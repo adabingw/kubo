@@ -1,0 +1,21 @@
+{
+    "flight": [
+      {
+        "num": "F8801",
+        "token": "d6a1f_H4sIAAAAAAAA_y2Q3W6jMBCFnya5KgYb2EAla4UoadksPwVC4cpyjENIuyHCroA-_bpQzfj4O2c0vvBFyrt41PXzR9depNA-BWh72bdUcsD6f_p5UHLq-_fu1uq0G_S69usyQ-4fL9bhA9w9GLqmij3Wvzm9d2AAZxxURZDF3l9SZGFK0iz0w_h5yyepiYHhbXfigGLNdd0VBcOp5_zwgH8B6y0tD7Z5WCLWS2wBO8ytNH7Ze_EaDvgFVVG1bjU4ehJj8hWay5lhfrwKmJeRcQzsMDmWQQKZUfhTFQejiIryNe7GKS49lMzGXM7TPvNHGeXTIR835pPq5VnOGIYAWDsXLr6nAu-cH2YSQ2PFRuL8NQmCarVq4DoQLWbC0LQdeyv4B2ey628HPuO94xhQU19Ib8jW6g3yKWqsUSjYmJ7qlhhKL4tSEn-nJ1IoZYs2BDXU_h5ygk6uo-BMLKUdgUCVoisJ39T1Rezr3TbYf8ChhuPmAQAA",
+        "cabin": "ECONOMY",
+        "from": "YYC",
+        "to": "YVR",
+        "date": "2025-02-01",
+        "subscribers": [
+          {
+            "uuid": "user-001"
+          },
+          {
+            "uuid": "user-002"
+          }
+        ]
+      }
+    ]
+  }
+  
