@@ -5,4 +5,4 @@ gcloud builds submit --config polling.yml
 # deploy to cloudrun
 gcloud run deploy polling --image gcr.io/kubo-448922/polling-0 --service-account kubo-cloudrun@kubo-448922.iam.gserviceaccount.com --platform managed --region us-central1
 
-gcloud pubsub subscriptions pull projects/kubo-448922/subscriptions/subscriptions-sub --limit=10
+gcloud pubsub subscriptions pull projects/kubo-448922/subscriptions/stop-08041-sub --limit=10

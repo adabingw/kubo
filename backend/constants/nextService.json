@@ -1,0 +1,68 @@
+{
+    "Metadata": {
+        "TimeStamp": "2025-02-09 10:24:52",
+        "ErrorCode": "200",
+        "ErrorMessage": "OK"
+    },
+    "NextService": {
+        "Lines": [
+            {
+                "StopCode": "08041",
+                "LineCode": "47",
+                "LineName": "Hamilton / Hwy 407 Terminal",
+                "ServiceType": "B",
+                "DirectionCode": "47   ",
+                "DirectionName": "47  - Hwy. 407 Bus Term",
+                "ScheduledDepartureTime": "2025-02-09 10:32:00",
+                "ComputedDepartureTime": "2025-02-09 10:32:04",
+                "DepartureStatus": "E",
+                "ScheduledPlatform": "10",
+                "ActualPlatform": "",
+                "TripOrder": 1,
+                "TripNumber": "47310",
+                "UpdateTime": "2025-02-09 10:23:43",
+                "Status": "M",
+                "Latitude": 43.647917,
+                "Longitude": -79.671633
+            },
+            {
+                "StopCode": "08041",
+                "LineCode": "47",
+                "LineName": "Hamilton / Hwy 407 Terminal",
+                "ServiceType": "B",
+                "DirectionCode": "47   ",
+                "DirectionName": "47  - Hwy. 407 Bus Term",
+                "ScheduledDepartureTime": "2025-02-09 11:02:00",
+                "ComputedDepartureTime": "2025-02-09 11:03:52",
+                "DepartureStatus": "E",
+                "ScheduledPlatform": "10",
+                "ActualPlatform": "",
+                "TripOrder": 2,
+                "TripNumber": "47330",
+                "UpdateTime": "2025-02-09 10:24:04",
+                "Status": "M",
+                "Latitude": 43.505833,
+                "Longitude": -79.744467
+            },
+            {
+                "StopCode": "08041",
+                "LineCode": "47",
+                "LineName": "Hamilton / Hwy 407 Terminal",
+                "ServiceType": "B",
+                "DirectionCode": "47   ",
+                "DirectionName": "47  - Hwy. 407 Bus Term",
+                "ScheduledDepartureTime": "2025-02-09 11:32:00",
+                "ComputedDepartureTime": "2025-02-09 11:35:48",
+                "DepartureStatus": "E",
+                "ScheduledPlatform": "10",
+                "ActualPlatform": "",
+                "TripOrder": 3,
+                "TripNumber": "47350",
+                "UpdateTime": "2025-02-09 10:23:43",
+                "Status": "M",
+                "Latitude": 43.256883,
+                "Longitude": -79.903767
+            }
+        ]
+    }
+}

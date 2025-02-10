@@ -1,0 +1,326 @@
+{
+    "Metadata": {
+        "TimeStamp": "2025-02-07 20:07:08",
+        "ErrorCode": "200",
+        "ErrorMessage": "OK"
+    },
+    "Messages": {
+        "Message": [
+            {
+                "Code": "M0000420164",
+                "ParentCode": "M0000419998",
+                "Status": "UPD",
+                "PostedDateTime": "2024-04-06 17:24:07",
+                "SubjectEnglish": "Elevator out of service",
+                "SubjectFrench": "",
+                "BodyEnglish": "The elevator connecting the main lobby to platforms 1 and 2 is out of service. The station remains accessible through the ramp in the bus terminal. Visit the Hamilton GO Centre page to find helpful information on departures, a station map and a listing of all the services we have available.Visit out Accessibility page to see how we are committed to making our services easy for everyone to use",
+                "BodyFrench": "L'ascenseur reliant le hall principal aux quais 1 et 2 est hors service. La gare reste accessible par la rampe de la station d'autobus.Visitez la page de la gare GO de Hamilton pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons.Visitez notre page Accessibilité pour voir comment nous nous engageons à rendre nos services aussi faciles à utiliser que possible pour tout le monde.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "LW"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "HA"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000435752",
+                "ParentCode": "M0000435639",
+                "Status": "UPD",
+                "PostedDateTime": "2024-07-25 13:59:14",
+                "SubjectEnglish": "Bus route modified",
+                "SubjectFrench": "Trajet d'autobus modifié",
+                "BodyEnglish": "Due to construction, eastbound buses will not stop at:· King St. and Hughson St.· King St. and Summers Lane· King St. and Caroline St. N.Please board the bus at Hamilton GO or King St. and Queen St.",
+                "BodyFrench": "En raison de la construction, les autobus en direction est ne s’arrêteront pas à · rue King et à la rue Hughson · rue King et à la rue Summers · rue King et rue Caroline N. Veuillez prendre l’autobus à Hamilton GO ou à la rue King et à la rue Queen.",
+                "Category": "Service Disruption",
+                "SubCategory": "Modified Trip - Bus Detour",
+                "Lines": [
+                    {
+                        "Code": "47"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000435753",
+                "ParentCode": "M0000435638",
+                "Status": "UPD",
+                "PostedDateTime": "2024-07-25 13:59:45",
+                "SubjectEnglish": "Bus route modified",
+                "SubjectFrench": "Trajet d'autobus modifié",
+                "BodyEnglish": "Due to construction, eastbound buses will not stop at:· King St. and Hughson St.· King St. and Summers Lane· King St. and Caroline St. N.Please board the bus at Hamilton GO or King St. and Queen St.",
+                "BodyFrench": "En raison de la construction, les autobus en direction est ne s’arrêteront pas à · rue King et à la rue Hughson · rue King et à la rue Summers · rue King et rue Caroline N. Veuillez prendre l’autobus à Hamilton GO ou à la rue King et à la rue Queen.",
+                "Category": "Service Disruption",
+                "SubCategory": "Modified Trip - Bus Detour",
+                "Lines": [
+                    {
+                        "Code": "18"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000435754",
+                "ParentCode": "M0000435637",
+                "Status": "UPD",
+                "PostedDateTime": "2024-07-25 14:00:16",
+                "SubjectEnglish": "Bus route modified",
+                "SubjectFrench": "Trajet d'autobus modifié",
+                "BodyEnglish": "Due to construction, eastbound buses will not stop at:· King St. and Hughson St.· King St. and Summers Lane· King St. and Caroline St. N.Please board the bus at Hamilton GO or King St. and Queen St.",
+                "BodyFrench": "En raison de la construction, les autobus en direction est ne s’arrêteront pas à · rue King et à la rue Hughson · rue King et à la rue Summers · rue King et rue Caroline N. Veuillez prendre l’autobus à Hamilton GO ou à la rue King et à la rue Queen.",
+                "Category": "Service Disruption",
+                "SubCategory": "Modified Trip - Bus Detour",
+                "Lines": [
+                    {
+                        "Code": "40"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000435755",
+                "ParentCode": "M0000435636",
+                "Status": "UPD",
+                "PostedDateTime": "2024-07-25 14:01:17",
+                "SubjectEnglish": "Bus route modified",
+                "SubjectFrench": "Trajet d'autobus modifié",
+                "BodyEnglish": "Due to construction, eastbound buses will not stop at:· King St. and Hughson St.· King St. and Summers Lane· King St. and Caroline St. N.Please board the bus at Hamilton GO or King St. and Queen St.",
+                "BodyFrench": "En raison de la construction, les autobus en direction est ne s’arrêteront pas à · rue King et à la rue Hughson · rue King et à la rue Summers · rue King et rue Caroline N. Veuillez prendre l’autobus à Hamilton GO ou à la rue King et à la rue Queen.",
+                "Category": "Service Disruption",
+                "SubCategory": "Modified Trip - Bus Detour",
+                "Lines": [
+                    {
+                        "Code": "17"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000442934",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2024-09-03 00:33:20",
+                "SubjectEnglish": "Elevator out of service ",
+                "SubjectFrench": "Ascenseur hors service ",
+                "BodyEnglish": "The elevator connecting the main lobby to platforms 1 and 2 is out of service. The station remains accessible through the ramp in the bus terminal. Visit the Hamilton GO Centre page to find helpful information on departures, a station map and a listing of all the services we have available.Visit out Accessibility page to see how we are committed to making our services easy for everyone to use",
+                "BodyFrench": "L'ascenseur reliant le hall principal aux quais 1 et 2 est hors service. La gare reste accessible par la rampe de la station d'autobus.Visitez la page de la gare GO de Hamilton pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons.Visitez notre page Accessibilité pour voir comment nous nous engageons à rendre nos services aussi faciles à utiliser que possible pour tout le monde.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "LW"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "HA"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000456818",
+                "ParentCode": "M0000456540",
+                "Status": "UPD",
+                "PostedDateTime": "2025-01-06 09:28:19",
+                "SubjectEnglish": "Temporary stop relocation – Route 33",
+                "SubjectFrench": "Déménagement temporaire des arrêts - Trajet 33 \r\n",
+                "BodyEnglish": "Due to construction, the southbound stop at Hurontario Street and Sir Lou Drive has been moved south to the mall driveway. The southbound stop at Hurontario Street and Ray Lawson Boulevard has been moved to the southwest corner.",
+                "BodyFrench": "En raison des travaux de construction, l'arrêt sud de la rue Hurontario et de la promenade Sir Lou a été déplacé vers le sud jusqu'à l'entrée du centre commercial. L'arrêt vers le sud de la rue Hurontario et du boulevard Ray Lawson a été déplacé à l'angle sud-ouest.",
+                "Category": "Service Disruption",
+                "SubCategory": "Temporary Bus Stop Location",
+                "Lines": [
+                    {
+                        "Code": "33"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000457720",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-01 00:49:25",
+                "SubjectEnglish": "Wi-Fi upgrades are in progress!",
+                "SubjectFrench": "Les mises à niveau du Wi-Fi sont en cours!",
+                "BodyEnglish": "We are working to provide faster Wi-Fi service on our trains to improve your onboard experience. There may be intermittent outages as this work progresses and your patience is appreciated.",
+                "BodyFrench": "Nous travaillons à offrir un service Wi-Fi plus rapide dans nos trains afin d’améliorer votre expérience à bord. Il peut y avoir des interruptions intermittentes pendant que ces travaux progressent et votre patience est appréciée.",
+                "Category": "Service Disruption",
+                "SubCategory": "Information",
+                "Lines": [
+                    {
+                        "Code": "UP"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000457819",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-01-17 01:08:23",
+                "SubjectEnglish": "Elevator out of service",
+                "SubjectFrench": "Ascenseur hors service",
+                "BodyEnglish": "The elevator connecting the east tunnel to platforms 1 and 2 is out of service. The station remains accessible from the elevator at the west end of the station. Visit the Ajax GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+                "BodyFrench": "L'ascenseur qui relie le tunnel Est aux quais 1 et 2 est hors service. La gare reste accessible depuis l'ascenseur situé à l'extrémité ouest de la gare. Visitez la page de la gare GO d’Ajax pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l’aide en matière d’accessibilité pendant les pannes d’ascenseur, communiquez avec nous ici pour obtenir de l’assistance.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "LE"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "AJ"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459488",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-04 15:28:47",
+                "SubjectEnglish": "Elevator out of service",
+                "SubjectFrench": "Ascenseur hors service",
+                "BodyEnglish": "The elevator connecting the GO platform and the TTC tunnel is out of service. Customers who need this elevator to access the TTC system are advised to use the TTC station elevator on Transway Crescent, adjacent to the south parking lot. Visit the Kennedy GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. Dignity Transportation shuttle service will be available, upon request, for transportation between the west and east side of the station. Requests must be made 48 hours in advance by calling 416-398-2222 and dial “0”. Please follow the signs to find the shuttle locations. Visit our Accessibility page to see how we are committed to making our services easy for everyone to use.",
+                "BodyFrench": "L'ascenseur reliant le quai GO et le tunnel TTC est hors service. Les clients qui ont besoin de cet ascenseur pour accéder au système TTC sont priés d'utiliser l'ascenseur de la station TTC sur le Transway Crescent, adjacent au parc de stationnement sud. Visitez la page Gare GO de Kennedy pour obtenir des renseignements utiles sur les départs, une carte de la gare et une liste de tous les services disponibles. Le service de navette de Dignity Transportation sera disponible, sur demande, pour le transport entre l’ouest et l’est de la gare. Les demandes doivent être faites 48 heures à l’avance en appelant le 416-398-2222 et composez le « 0 ». Veuillez suivre les panneaux pour trouver l’emplacement des navettes. Consultez notre page sur l'accessibilité pour découvrir comment nous nous engageons à rendre nos services faciles à utiliser pour tous.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "ST"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "KE"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459498",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-04 17:31:32",
+                "SubjectEnglish": "Elevator out of service",
+                "SubjectFrench": "Ascenseur hors service",
+                "BodyEnglish": "The elevator connecting the main lobby to the buildings upper floors is out of service. The station remains accessible. Visit the Hamilton GO Centre page to find helpful information on departures, a station map and a listing of all the services we have available. Visit out Accessibility page to see how we are committed to making our services easy for everyone to use",
+                "BodyFrench": "L'ascenseur qui relie le hall principal aux étages supérieurs des bâtiments est hors service. La gare reste accessible.Visitez la page de la gare GO de Hamilton pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons.Pour obtenir de l’aide en matière d’accessibilité pendant les pannes d’ascenseur, communiquez avec nous ici pour obtenir de l’assistance.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "LW"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "HA"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459809",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-07 17:40:12",
+                "SubjectEnglish": "Bus delay – Route 19",
+                "SubjectFrench": "Délai d’autobus - Trajet 19 \r\n",
+                "BodyEnglish": "Buses are delayed up to 25 minutes due to heavy traffic throughout our service area.",
+                "BodyFrench": "Les autobus sont retardés de 25 minutes en raison de la circulation intense tout au long de notre zone de service.",
+                "Category": "Service Disruption",
+                "SubCategory": "Bus Delay",
+                "Lines": [
+                    {
+                        "Code": "19"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459810",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-07 17:40:46",
+                "SubjectEnglish": "Bus delay – Route 33",
+                "SubjectFrench": "Délai d’autobus - Trajet 33 \r\n",
+                "BodyEnglish": "Buses are delayed up to 25 minutes due to heavy traffic throughout our service area.",
+                "BodyFrench": "Les autobus sont retardés de 25 minutes en raison de la circulation intense tout au long de notre zone de service.",
+                "Category": "Service Disruption",
+                "SubCategory": "Bus Delay",
+                "Lines": [
+                    {
+                        "Code": "33"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459815",
+                "ParentCode": "M0000459808",
+                "Status": "UPD",
+                "PostedDateTime": "2025-02-07 17:55:17",
+                "SubjectEnglish": "Update - Elevator out of service",
+                "SubjectFrench": "Ascenseur hors service",
+                "BodyEnglish": "The elevator connecting the pedestrian bridge to platform 2 is out of service. The station is not accessible from the east tunnel. Customers needing the elevator must exit or board the train at Ajax GO station through the west tunnel elevator. Visit the Pickering GO Station page to find helpful information on departures, a station map and a listing of all the services we have available. For Accessibility support during elevator outages, contact us here for assistance.",
+                "BodyFrench": "L'ascenseur reliant le pont piétonnier au quai 2 est hors service. La gare n'est pas accessible depuis le tunnel est. Les clients qui ont besoin de l'ascenseur doivent sortir ou monter à bord du train à la Gare GO Ajax par l'ascenseur du tunnel ouest.Visitez la page de la gare GO de Pickering pour trouver des informations utiles, notamment sur les départs, un plan de la gare et tous les services que nous proposons. Pour obtenir de l’aide en matière d’accessibilité pendant les pannes d’ascenseur, communiquez avec nous ici pour obtenir de l’assistance.",
+                "Category": "Amenity",
+                "SubCategory": "Elevator-Escalator Disruption",
+                "Lines": [
+                    {
+                        "Code": "LE"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "PIN"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459819",
+                "ParentCode": "M0000459811",
+                "Status": "UPD",
+                "PostedDateTime": "2025-02-07 18:40:26",
+                "SubjectEnglish": "Bus delay – Route 41",
+                "SubjectFrench": "Retard dans l’autobus - Trajet 41 \r\n",
+                "BodyEnglish": "Buses are delayed up to 20 minutes due to heavy traffic throughout our service area.",
+                "BodyFrench": "Les autobus sont retardés de 20 minutes en raison de la circulation intense tout au long de notre zone de service.",
+                "Category": "Service Disruption",
+                "SubCategory": "Bus Delay",
+                "Lines": [
+                    {
+                        "Code": "41"
+                    }
+                ],
+                "Stops": [],
+                "Trips": []
+            }
+        ]
+    }
+}

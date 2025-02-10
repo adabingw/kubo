@@ -1,0 +1,1032 @@
+{
+    "Metadata": {
+        "TimeStamp": "2025-02-07 20:17:34",
+        "ErrorCode": "200",
+        "ErrorMessage": "OK"
+    },
+    "Trip": [
+        {
+            "TripNumber": "E7907Q",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": [
+                {
+                    "Order": 1,
+                    "ID": "907",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Union Station",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "UN",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "96070",
+            "TripName": "Durham College Oshawa GO 06:05 - Finch Bus Terminal 07:25",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 7,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St @ Glendora Ave",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01648",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 8,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St. @ Sheppard Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02772",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 9,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St @ Elmwood Ave",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01653",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 10,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St. @ Empress Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01660",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 11,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St @ Norton Ave",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01655",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 12,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St @ Horsham Ave",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01650",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 13,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St. @ Finch Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01661",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 14,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Finch Bus Terminal",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00736",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E1860Q",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": [
+                {
+                    "Order": 1,
+                    "ID": "907",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Union Station",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "UN",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "41061",
+            "TripName": "Pickering GO 05:25 - Hamilton GO Centre 08:55",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 22,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Main St. W. @ Haddon Ave. S.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02185",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 23,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Mcmaster U Bus Term.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00310",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "41136",
+            "TripName": "Bramalea GO 08:15 -  Centennial College 09:15",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Hwy 407 Bus Terminal",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02673",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 3,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Sheppard Ave. E. @ Herons Hill Way",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02838",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 4,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Consumers Rd. @ William Sylvester Dr.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02756",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 5,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Centennial College",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00358",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E2722C",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": [
+                {
+                    "Order": 1,
+                    "ID": "907",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Union Station",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "UN",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "6314",
+            "TripName": "Aurora GO 10:57 - Union Station GO 11:47",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 1,
+                    "ID": "32",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "King City GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "KC",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                },
+                {
+                    "Order": 1,
+                    "ID": "31",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Maple GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "MP",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E6314B",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "31",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Maple GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "MP",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E2722K",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "907",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Union Station",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "UN",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E2726W",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E6314R",
+            "TripName": "",
+            "IsCancelled": "0",
+            "IsOverride": "1",
+            "Stop": []
+        },
+        {
+            "TripNumber": "56390",
+            "TripName": "Durham College Oshawa GO 12:55 - Oakville GO 16:05",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 11,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Ymca Blvd. @ Kennedy Rd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02144",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 12,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Unionville GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00128",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 13,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Ymca Blvd. @ Kennedy Rd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02141",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 14,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St. @ Hwy. 407",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02771",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 15,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Richmond Hill Centre",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00350",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 16,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Yonge St. @ Garden Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02021",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 17,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Hwy 407 Bus Terminal",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02674",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 18,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Bramalea GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02728",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 19,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Square One GO Terminal",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00133",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 20,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Erin Mills Transitway Station",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02215",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 21,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Hwy. 407 Park & Ride",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02163",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 22,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd.  @ Burnhamthorpe Rd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01441",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 23,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Dundas St.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02700",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 24,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Rosegate Way",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02786",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 25,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Glenashton Dr.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02763",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 26,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ River Oaks Blvd. E.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02764",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 27,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Upper Middle Rd. E.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02765",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 28,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Sheridan College",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00939",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 29,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Mccraney St. E.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02766",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 30,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Trafalgar Rd. @ Leighland Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "01729",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 31,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Oakville GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00137",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "30413",
+            "TripName": "Bramalea GO 13:50 - University of Waterloo Terminal 15:20",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Weber St. E. @ Montgomery Rd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02205",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 3,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Weber St. E. @ Queen St. N.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02531",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 4,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Kitchener GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02186",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 5,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Wilfrid Laurier University",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02148",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 6,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "University Of Waterloo",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02800",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "25553",
+            "TripName": "Square One 16:20 - University of Waterloo Terminal 17:50",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Wilfrid Laurier University",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02148",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 3,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "University Of Waterloo",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02800",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "3975",
+            "TripName": "Union Station GO 16:49 - Kitchener GO 18:30",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 2,
+                    "ID": "24",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Etobicoke North GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "0",
+                    "IsOverride": "1",
+                    "Code": "ET",
+                    "ActualTime": null,
+                    "ServiceType": "T"
+                }
+            ]
+        },
+        {
+            "TripNumber": "33671",
+            "TripName": "York Mills Bus Terminal 16:45 - Georgetown GO 18:45",
+            "IsCancelled": "0",
+            "IsOverride": "0",
+            "Stop": [
+                {
+                    "Order": 21,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Bovaird Dr. W. @ Mississauga Rd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00215",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 22,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Noble St.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00839",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 23,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ King St.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00213",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 24,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Mcfarlane Dr.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00833",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 25,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Delrex Blvd.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00828",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 26,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Armstrong Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00824",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 27,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "279 Guelph St @ Sinclair Ave",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00844",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 28,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Sinclair Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00842",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 29,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Alcott Dr.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00211",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 30,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Guelph St. @ Mountainview Rd. N.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "00924",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 31,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Mountainview Rd. N. @ Maple Ave.",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02633",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                },
+                {
+                    "Order": 32,
+                    "ID": "",
+                    "SchArrival": null,
+                    "SchDeparture": null,
+                    "Name": "Georgetown GO",
+                    "IsStopping": "0",
+                    "IsCancelled": "1",
+                    "IsOverride": "0",
+                    "Code": "02413",
+                    "ActualTime": null,
+                    "ServiceType": "B"
+                }
+            ]
+        },
+        {
+            "TripNumber": "E7907W",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E1860B",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "47047",
+            "TripName": "Erin Mills Transitway Station 07:20 - McMaster University 08:10",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "2722",
+            "TripName": "Milton GO 08:00 - Union Station GO 09:03",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "X2728",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E7410Q",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E2724Q",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E8122U",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E2722Q",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E6314Q",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "1",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E6314",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "E2728Q",
+            "TripName": "",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        },
+        {
+            "TripNumber": "92523",
+            "TripName": "Yorkdale Bus Terminal 15:25 - Dundas St. @ Hwy. 412 Park & Ride 16:49",
+            "IsCancelled": "1",
+            "IsOverride": "0",
+            "Stop": []
+        }
+    ]
+}

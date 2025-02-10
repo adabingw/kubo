@@ -1,0 +1,1507 @@
+{
+    "Metadata": {
+        "TimeStamp": "2025-02-09 10:22:48",
+        "ErrorCode": "200",
+        "ErrorMessage": "OK"
+    },
+    "Stop": {
+        "Code": "08041",
+        "Name": "Bramalea GO",
+        "Line": [
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "31",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02300"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "32",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00011"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00147"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "41",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00358"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "47",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "48",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00128"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "00159"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            },
+            {
+                "Code": "56",
+                "Display": "",
+                "Direction": "E",
+                "DestinationStop": "02673"
+            }
+        ]
+    }
+}

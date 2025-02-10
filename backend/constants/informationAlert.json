@@ -1,0 +1,188 @@
+{
+    "Metadata": {
+        "TimeStamp": "2025-02-07 20:08:58",
+        "ErrorCode": "200",
+        "ErrorMessage": "OK"
+    },
+    "Messages": {
+        "Message": [
+            {
+                "Code": "M0000452322",
+                "ParentCode": "M0000445462",
+                "Status": "UPD",
+                "PostedDateTime": "2024-11-27 12:03:14",
+                "SubjectEnglish": "Bus Loop Closed for Construction",
+                "SubjectFrench": "Fermeture de la boucle d’autobus en raison des travaux",
+                "BodyEnglish": "The bus loop at Allandale Waterfront GO is closed for construction, and the stops for GO Bus Route 68 have been temporarily relocated to Essa Road near Gowan Street. Here’s what you need to know:· For customers navigating to the temporary bus stops from the station side, please use the pedestrian tunnel to access Gowan Street and travel west towards Essa Road.· For customers navigating to the temporary bus stops from Gowan Street, please follow the sidewalk and travel west towards Essa Road.· For customers travelling southbound to Union Station, the temporary bus stop is on the west side of Gowan Street. For customers travelling northbound to Barrie bus terminal, the temporary stop is on the corner of Gowan Street and Essa Road.· The Lakeshore Dr. and Tiffin St. access to the pickup and drop-off area is closed (see map). You can still access the pickup and drop-off area from the east entrance.· Please be cautious around the construction areas and follow all directional signage. We will keep you updated as the project progresses. Train customers: This construction will change how you move around your station. Please allow extra time to navigate around the construction areas. Do not walk on the tracks. Crossing tracks is dangerous and illegal.For more information on this project, please visit the City of Barrie website.",
+                "BodyFrench": "La boucle d’autobus de la gare GO d’Allandale Waterfront est fermée en raison des travaux, et les arrêts d’autobus GO de la ligne 68 ont été temporairement déplacés sur le chemin Essa, près de la rue Gowan. Voici ce que vous devez savoir :· Pour les clients qui se dirigent vers les arrêts d’autobus temporaires du côté de la gare, veuillez utiliser le tunnel piétonnier pour accéder à la rue Gowan et vous diriger vers l’ouest en direction du chemin Essa.· Pour les clients qui se rendent aux arrêts d’autobus temporaires depuis la rue Gowan, veuillez suivre le trottoir et vous diriger vers l’ouest en direction du chemin Essa.· Pour les clients voyageant vers le sud en direction de la gare Union, l’arrêt d’autobus temporaire se trouve du côté ouest de la rue Gowan. Pour les clients voyageant vers le nord jusqu’au terminus d’autobus de Barrie, l’arrêt temporaire se trouve au coin de la rue Gowan et du chemin Essa.· L’accès au débarcadère par la promenade Lakeshore et la rue Tiffin sera fermé (voir la carte). Vous pouvez toujours accéder à l’embarcadère à partir de l’entrée est.· Faites preuve de prudence autour de la zone de travaux et suivez les panneaux indicateurs. Nous vous tiendrons informé au fur et à mesure que le projet avancera. Clients du train : Ces travaux de construction vont changer la façon dont vous vous déplacez dans votre gare. Accordez-vous plus de temps pour naviguer dans les zones de travaux. Ne marchez pas sur les voies ferrées. Il est dangereux et illégal de traverser les voies ferrées.Pour de plus amples renseignements sur ce projet, veuillez consulter le site Web de la Ville de Barrie.",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "BR"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "AD"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000454630",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2024-12-13 09:49:51",
+                "SubjectEnglish": "Exhibition GO: Pedestrian Bridge Closure",
+                "SubjectFrench": "La gare GO d’Exhibition : Pont piétonnier fermé",
+                "BodyEnglish": "The pedestrian bridge, at Exhibition GO, is closed for the winter season and inaccessible to customers. Please use elevators and stairwells to access the pedestrian tunnel for Exhibition GO platform and station access. Check schedules and plan ahead before you travel.",
+                "BodyFrench": "Le pont piétonnier à la gare GO d’Exhibition est fermé pour la saison hivernale et inaccessible aux clients. Veuillez utiliser les ascenseurs et les escaliers pour accéder au tunnel piétonnier pour accéder au quai et à la gare GO d’Exhibition. Vérifier les horaires et planifier à l’avance avant de voyager.",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "12"
+                    },
+                    {
+                        "Code": "15"
+                    },
+                    {
+                        "Code": "18"
+                    },
+                    {
+                        "Code": "LW"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "EX"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000454635",
+                "ParentCode": "M0000453858",
+                "Status": "UPD",
+                "PostedDateTime": "2024-12-13 10:24:54",
+                "SubjectEnglish": "Bronte GO – Elevator Construction",
+                "SubjectFrench": "Gare GO de Bronte – Travaux sur l’ascenseur ",
+                "BodyEnglish": "The elevator serving the north parking lot is out of service for repairs. Learn more about these construction impacts.",
+                "BodyFrench": "L’ascenseur desservant le parc de stationnement nord est hors service pour des réparations. Apprenez-en plus sur ces impacts de construction.",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "LW"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "BO"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000457843",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-01-17 07:55:03",
+                "SubjectEnglish": "Important Station Information",
+                "SubjectFrench": "",
+                "BodyEnglish": "The furnace at your station is currently out of service. Until the repairs are completed, we will have portable heaters for your comfort, however the temperature may be colder than usual.",
+                "BodyFrench": "Le four de votre station est actuellement hors service. Jusqu'à ce que les réparations soient terminées, nous aurons des appareils de chauffage portatifs pour votre confort, mais la température peut être plus froide que d'habitude.",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "MI"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "ER"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459124",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-01-31 17:23:01",
+                "SubjectEnglish": "Rouge Hill GO: Elevator rehabilitation project",
+                "SubjectFrench": "Gare GO de Rouge Hill : Projet de réhabilitation des ascenseurs",
+                "BodyEnglish": "There is ongoing repair work to the elevators in the west pedestrian tunnel. These repairs will be completed in phases, and there is no accessible eastbound GO train service from Rouge Hill GO. Dignity shuttle services will be available for eastbound customers. There are no changes for customers who do not require elevator access to the platforms. Jan. 13 until the end of March: Elevator one, located on platform one, will be closed for repairs. Feb. 24 until mid-June: Elevator two, located on platform two, will be closed for repairs. Dignity shuttle service is available, learn more.",
+                "BodyFrench": "Des travaux de réparation des ascenseurs du tunnel piétonnier ouest sont en cours. Ces réparations seront effectuées par étapes, et il n’y a pas de service de train GO en direction est accessible à partir de la gare GO de Rouge Hill. Les services de navette Dignity seront disponibles pour les clients se dirigeant vers l’est. Il n’y a aucun changement pour les clients qui n’ont pas besoin d’accéder aux quais par ascenseur. Du 13 janvier jusqu’à la fin mars : L’ascenseur 1, situé sur le quai 1, sera fermé pour des réparations. Du 24 février à la mi-juin : L’ascenseur 2, situé sur le quai 2, sera fermé pour des réparations. Le service de navette Dignity est disponible, en savoir plus.",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "LE"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "RO"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459382",
+                "ParentCode": null,
+                "Status": "INIT",
+                "PostedDateTime": "2025-02-05 01:30:42",
+                "SubjectEnglish": "Milton GO is getting upgraded",
+                "SubjectFrench": "Milton GO est en cours de mise à niveau \r\n",
+                "BodyEnglish": "Over the next year we are making important changes to Milton GO station. Starting Feb. 19, we will be closing the station building while we make important upgrades to the washrooms. Here’s what you need to know: · There will be temporary washrooms located on the west side of the building close to the accessible parking area. · Please follow all directional signs and use caution around construction areas. · This schedule may be adjusted due to weather conditions or unforeseen circumstances. Learn more about these and future station improvements Thank you for your patience while we complete this important work",
+                "BodyFrench": "Au cours de la prochaine année, nous apporterons des changements importants à la Gare GO de Milton. À compter du 19 février, nous fermerons l’édifice de la gare pendant que nous effectuons d’importantes mises à niveau des toilettes. Voici ce que vous devez savoir : · Il y aura des toilettes temporaires situées sur le côté ouest de l’immeuble près de la zone de stationnement accessible. · Veuillez suivre tous les panneaux directionnels et faire preuve de prudence en ce qui concerne les zones de construction. · Ce calendrier peut être modifié en raison de conditions météorologiques ou de circonstances imprévues. Apprenez-en davantage sur ces Mercis de votre patience et les améliorations futures de la station pendant que nous effectuons cet important travail",
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "MI"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "ML"
+                    }
+                ],
+                "Trips": []
+            },
+            {
+                "Code": "M0000459450",
+                "ParentCode": "M0000454423",
+                "Status": "UPD",
+                "PostedDateTime": "2025-02-04 07:09:30",
+                "SubjectEnglish": "Tunnel repairs begin Dec 11",
+                "SubjectFrench": "",
+                "BodyEnglish": "From Dec. 11 until Feb. 26, 2025, there will be ongoing repair work in the east and west tunnels at Pickering GO. There will also be some minor repair work on the train platforms. Jan. 24 - Feb. 26 - East tunnel closed for repairs. Here’s what you need to know: · The station building, bus loop, and parking lots remain accessible from the pedestrian bridge. · Approximately eight parking spaces will be closed in the south parking lot (see station map). · Please follow all directional signage and use caution when moving through construction areas. · This work schedule is subject to change due to unforeseen circumstances or weather conditions. We appreciate your patience while we complete this important work at your station.",
+                "BodyFrench": null,
+                "Category": "General Information",
+                "SubCategory": "Station General Information",
+                "Lines": [
+                    {
+                        "Code": "LE"
+                    }
+                ],
+                "Stops": [
+                    {
+                        "Name": null,
+                        "Code": "PIN"
+                    }
+                ],
+                "Trips": []
+            }
+        ]
+    }
+}

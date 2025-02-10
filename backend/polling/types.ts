@@ -1,19 +1,13 @@
+
+// mapping of item to topic id for pub sub
+// stops have a stopCode: topic id
+// service and information are global topics subscribed by every user
 interface Subscriptions {
-    flight: Flight[]
+    stops: StopSubscription,
+    service: string,
+    information: string
 }
 
-interface Flight {
-    num: string
-    token: string
-    cabin: CabinType
-    from: string
-    to: string
-    date: string
-    subscribers: User[]
+interface StopSubscription {
+    [key: string]: string; // key is stop code
 }
-
-interface User {
-    uuid: string
-}
-
-type CabinType = "ECONOMY" | "PREMIUM_ECONOMY" | "BUSINESS" | "FIRST"
