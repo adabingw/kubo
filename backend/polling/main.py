@@ -12,7 +12,7 @@ import logging
 
 publisher = pubsub_v1.PublisherClient()
 app = Flask(__name__)
-db = firestore.Client(database=FIRESTORE_SUBSCRIPTION_COLLECTION)
+db = firestore.Client(database='(default)')
 logging.basicConfig(level=logging.DEBUG)
 
 def polling():
