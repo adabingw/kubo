@@ -54,7 +54,7 @@ def polling():
                 return "404"
             
             result = json.loads(json.dumps(res))
-                        
+            
             if result['Metadata']['ErrorCode'] == '200':
                 updates = result['NextService']['Lines']
                 for update in updates:

@@ -1,12 +1,14 @@
 const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
+const { Server } = require("socket.io");
+const { createServer } = require("http");
 const { PubSub } = require("@google-cloud/pubsub");
 const admin = require("firebase-admin");
+const path = require('path');
+const cors = require("cors");
 
-const { PROJECT } = require('./constants')
+const { PROJECT } = require('./constants');
 const serviceAccount = require("./env.json");
-const sql = require('./db');
+const { init_db, get_stop_by_name } = require('./db.js')
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -18,33 +20,39 @@ const pubsub = new PubSub({
 
 const db = admin.firestore();
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+app.use(cors({ origin: "http://localhost:5173" }));
+const server = createServer(app);
+const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST"],
+    },
+  });
 
 const userId = "test";  
 const userRef = db.collection("users").doc(userId);
 
 // listening to users collection for userId for updates on subscriptions
-userRef.onSnapshot((doc) => {
-    if (doc.exists) {
-        // doc data should be map of list of pubsub subscriptions
-        console.log("User data changed:", doc.data());
-        const data = doc.data();
-        const stops = data['stops'];
-        if (stops) {
-            subscriptions.forEach(subscriptionName => {
-                const subscription = pubsub.subscription(subscriptionName);
-                subscription.on("message", message => {
-                    console.log(`🔔 New message from ${subscriptionName}:`, message.data.toString());
-                    io.emit("new-message", { topic: subscriptionName, data: message.data.toString() });
-                    message.ack();
-                });
-            });
-        }
-    } else {
-        console.log("User not found");
-    }
-});
+// userRef.onSnapshot((doc) => {
+//     if (doc.exists) {
+//         // doc data should be map of list of pubsub subscriptions
+//         console.log("User data changed:", doc.data());
+//         const data = doc.data();
+//         const stops = data['stops'];
+//         if (stops) {
+//             subscriptions.forEach(subscriptionName => {
+//                 const subscription = pubsub.subscription(subscriptionName);
+//                 subscription.on("message", message => {
+//                     console.log(`🔔 New message from ${subscriptionName}:`, message.data.toString());
+//                     io.emit("new-message", { topic: subscriptionName, data: message.data.toString() });
+//                     message.ack();
+//                 });
+//             });
+//         }
+//     } else {
+//         console.log("User not found");
+//     }
+// });
 
 const createTopic = async (projectId, topicName) => {
     "use strict";
@@ -108,6 +116,10 @@ const subscribeToTopic = async (projectId, stopCode) => {
     });
 }
 
+const unsubscribeFromTopic = async (projectId, stopCode) => {
+
+}
+
 io.on("connection", socket => {
     console.log("⚡ Client connected!");
     socket.on('subscribe', async ({ projectId, stopCode }) => {
@@ -118,17 +130,27 @@ io.on("connection", socket => {
         }
     });
 
-    socket.on('search', async ({ stopCode }) => {
-        const res = sql.get_stop_by_name(stopCode);
+    socket.on('search', async (query) => {
+        const res = get_stop_by_name(query);
+        console.log(res)
         socket.emit('result', JSON.stringify(res));
     });
+
+    socket.on('unsubscribe', async ({ stopCode }) => {
+        console.log('unsubscribe ', stopCode);
+    })
+
+    socket.on('BOO', (message) => {
+        console.log(`AHHHHHH ${message}`);
+    })
 });
 
 server.listen(5000, () => {
     try {
-        sql.init_db();
+        console.log('db: ', init_db);
+        init_db();
     } catch (err) {
-        console.error('cannot setup db');
+        console.error('cannot setup db', err);
     }
     console.log("🚀 Server running on port 5000")}
 );

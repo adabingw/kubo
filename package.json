@@ -1,0 +1,16 @@
+{
+  "name": "kubo",
+  "version": "1.0.0",
+  "description": "凹",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm --prefix frontend start\" \"npm --prefix server start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
+}

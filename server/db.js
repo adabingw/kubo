@@ -1,14 +1,22 @@
 const sqlite3 = require('sqlite3').verbose(); // Import SQLite
 const axios = require('axios');
-const go = require('env.go.js');
+const go = require('./env.go.js');
 
 // create local stops db to store go stops
 const db = new sqlite3.Database('./db');
+const tableName = 'stops'
 
 const init_db = async () => {
     db.serialize(() => {
         // Create a users table with id, name, and email
-        db.run(`CREATE TABLE IF NOT EXISTS stops (
+        db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
+            if (err) {
+              console.error(`Error dropping table ${tableName}:`, err.message);
+            } else {
+              console.log(`Table ${tableName} has been dropped.`);
+            }
+        });
+        db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (
             stopCode string PRIMARY KEY,
             stopName string,
             type string
@@ -18,8 +26,9 @@ const init_db = async () => {
         db.run(`CREATE INDEX IF NOT EXISTS idx_name ON stops (stopName)`);
     });
 
-    const response = await axios.get(`${go.GOAPI_URL}${go.GOAPI_URL}?key=${go.GOAPI_KEY}`);
-    const data = await response.json();
+    const url = `${go.GOAPI_URL}${go.ALL_STOPS_ENDPOINT}?key=${go.GOAPI_KEY}`
+    const response = await axios.get(url);
+    const data = response.data;
 
     if (!(data && data.Metadata && data.Metadata.ErrorCode == "200")) {
         teardown();
@@ -28,13 +37,12 @@ const init_db = async () => {
 
     if (data.Stations && data.Stations.Station) {
         const stations = data.Stations.Station;
-        for (const station in stations) {
+        for (const station of stations) {
             const query = 'INSERT INTO stops (stopCode, stopName, type) VALUES (?, ?, ?)';
-
             db.run(query, [station.LocationCode, station.LocationName, station.LocationType], function(err) {
               if (err) {
-                teardown();
-                throw new Error(err);
+                // teardown();
+                throw new Error(err + " " + station.LocationCode);
               }
             });
         }
@@ -46,7 +54,8 @@ const init_db = async () => {
 }
 
 const get_stop_by_name = (stopName) => {
-    db.get("SELECT * FROM stops WHERE stopName = ?", [stopName], (err, row) => {
+    console.log(stopName)
+    db.get("SELECT * FROM stops WHERE stopName LIKE ?", [`%${stopName}%`], (err, row) => {
         if (err) {
             console.error(err);
         } else {
@@ -60,4 +69,6 @@ const teardown = (db) => {
     db.close();
 }
 
-export { init_db, get_stop_by_name, teardown };
+module.exports = {
+    init_db, get_stop_by_name
+}

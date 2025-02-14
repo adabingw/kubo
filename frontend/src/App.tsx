@@ -13,14 +13,24 @@ function App() {
         });
     }, []);
 
+    const onSearchInput = (e: React.FormEvent<HTMLInputElement>) => {
+        console.log(e.currentTarget.value);
+        socket.emit('search', e.currentTarget.value);
+    }
+
     return (
-        <div>
-            <h1>Pub/Sub Messages</h1>
-            {messages.map((msg: Message, idx) => (
-                <div key={idx}>
-                    <strong>{msg.topic}:</strong> {msg.data}
-                </div>
-            ))}
+        <div className="">
+            <h1>kubo.</h1>
+            <div>search stops</div>
+            <input placeholder="search me!" onInput={onSearchInput} />
+            <div className="mt-5">stop updates</div>
+            {(messages.length > 0) ? 
+                <>{messages.map((msg: Message, idx) => (
+                    <div key={idx}>
+                        <strong>{msg.topic}:</strong> {msg.data}
+                    </div>
+                ))}</> : <p>subscribe to stops to start seeing its updates!!</p>
+            }
         </div>
     );
 }
