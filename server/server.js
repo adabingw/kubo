@@ -122,24 +122,34 @@ const unsubscribeFromTopic = async (projectId, stopCode) => {
 
 io.on("connection", socket => {
     console.log("⚡ Client connected!");
+
+    io.emit('welcome');
+
     socket.on('subscribe', async ({ projectId, stopCode }) => {
         if (subscribeToTopic(projectId, stopCode)) {
-            socket.emit('success', 'yay!');
+            io.emit('success', 'yay!');
         } else {
-            socket.emit('error', 'bruh');
+            io.emit('error', 'bruh');
         }
     });
-
-    socket.on('search', async (query) => {
-        const res = get_stop_by_name(query);
-        console.log(res)
-        socket.emit('result', JSON.stringify(res));
+    
+    socket.on("disconnect", () => {
+        console.log("User disconnected");
     });
-
+    
+    socket.on('search', async (query) => {
+        const res = await get_stop_by_name(query);
+        console.log(res)
+        io.emit('search-result', JSON.stringify({
+            query: query,
+            data: res
+        }));
+    });
+    
     socket.on('unsubscribe', async ({ stopCode }) => {
         console.log('unsubscribe ', stopCode);
     })
-
+    
     socket.on('BOO', (message) => {
         console.log(`AHHHHHH ${message}`);
     })

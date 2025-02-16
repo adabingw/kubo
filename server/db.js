@@ -54,14 +54,24 @@ const init_db = async () => {
 }
 
 const get_stop_by_name = (stopName) => {
-    console.log(stopName)
-    db.get("SELECT * FROM stops WHERE stopName LIKE ?", [`%${stopName}%`], (err, row) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(row);
-            return row;
-        }
+    return new Promise((resolve, reject) => {
+        db.all(
+            `SELECT * FROM stops
+             WHERE stopName LIKE ? 
+             OR stopName LIKE ? 
+             OR stopName LIKE ?
+             OR stopName = ?
+             `,
+            [`${stopName}%`, `% ${stopName} %`, `% ${stopName}`, `${stopName}`],  // First matches starting with, second ensures whole-word match
+            (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
     });
 }
 
