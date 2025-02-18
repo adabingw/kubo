@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Updates from "./Updates";
+import Subscriptions from "./Subscriptions";
 
 function Board() {
     const [ panel, setPanel ] = useState<number>(0);
@@ -17,8 +19,8 @@ function Board() {
                 <span onClick={() => panelClick(1)} 
                     className={`${panel==1 ? `${focusedStyling}` : 'text-[#99A3BA]'}`}>subscriptions</span>
             </div>
-            <div>
-                {panel == 0 ? <></> : <></>}
+            <div className="w-full">
+                {panel == 0 ? <Updates /> : <Subscriptions />}
             </div>
         </div>
     );

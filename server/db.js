@@ -53,6 +53,25 @@ const init_db = async () => {
     return db;
 }
 
+const get_stop_by_stopcode = (stopCode) => {
+    return new Promise((resolve, reject) => {
+        db.get(
+            `SELECT * FROM stops
+             WHERE stopCode = ? 
+             `,
+            [`${stopCode}`],  // First matches starting with, second ensures whole-word match
+            (err, rows) => {
+                if (err) {
+                    console.error(err);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            }
+        );
+    });
+}
+
 const get_stop_by_name = (stopName) => {
     return new Promise((resolve, reject) => {
         db.all(
@@ -80,5 +99,5 @@ const teardown = (db) => {
 }
 
 module.exports = {
-    init_db, get_stop_by_name
+    init_db, get_stop_by_name, get_stop_by_stopcode
 }

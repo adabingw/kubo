@@ -1,4 +1,4 @@
-from schema import Schema
+from schema import Schema, Or
 
 metadata_schema = Schema({
     "TimeStamp": str,  # Fixed capitalization to match your data
@@ -7,14 +7,14 @@ metadata_schema = Schema({
 })
 
 line_schema = Schema({
-    "StopCode": str,
+    "StopCode": Or(str, int),
     "LineCode": str,
     "LineName": str,
     "ServiceType": str,
     "DirectionCode": str,
     "DirectionName": str,
     "ScheduledDepartureTime": str,
-    "ComputedDepartureTime": str,
+    "ComputedDepartureTime": Or(str, None),
     "DepartureStatus": str,
     "ScheduledPlatform": str,
     "ActualPlatform": str,

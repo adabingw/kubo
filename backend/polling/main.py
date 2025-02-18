@@ -28,21 +28,21 @@ def polling():
         docs = subscriptions_ref.stream()
 
         # Parse and store the results
-        firestore = []
+        db_data = []
         for doc in docs:
             subscription = doc.to_dict()
 
             # Add the subscription to the list
-            firestore.append(subscription)
+            db_data.append(subscription)
     
-        logging.debug(firestore)
+        logging.debug(db_data)
         # DEBUG:root:[{'08041': 'stop-08041'}]
 
         # query from api
         data = defaultdict(list)
         subscriptions = {}
         
-        for subscription in firestore:
+        for subscription in db_data:
             logging.debug(subscription)
             stop, topic = list(subscription.items())[0]
             subscriptions[stop] = topic

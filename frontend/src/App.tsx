@@ -3,31 +3,65 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBus, faMagnifyingGlass, faTrain } from '@fortawesome/free-solid-svg-icons'
 
 import io, { Socket } from "socket.io-client";
-import { Stop, StopSchema } from "./types";
+import { Stop, StopList, StopListSchema, SubListSchema } from "./types";
 import Board from "./Board";
 
 const socket: Socket = io("http://localhost:5000");
 export const SocketContext = createContext<Socket>(socket);
 
+interface SubDict {
+    [k: string]: Stop
+}
+
 function App() {
-    const [search, setSearch] = useState<Stop>([]);
+    const [search, setSearch] = useState<StopList>([]);
+    const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const [query, setQuery] = useState<string>('');
 
+    const fetchSubscriptions = () => {
+        fetch(`http://localhost:5000/api/subscriptions`)
+            .then(res => res.json())
+            .then(data => {
+                try {
+                    const result = SubListSchema.parse(JSON.parse(data));
+                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(result));
+                    const dict: SubDict = {}
+                    result.forEach(sub => {
+                        const key = sub.stop.stopCode.toString();
+                        dict[key] = sub.stop
+                    })
+                    setSubscriptions(dict);
+                } catch (e) {
+                    console.error(`Error while parsing search result: ${e}`);
+                }
+            });
+    }
+
     useEffect(() => {
-        socket.on("search-result", (msg: string) => {
+        const subscriptions = localStorage.getItem(`kubo-subscriptions`);
+        if (subscriptions) {
             try {
-                const result = JSON.parse(msg);
-                console.log(result);
-                localStorage.setItem(`kubo-${result.query}`, JSON.stringify(result.data));
-                setSearch(result.data);
+                setSubscriptions(SubListSchema.parse(JSON.parse(subscriptions)))
+                return;
             } catch (e) {
-                console.error(`Error while parsing search result: ${e}`);
+                console.error(`Error parsing JSON: ${e}`);
             }
-            
+        } else {
+            fetchSubscriptions();
+        }
+
+        socket.on('unsubscribe-success', () => {
+            fetchSubscriptions();
         });
-    
+
+        socket.on('subscribe-success', () => {
+            fetchSubscriptions();
+        })
+    }, []);
+
+    useEffect(() => {
         socket.on("welcome", () => {
-            console.log('hit!')
+            console.log('connected to backend!')
         })
     }, [])
 
@@ -36,7 +70,7 @@ function App() {
         console.log('storage: ', storage);
         if (storage) {
             try {
-                const stopData = StopSchema.parse(JSON.parse(storage));
+                const stopData = StopListSchema.parse(JSON.parse(storage));
                 console.log('stopData: ', stopData)
                 setSearch(stopData);
                 return;
@@ -44,12 +78,19 @@ function App() {
                 console.error(`Error parsing JSON: ${e}`);
             }
         }
-        socket.emit('search', v);
-    } 
-
-    useEffect(() => {
-        console.log(query, search)
-    }, [query, search])
+        fetch(`http://localhost:5000/api/search?query=${v}`)
+            .then(res => res.json())
+            .then(data => {
+                try {
+                    const result = JSON.parse(data);
+                    console.log(result);
+                    localStorage.setItem(`kubo-${result.query}`, JSON.stringify(result.data));
+                    setSearch(result.data);
+                } catch (e) {
+                    console.error(`Error while parsing search result: ${e}`);
+                }
+            });
+    }
 
     const onSearchInput = (e: React.FormEvent<HTMLInputElement>) => {
         if (e.currentTarget.value.length === 0) {
@@ -92,7 +133,7 @@ function App() {
                             </div>
                         ))}
                         </> : (query.length > 0) ? 
-                            <span>rip nothing found</span> : <></>
+                            <span>No results</span> : <></>
                     }
                 </div> : <></>
             }
@@ -100,14 +141,6 @@ function App() {
             <div className="mt-5 flex justify-center">
                 <Board />
             </div>    
-
-            {/* {(messages.length > 0) ? 
-                <>{messages.map((msg: Message, idx) => (
-                    <div key={idx}>
-                        <strong>{msg.topic}:</strong> {msg.data}
-                    </div>
-                ))}</> : <p>subscribe to stops to start seeing its updates!!</p>
-            } */}
         </div>
         </SocketContext.Provider>
     );
