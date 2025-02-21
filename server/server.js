@@ -8,8 +8,12 @@ const cors = require("cors");
 
 const { PROJECT } = require('./constants');
 const serviceAccount = require("./env.json");
-const { init_db, get_stop_by_name, get_stop_by_stopcode } = require('./db.js')
+const { init_db, get_stop_by_name, get_stop_by_stopcode } = require('./db.js');
+const { create_get_subscription, create_topic, get_topic } = require('./pubsub.js')
 
+/**
+ * firebase and pubsub setup
+ */
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
@@ -17,13 +21,14 @@ const pubsub = new PubSub({
     projectId: PROJECT.PUBSUB_PROJECT_ID,
     keyFilename: path.join(__dirname, "env.json")
 });
-
 const db = admin.firestore();
-const app = express();
 
+/**
+ * expressjs and socketio setup
+ */
+const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json()); // Middleware for parsing JSON
-
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
@@ -32,156 +37,70 @@ const io = new Server(server, {
     },
 });
 
+/**
+ * firebase data
+ */
 const userId = "test";  
 const userRef = db.collection("users").doc(userId);
+const dataRef = db.collection("data").doc(userId);
 
-// listening to users collection for userId for updates on subscriptions
-userRef.onSnapshot((doc) => {
-    if (doc.exists) {
-        // doc data should be map of list of pubsub subscriptions
-        console.log("User data changed:", doc.data());
-        const data = doc.data();
-        const stops = data.stops;
-        if (!stops) {
-            console.error('No stops');
+/**
+ * temp storage to store session data
+ */
+const memoryStore = {};
+
+// cleanup historical firestore data after 1h
+const cleanup = async () => {
+    const now = Date.now();
+    const threshold = now - 60 * 60 * 1000; // 60 minutes in ms
+    try {
+        const docSnap = await dataRef.get();
+        if (!docSnap.exists) {
+            console.log("No document found!");
+            return null;
         }
-        stops.forEach(async sub => {
-            const create_get_subscription = async () => {
-                try {
-                    const [subscription] = await pubsub.topic(sub).createSubscription(sub);
-                    console.log(`Subscription ${sub} created.`);
-                    return subscription;
-                } catch (error) {
-                    if (error.code === 6) {
-                        console.log(`Subscription ${sub} already exists.`);
-                        const subscription = pubsub.subscription(sub);
-                        return subscription;
-                    } else if (error.code === 5) {
-                        console.error('Topic has not been created yet');
-                        createTopic(sub);
-                    } else {
-                        console.error("Error creating subscription:", error);
-                        return null;
-                    }
-                }
-            }
-
-            const subscription = await create_get_subscription();
-            if (subscription) {
-                subscription.on("message", async message => {
-                    const stopCode = subscription.name.split('-')
-                    if (stopCode.length != 3) return;
-                    const stop = await get_stop_by_stopcode(stopCode[2])
-                    console.log(stopCode)
-                    console.log(stop)
-                    console.log(`🔔 New message from ${sub}:`, message.data.toString());
-                    io.emit("new-message", { 
-                        topic: sub, 
-                        data: message.data.toString(), 
-                        timestamp: new Date(),
-                        stop: JSON.stringify(stop)
-                    });
-                    message.ack();
+        const data = docSnap.data()
+        for (const key of Object.keys(data)) {
+            if (new Date(data[key].creationDate) < new Date(threshold)) {
+                await dataRef.update({
+                    [key]: admin.firestore.FieldValue.delete(),
                 });
             }
-        });
-    } else {
-        console.log("User not found");
-    }
-});
-
-app.get("/subscriptions", (req, res) => {
-    userRef.get().then((doc) => {
-        if (doc.exists) {
-            const result = []
-            const data = doc.data();
-            const stops = data.stops;
-            if (stops) {
-                stops.forEach(async stop => {
-                    result.push({
-                        topic: stop,
-                        stop: await get_stop_by_stopcode(stop)
-                    })
-                })
-            }
-            res.json(JSON.stringify(result));
-        } else {
-            console.error("No such document!");
-            res.status(409).json({ error: `Error: document not found` });
-            return false;
         }
-    }).then(() => {
-        console.log("Success!");
-    }).catch((error) => {
-        console.error("Error updating array: ", error);
-        res.status(400).json({ error: `Error: ${error}` });
-    });
-    res.status(500).json({ error: `Error: server error` });
-});
-
-app.get("/search", async (req, res) => {
-    const result = await get_stop_by_name(req.query.query);
-    console.log(result);
-    res.json(JSON.stringify({
-        query: query,
-        data: result
-    }));
-});
-
-const createTopic = async (topicName) => {
-    "use strict";    
-    try {
-        const [topic] = await pubsub.createTopic(topicName);
-        console.log(`Topic created: ${topic.name}`);
-        return { success: true, message: `Topic created: ${topic.name}` };
     } catch (error) {
-        console.error(`Error creating topic: ${error.message}`);
-        return { success: false, message: error.message };
+        console.error("Error getting document:", error);
     }
-}
-
-const findTopic = async(stopCode) => {
-    try {
-        const userRef = db.collection("users").doc(stopCode);
-        const doc = await userRef.get();
-
-        if (!doc.exists) {
-            return undefined;
-        }
-
-        return doc.data();
-    } catch (error) {
-        console.error(`Error finding topic: ${error}`);
-        return undefined;
-    }
+    memoryStore["cleanup"] = new Date().getTime();
+    return;
 }
 
 const subscribe = async (stopCode) => {
     // check if topic exists in subscribes
-    const res = findTopic(stopCode);
     const topicName = `stop-${stopCode}`;
-    // if not, create topic and update subscriptions collections
-    if (!res) {
-        const creationResult = await createTopic(PROJECT.PUBSUB_PROJECT_ID, topicName);
-        console.info(`Topic created! ${creationResult}`);
-        try {
-            const data = {}
-            data[stopCode] = topicName;
-            await db.collection("subscriptions").doc("stops").update(data);
-        } catch (error) {
-            console.error(`Error writing to subscriptions: ${error}`);
-            return false;
+    try {
+        const topicExists = get_topic(pubsub, topicName);
+        if (!topicExists) {
+            const creationResult = await create_topic(pubsub, topicName);
+            console.info(`Topic created! ${creationResult}`);
+            try {
+                const data = {}
+                data[stopCode] = topicName;
+                await db.collection("subscriptions").doc("stops").update(data);
+            } catch (error) {
+                console.error(`Error writing to subscriptions: ${error}`);
+                return false;
+            }
         }
+    } catch (error) {
+        console.error(`Error getting topic: ${error}`)
     }
 
     // update users collection
     userRef.update({
         stops: firebase.firestore.FieldValue.arrayUnion(topicName)
-    })
-    .then(() => {
+    }).then(() => {
         console.log('Array updated successfully!');
-    })
-    .catch((error) => {
+    }).catch((error) => {
         console.error('Error updating array: ', error);
         return false;
     });
@@ -206,10 +125,136 @@ const unsubscribe = async (stopCode) => {
     return true;
 }
 
+const get_setup_data = async () => {
+    try {
+        cleanup();
+    } catch (error) {
+        console.error(`Error cleaning up ${error}`);
+    }
+
+    try {
+        const docSnap = await dataRef.get();
+        if (!docSnap.exists) {
+            return null;
+        }
+        const data = docSnap.data()
+        const messages = []
+        for (const key of Object.keys(data)) {
+            try {
+                const jsonData = JSON.parse(data[key].data);
+                messages.push(jsonData)
+            } catch (e) {
+                console.error(`Error parsing JSON ${e}`);
+            }
+        }
+        io.emit("new-message", messages);
+    } catch (error) {
+        console.error("Error getting document:", error);
+    }
+}
+
+// listening to users collection for userId for updates on subscriptions
+userRef.onSnapshot((doc) => {
+    if (doc.exists) {
+        // doc data should be map of list of pubsub subscriptions
+        console.log("User data changed:", doc.data());
+        const data = doc.data();
+        const stops = data.stops;
+        if (!stops) {
+            console.error('No stops');
+            return;
+        }
+        stops.forEach(async sub => {
+            const subscription = await create_get_subscription(pubsub, sub);
+            if (subscription) {
+                subscription.on("message", async message => {
+                    const stopCode = subscription.name.split('-')
+                    if (stopCode.length != 3) return;
+                    const stop = await get_stop_by_stopcode(stopCode[2]);
+
+                    const data = {};
+                    data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
+                        creationDate: new Date().getTime(),
+                        data: JSON.stringify({ 
+                            topic: sub, 
+                            data: message.data.toString(), 
+                            timestamp: new Date(),
+                            stop: JSON.stringify(stop)
+                        })
+                    };
+
+                    // add data to historical data
+                    await dataRef.set(data, { merge: true });
+
+                    // emit data to frontend
+                    io.emit("new-message", [{ 
+                        topic: sub, 
+                        data: message.data.toString(), 
+                        timestamp: new Date(),
+                        stop: JSON.stringify(stop)
+                    }]);
+                    message.ack();
+
+                    // check if need to cleanup data
+                    if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore).getTime() < Date.now() - 60 * 60 * 1000)) {
+                        cleanup();
+                    }
+                });
+            }
+        });
+    } else {
+        console.log("User not found");
+    }
+});
+
+/**
+ * endpoints
+ */
+app.get("/api/subscriptions", async (req, res) => {
+    try {
+        const doc = await userRef.get();
+        
+        if (!doc.exists) {
+            console.error("No such document!");
+            return res.status(404).json({ error: "Error: document not found" });
+        }
+
+        const data = doc.data();
+        const stops = data.stops || [];
+
+        const result = await Promise.all(
+            stops.map(async (stop) => ({
+                topic: stop,
+                stop: await get_stop_by_stopcode(stop.split('-')[1]),
+            }))
+        );
+        console.log(result)
+
+        return res.json(result);
+    } catch (error) {
+        console.error("Error getting subscriptions:", error);
+        return res.status(500).json({ error: `Error: ${error.message}` });
+    }
+});
+
+
+app.get("/api/search", async (req, res) => {
+    const { query } = req.query;
+    const result = await get_stop_by_name(query);
+    console.log(result);
+    res.json(JSON.stringify({
+        query: query,
+        data: result
+    }));
+});
+
+/**
+ * sockets
+ */
 io.on("connection", socket => {
     console.log("⚡ Client connected!");
 
-    io.emit('welcome');
+    get_setup_data();
 
     socket.on('subscribe', async (stopCode) => {
         if (subscribe(projectId, stopCode)) {
@@ -234,7 +279,6 @@ io.on("connection", socket => {
 
 server.listen(5000, () => {
     try {
-        console.log('db: ', init_db);
         init_db();
     } catch (err) {
         console.error('cannot setup db', err);

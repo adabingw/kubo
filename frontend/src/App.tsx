@@ -23,7 +23,9 @@ function App() {
             .then(res => res.json())
             .then(data => {
                 try {
-                    const result = SubListSchema.parse(JSON.parse(data));
+                    console.log(data)
+                    const result = SubListSchema.parse(data);
+                    console.log(result)
                     localStorage.setItem(`kubo-subscriptions`, JSON.stringify(result));
                     const dict: SubDict = {}
                     result.forEach(sub => {
@@ -39,6 +41,7 @@ function App() {
 
     useEffect(() => {
         const subscriptions = localStorage.getItem(`kubo-subscriptions`);
+        console.log(subscriptions)
         if (subscriptions) {
             try {
                 setSubscriptions(SubListSchema.parse(JSON.parse(subscriptions)))
@@ -119,7 +122,7 @@ function App() {
                 <span className="w-15"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
             </div>
             {search && query ? 
-                <div className={`ml-30 min-w-100 absolute bg-white flex flex-col border-l-1 border-b-1 border-r-1 border-gray-300 rounded-b-sm pt-10`}>
+                <div className={`ml-30 min-w-100 absolute z-1000 bg-white flex flex-col border-l-1 border-b-1 border-r-1 border-gray-300 rounded-b-sm pt-10`}>
                     {(search && search.length > 0) ? 
                         <>
                             {search.map((stop) => (
