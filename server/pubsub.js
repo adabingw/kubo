@@ -11,7 +11,7 @@ const create_get_subscription = async (pubsub, sub) => {
             return subscription;
         } else if (error.code === 5) {
             console.error('Topic has not been created yet');
-            createTopic(sub);
+            create_topic(pubsub, sub);
         } else {
             console.error("Error creating subscription:", error);
             return null;

@@ -9,7 +9,7 @@ const cors = require("cors");
 const { PROJECT } = require('./constants');
 const serviceAccount = require("./env.json");
 const { init_db, get_stop_by_name, get_stop_by_stopcode } = require('./db.js');
-const { create_get_subscription, create_topic, get_topic } = require('./pubsub.js')
+const { create_get_subscription, create_topic, get_topic } = require('./pubsub.js');
 
 /**
  * firebase and pubsub setup
@@ -49,6 +49,26 @@ const dataRef = db.collection("data").doc(userId);
  */
 const memoryStore = {};
 
+const wipe = async (subscription) => {    
+    try {
+        const docSnap = await dataRef.get();
+        if (!docSnap.exists) {
+            console.log("No document found!");
+            return null;
+        }
+        const data = docSnap.data()
+        for (const key of Object.keys(data)) {
+            if (key.includes(subscription)) {
+                await dataRef.update({
+                    [key]: admin.firestore.FieldValue.delete(),
+                });
+            }
+        }
+    } catch (error) {
+        console.error("Error clearing document:", error);
+    }
+}
+
 // cleanup historical firestore data after 1h
 const cleanup = async () => {
     const now = Date.now();
@@ -78,10 +98,10 @@ const subscribe = async (stopCode) => {
     // check if topic exists in subscribes
     const topicName = `stop-${stopCode}`;
     try {
-        const topicExists = get_topic(pubsub, topicName);
+        const topicExists = await get_topic(pubsub, topicName);
         if (!topicExists) {
             const creationResult = await create_topic(pubsub, topicName);
-            console.info(`Topic created! ${creationResult}`);
+            console.log(`Topic created! ${creationResult}`);
             try {
                 const data = {}
                 data[stopCode] = topicName;
@@ -96,22 +116,23 @@ const subscribe = async (stopCode) => {
     }
 
     // update users collection
-    userRef.update({
-        stops: firebase.firestore.FieldValue.arrayUnion(topicName)
+    await userRef.update({
+        stops: admin.firestore.FieldValue.arrayUnion(topicName)
     }).then(() => {
         console.log('Array updated successfully!');
     }).catch((error) => {
         console.error('Error updating array: ', error);
         return false;
     });
+    return true;
 }
 
 const unsubscribe = async (stopCode) => {
-    userRef.get().then((doc) => {
+    await userRef.get().then((doc) => {
         if (doc.exists) {
             const data = doc.data();
-            const updatedArray = (data.yourArrayField || []).filter(item => item !== `stop-${stopCode}`);
-            return userRef.update({ yourArrayField: updatedArray });
+            const updatedArray = (data.stops || []).filter(item => item !== `stop-${stopCode}`);
+            userRef.update({ stops: updatedArray });
         } else {
             console.error("No such document!");
             return false;
@@ -139,6 +160,7 @@ const get_setup_data = async () => {
         }
         const data = docSnap.data()
         const messages = []
+        
         for (const key of Object.keys(data)) {
             try {
                 const jsonData = JSON.parse(data[key].data);
@@ -147,6 +169,7 @@ const get_setup_data = async () => {
                 console.error(`Error parsing JSON ${e}`);
             }
         }
+        console.log(messages)
         io.emit("new-message", messages);
     } catch (error) {
         console.error("Error getting document:", error);
@@ -168,9 +191,12 @@ userRef.onSnapshot((doc) => {
             const subscription = await create_get_subscription(pubsub, sub);
             if (subscription) {
                 subscription.on("message", async message => {
-                    const stopCode = subscription.name.split('-')
+                    const stopCode = subscription.name.split('-');
+                    console.log(`Stop code: ${stopCode}`);
                     if (stopCode.length != 3) return;
                     const stop = await get_stop_by_stopcode(stopCode[2]);
+                    // wipe
+                    await wipe(subscription.name.replaceAll('/', '-'));
 
                     const data = {};
                     data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
@@ -196,7 +222,7 @@ userRef.onSnapshot((doc) => {
                     message.ack();
 
                     // check if need to cleanup data
-                    if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore).getTime() < Date.now() - 60 * 60 * 1000)) {
+                    if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore["cleanup"]).getTime() < Date.now() - 60 * 60 * 1000)) {
                         cleanup();
                     }
                 });
@@ -255,12 +281,13 @@ io.on("connection", socket => {
     console.log("⚡ Client connected!");
 
     get_setup_data();
+    io.emit('welcome');
 
     socket.on('subscribe', async (stopCode) => {
-        if (subscribe(projectId, stopCode)) {
-            io.emit('subscribe-success', `Successfully subscribed to ${stopCode}`);
+        if (await subscribe(stopCode)) {
+            io.emit('subscribe-success');
         } else {
-            io.emit('subscribe-error', 'Subscription error');
+            io.emit('subscribe-error');
         }
     });
     
@@ -269,7 +296,7 @@ io.on("connection", socket => {
     });
     
     socket.on('unsubscribe', async (stopCode) => {
-        if (unsubscribe(stopCode)) {
+        if (await unsubscribe(stopCode)) {
             io.emit('unsubscribe-success', `Successfully unsubscribed from ${stopCode}`);
         } else {
             io.emit('unsubscribe-error', 'Unsubscribe error');

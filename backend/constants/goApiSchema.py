@@ -28,7 +28,7 @@ line_schema = Schema({
 
 next_service_schema = Schema({
     "Metadata": metadata_schema,
-    "NextService": {
+    "NextService": Or({
         "Lines": [line_schema]  # Ensures each element in `Lines` follows `line_schema`
-    }
+    }, None)
 })

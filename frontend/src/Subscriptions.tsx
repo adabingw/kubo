@@ -1,34 +1,10 @@
 import { useEffect, useState, useContext } from "react";
-import { SocketContext } from "./App";
-import { Sub, SubListSchema } from "./types";
+import { SocketContext, SubDict } from "./App";
+import { Sub } from "./types";
 
 function Subscriptions() {
 
-    const SQUARE_ONE = {
-        "stopCode": "00132",
-        "stopName": "Square One",
-        "type": "Bus Terminal"
-    }
-
-    const UNION = {
-        "stopCode": "UN",
-        "stopName": "Union Station GO",
-        "type": "Train Station"
-    }
-
-    const testSubs = [
-        {
-            "topic": "stop-00132",
-            "stop": SQUARE_ONE
-        },
-        {
-            "topic": "stop-UN",
-            "stop": UNION
-        },
-
-    ]
-
-    const [subscriptions, setSubscriptions] = useState<Sub[]>(testSubs);
+    const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const socket = useContext(SocketContext);
 
     const fetchSubscriptions = () => {
@@ -36,20 +12,29 @@ function Subscriptions() {
             .then(res => res.json())
             .then(data => {
                 try {
-                    const result = JSON.parse(data);
-                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(result));
-                    setSubscriptions(SubListSchema.parse(result));
+                    console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
+                    const result = data;
+                    const dict: SubDict = {}
+                    result.forEach((sub: Sub) => {
+                        const key = sub.stop.stopCode.toString();
+                        dict[key] = sub
+                    })
+                    console.log(`Fetch subscriptions dict: ${JSON.stringify(dict)}`);
+                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(dict));
+                    setSubscriptions(dict);
+                    return result;
                 } catch (e) {
                     console.error(`Error while parsing search result: ${e}`);
                 }
             });
+        return {};
     }
 
     useEffect(() => {
         const subscriptions = localStorage.getItem(`kubo-subscriptions`);
         if (subscriptions) {
             try {
-                setSubscriptions(SubListSchema.parse(JSON.parse(subscriptions)))
+                setSubscriptions(JSON.parse(subscriptions))
                 return;
             } catch (e) {
                 console.error(`Error parsing JSON: ${e}`);
@@ -57,28 +42,34 @@ function Subscriptions() {
         } else {
             fetchSubscriptions();
         }
+    }, []);
 
+    useEffect(() => {
         socket.on('unsubscribe-success', () => {
             fetchSubscriptions();
         });
+    }, [])
 
+    useEffect(() => {
         socket.on('subscribe-success', () => {
             fetchSubscriptions();
         })
-    }, []);
+    }, [])
 
-    const unsubscribeClick = (topic: string) => {
-        socket.emit("unsubscribe", topic);
+    const unsubscribeClick = (stopCode: string) => {
+        socket.emit("unsubscribe", stopCode);
     }
 
     return (
         <div className="w-full flex flex-col mt-5">
-            {subscriptions.map((subscription) => (
-                <div key={`${subscription.stop.stopCode}`} className="border-b-1 flex flex-row items-center justify-between my-2">
+            {Object.keys(subscriptions).map((i) => (
+                <div key={`${subscriptions[i].stop.stopCode}`} className="border-b-1 flex flex-row items-center justify-between my-2">
                     <span>
-                        {subscription.stop.stopName}
+                        {subscriptions[i].stop.stopName}
                     </span>
-                    <span className="button-16 mb-2" onClick={() => unsubscribeClick(subscription.topic)}>unsubscribe</span>
+                    <span className="button-16 mb-2" onClick={() => unsubscribeClick(subscriptions[i].stop.stopCode.toString())}>
+                        unsubscribe
+                    </span>
                 </div>
             ))}
         </div>

@@ -17,9 +17,9 @@ const init_db = async () => {
             }
         });
         db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (
-            stopCode string PRIMARY KEY,
-            stopName string,
-            type string
+            stopCode TEXT PRIMARY KEY,
+            stopName TEXT,
+            type TEXT
         )`);
       
         // Create a secondary index on the 'email' column to improve query performance
@@ -39,7 +39,7 @@ const init_db = async () => {
         const stations = data.Stations.Station;
         for (const station of stations) {
             const query = 'INSERT INTO stops (stopCode, stopName, type) VALUES (?, ?, ?)';
-            db.run(query, [station.LocationCode, station.LocationName, station.LocationType], function(err) {
+            db.run(query, [station.LocationCode.toString(), station.LocationName, station.LocationType], function(err) {
               if (err) {
                 // teardown();
                 throw new Error(err + " " + station.LocationCode);

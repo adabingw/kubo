@@ -36,16 +36,14 @@ def polling():
             db_data.append(subscription)
     
         logging.debug(db_data)
-        # DEBUG:root:[{'08041': 'stop-08041'}]
+        # DEBUG:root:[{'LO': 'stop-LO', '00147': 'stop-00147', 'UN': 'stop-UN'}]
 
         # query from api
         data = defaultdict(list)
-        subscriptions = {}
+        subscriptions = db_data[0]
         
-        for subscription in db_data:
-            logging.debug(subscription)
-            stop, topic = list(subscription.items())[0]
-            subscriptions[stop] = topic
+        for i, (stop, topic) in enumerate(subscriptions.items()):
+            logging.debug(f"{i}, {stop}, {topic}")
             
             payload = [stop]
             res = request(QUERY_NEXT_SERVICE, payload)
@@ -71,6 +69,7 @@ def polling():
 
                     topic_id = subscriptions[stop]
                     topic_path = publisher.topic_path(PUBSUB_PROJECT_ID, topic_id)
+                    logging.debug(f"{topic_path}, {topic_id}")
                     
                     future = publisher.publish(topic_path, message_data)
 
