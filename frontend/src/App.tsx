@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, useRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBus, faCheck, faMagnifyingGlass, faTrain } from '@fortawesome/free-solid-svg-icons'
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,6 +14,7 @@ import { Stop, StopList, StopListSchema, Sub } from "./types";
 import { Button } from "@mui/material";
 import Updates from "./Updates";
 import Subscriptions from "./Subscriptions";
+import { useClickOutside } from "./hooks/useClickOut";
 
 const socket: Socket = io("http://localhost:5000");
 export const SocketContext = createContext<Socket>(socket);
@@ -28,7 +29,10 @@ function App() {
     const [query, setQuery] = useState<string>('');
     const [open, setOpen] = useState(false);
     const [selectedStop, setSelectedStop] = useState<Stop | undefined>(undefined);
-    const [ panel, setPanel ] = useState<number>(0);
+    const [panel, setPanel] = useState<number>(0);
+
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const focusedStyling = "text-[#474747] font-medium"
 
@@ -154,17 +158,25 @@ function App() {
         }
     }
 
+    const { clickOutside, setClickOutside } = useClickOutside(dropdownRef, inputRef);
+
     return (
         <SocketContext.Provider value={socket}>
         <div className="w-full">
             <h1>kubo.</h1>
             <div className="form-group mt-3 text-[#99A3BA]">
                 <span>search GO stop</span>
-                <input className="form-field" type="text" placeholder="ie: union" onInput={onSearchInput} onKeyDown={onSearchKeyDown}/>
+                <input 
+                    className="form-field" type="text" ref={inputRef}
+                    placeholder="ie: union" onInput={onSearchInput} onKeyDown={onSearchKeyDown}
+                    onFocus={() => setClickOutside(false)}
+                />
                 <span className="w-15"><FontAwesomeIcon icon={faMagnifyingGlass} /></span>
             </div>
-            {search && query ? 
-                <div className={`ml-30 min-w-100 absolute z-1000 bg-white flex flex-col border-l-1 border-b-1 border-r-1 border-gray-300 rounded-b-sm pt-10`}>
+            {search && query.length >= 3 && !clickOutside ?
+                <div 
+                ref={dropdownRef}
+                className={`ml-30 min-w-100 absolute z-1000 bg-white flex flex-col border-l-1 border-b-1 border-r-1 border-gray-300 rounded-b-sm pt-10`}>
                     {(search && search.length > 0) ? 
                         <>
                             {search.map((stop) => (
