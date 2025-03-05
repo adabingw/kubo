@@ -2,11 +2,12 @@ import { useEffect, useState, useContext, useRef } from "react";
 import { SocketContext } from "./App";
 import { Message, NextService, StopSchema } from "./types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBus, faTrain } from "@fortawesome/free-solid-svg-icons";
+import { faBus, faFeather, faTrain } from "@fortawesome/free-solid-svg-icons";
 
 function Board() {
 
     const [messages, setMessages] = useState<Message[]>([]);
+    const [filter, setFilter] = useState<string>("");
     const messagesRef = useRef<Message[]>([]); // Keep an always-up-to-date reference
     const socket = useContext(SocketContext);
 
@@ -97,23 +98,39 @@ function Board() {
 
     return (
         <div className="w-full flex flex-col mt-5">
-            {messages.map((message) => (
-                <div key={`${message.topic}-${message.timestamp}-${message.data.DirectionCode}`} className="border-b-1 flex flex-col mt-2">
-                    <span>
-                        <span className="mr-3">{message.data.ServiceType === 'B' ? <FontAwesomeIcon icon={faBus}></FontAwesomeIcon> : <FontAwesomeIcon icon={faTrain}></FontAwesomeIcon>}</span>
-                        <span className="mr-3 text-gray-500 time-ago" data-timestamp={message.timestamp}>{calcTime(message.timestamp)} ago</span>
-                        <span className="font-medium">{message.stop.stopName}</span>
-                    </span>
-                    <span>
-                        {message.data.LineName} ({message.data.DirectionName}) scheduled to leave in <span className="leave-time" data-timestamp={message.data.ScheduledDepartureTime}>
-                            {calcTime(message.data.ScheduledDepartureTime)}
-                    </span>
-                    </span>
-                    <span className="mb-2">
-                        Next service: {message.next ? message.next : "unavailable"}
-                    </span>
+        {messages.length > 0 &&
+            <>
+                <div className="flex flex-row w-full items-center">
+                    <FontAwesomeIcon icon={faFeather} color="gray" />
+                    <input placeholder="Filter lines/stops or type bus/train" className="ml-3 w-full" onInput={(e) => setFilter(e.currentTarget.value)} />
                 </div>
-            ))}
+                {messages.map((message) => {
+                    const show = message.stop.stopName.toLowerCase().includes(filter) || 
+                                    message.data.LineName.toLowerCase().includes(filter) || 
+                                    message.data.DirectionName.toLowerCase().includes(filter) ||
+                                    "bus".includes(filter.toLowerCase()) && message.data.ServiceType === 'B' || 
+                                    "train".includes(filter.toLowerCase()) && message.data.ServiceType === 'T'
+                    return (
+                        show ? 
+                        <div key={`${message.topic}-${message.timestamp}-${message.data.DirectionCode}`} className="border-b-1 flex flex-col mt-2">
+                            <span>
+                                <span className="mr-3">{message.data.ServiceType === 'B' ? <FontAwesomeIcon icon={faBus}></FontAwesomeIcon> : <FontAwesomeIcon icon={faTrain}></FontAwesomeIcon>}</span>
+                                <span className="mr-3 text-gray-500 time-ago" data-timestamp={message.timestamp}>{calcTime(message.timestamp)} ago</span>
+                                <span className="font-medium">{message.stop.stopName}</span>
+                            </span>
+                            <span>
+                                {message.data.LineName} ({message.data.DirectionName}) scheduled to leave in <span className="leave-time" data-timestamp={message.data.ScheduledDepartureTime}>
+                                    {calcTime(message.data.ScheduledDepartureTime)}
+                            </span>
+                            </span>
+                            <span className="mb-2">
+                                Next service: {message.next ? message.next : "unavailable"}
+                            </span>
+                        </div> : <></>
+                    )
+                })}
+            </>
+        }
         </div>
     );
 }
