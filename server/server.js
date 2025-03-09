@@ -187,6 +187,7 @@ userRef.onSnapshot((doc) => {
             console.error('No stops');
             return;
         }
+
         stops.forEach(async sub => {
             const subscription = await create_get_subscription(pubsub, sub);
             if (subscription) {
@@ -195,7 +196,8 @@ userRef.onSnapshot((doc) => {
                     console.log(`Stop code: ${stopCode}`);
                     if (stopCode.length != 3) return;
                     const stop = await get_stop_by_stopcode(stopCode[2]);
-                    // wipe
+
+                    // wipe data for that specific subscription
                     await wipe(subscription.name.replaceAll('/', '-'));
 
                     const data = {};

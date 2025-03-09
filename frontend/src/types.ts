@@ -34,3 +34,4 @@ export type Stop = z.infer<typeof StopSchema>
 export type Message = z.infer<typeof MessageSchema>
 export type StopList = z.infer<typeof StopListSchema>
 export type Sub = z.infer<typeof SubSchema>
+export type NextServiceType = z.infer<typeof NextService>

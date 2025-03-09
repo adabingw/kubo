@@ -2,59 +2,129 @@ import { useEffect, useState, useContext, useRef } from "react";
 import { SocketContext } from "./App";
 import { Message, NextService, StopSchema } from "./types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBus, faFeather, faTrain } from "@fortawesome/free-solid-svg-icons";
+import { faBus, faFeather, faRotateRight, faTrain } from "@fortawesome/free-solid-svg-icons";
 
 function Board() {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [filter, setFilter] = useState<string>("");
-    const messagesRef = useRef<Message[]>([]); // Keep an always-up-to-date reference
+    const messagesRef = useRef<Message[]>([]);
     const socket = useContext(SocketContext);
 
     useEffect(() => {
+        // runs on reload too
         socket.on("new-message", (msgs: { topic: string, data: string, timestamp: string, stop: string}[]) => {
             const newMessages = [...messagesRef.current];
-            const messagesMap: Record<string, Message> = {}
+            const messagesMap: Record<string, Message> = {};
+            // for storage purposes
+            const messageStorage: Record<string, Message[]> = {};
+
             for (const msg of msgs) {
                 const dataJSON = JSON.parse(msg.data);
                 for (const data of dataJSON) {
                     const parsedData = NextService.parse(data);
-                    if (!messagesMap[parsedData.LineCode]) {
-                        const stop_ = StopSchema.parse(JSON.parse(msg.stop))
-                        messagesMap[`${stop_.stopCode}-${parsedData.LineCode}`] = {
-                            topic: msg.topic,
-                            data: parsedData,
-                            timestamp: msg.timestamp,
-                            stop: stop_
-                        };
-                    } else if (!messagesMap[parsedData.LineCode].next) {
+                    const stop_ = StopSchema.parse(JSON.parse(msg.stop));
+                    const key = `${stop_.stopCode}-${parsedData.LineCode}`;
+
+                    // if the train/bus already left, ignore this data
+                    if (Date.now() >= new Date(parsedData.ScheduledDepartureTime).getTime()) continue;
+
+                    const message = {
+                        topic: msg.topic,
+                        data: parsedData,
+                        timestamp: msg.timestamp,
+                        stop: stop_
+                    };
+                    
+                    // store all future services
+                    if (!messageStorage[key]) {
+                        messageStorage[key] = [message];
+                    } else {
+                        messageStorage[key].push(message);
+                    }
+
+                    messageStorage[key].sort((a,b) => 
+                        new Date(a.data.ScheduledDepartureTime).getTime() 
+                        - new Date(b.data.ScheduledDepartureTime).getTime())
+                    localStorage.setItem(`kubo-data-${key}`, JSON.stringify(messageStorage[key]));
+
+                    // initiate data if it does't exist
+                    if (!messagesMap[key]) {
+                        messagesMap[key] = message;
+                    // if there's no next service, set this as next service
+                    } else if (!messagesMap[key].next) {
                         const nextTime = 
                             new Date(parsedData.ScheduledDepartureTime) > 
-                            new Date(messagesMap[parsedData.LineCode].data.ScheduledDepartureTime)
-                        if (nextTime) messagesMap[parsedData.LineCode].next = parsedData.ScheduledDepartureTime;
-                    } else if (messagesMap[parsedData.LineCode].next != undefined) {
+                            new Date(messagesMap[key].data.ScheduledDepartureTime)
+                        if (nextTime) messagesMap[key].next = parsedData.ScheduledDepartureTime;
+                    // if there is next service but it's after current, set current as next service
+                    } else if (messagesMap[key].next != undefined) {
                         const nextTime = 
                             new Date(parsedData.ScheduledDepartureTime) > 
-                            new Date(messagesMap[parsedData.LineCode].data.ScheduledDepartureTime) && 
+                            new Date(messagesMap[key].data.ScheduledDepartureTime) && 
                             new Date(parsedData.ScheduledDepartureTime) < 
-                            new Date(messagesMap[parsedData.LineCode].next || '')
-                        if (nextTime) messagesMap[parsedData.LineCode].next = parsedData.ScheduledDepartureTime;
+                            new Date(messagesMap[key].next || '')
+                        if (nextTime) messagesMap[key].next = parsedData.ScheduledDepartureTime;
                     }
                 }
             }
+
+            // filter out old messages of this stopcode and linecode
             const filteredMessages = newMessages.filter(
                 (msg) => !messagesMap[`${msg.stop.stopCode}-${msg.data.LineCode}`]
             );
             
             filteredMessages.push(...Object.values(messagesMap));
-            messagesRef.current = filteredMessages;            
-            setMessages([...filteredMessages]);
+            const messagesData = pruneData(filteredMessages);
+            messagesRef.current = messagesData;            
+            localStorage.setItem(`kubo-saved-messages`, JSON.stringify(messagesData));
+            setMessages([...messagesData]);
         });
+    }, []);
+
+    // update all timestamps on start
+    useEffect(() => {
+        const storage = localStorage.getItem(`kubo-saved-messages`);
+        console.log(storage)
+        if (!storage) return;
+        try {
+            const dataJSON = JSON.parse(storage) as Message[];
+            const result = pruneData(dataJSON);
+            setMessages([...result]);
+        } catch (e) {
+            console.error(`Error parsing JSON: ${e}`);
+        }
     }, []);
 
     useEffect(() => {
         updateTimestamps();
-    }, []);
+    }, [messages]);
+
+    // go thru all messages and update old messages with new messages
+    const pruneData = (data: Message[]) => {
+        const result = [...data];
+        for (let i = result.length - 1; i >= 0; i--) {
+            const res = result[i];
+            if (new Date(res.data.ScheduledDepartureTime).getTime() <= Date.now()) {
+                // get new message
+                const storage = localStorage.getItem(`kubo-data-${res.stop.stopCode}-${res.data.LineCode}`);
+                if (!storage) {
+                    result.splice(i, 1);
+                } else {
+                    const dataJSON = JSON.parse(storage) as Message[];
+                    if (Array.isArray(dataJSON) && dataJSON.length >= 1) {
+                        const service = dataJSON.splice(0, 1)[0];
+                        result[i] = service;
+                        if (dataJSON.length > 0) {
+                            const nextService = dataJSON.splice(0, 1)[0];
+                            result[i].next = nextService.data.ScheduledDepartureTime;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     const calcTime = (t: string | number): string => {
         const timestamp = new Date(t).getTime();
@@ -88,8 +158,14 @@ function Board() {
         const elements2 = document.getElementsByClassName("leave-time");
         if (elements2) {
             for (const element of elements2) {
-                const time = element.getAttribute("data-timestamp");
-                element.innerHTML = calcTime(time || new Date().getTime());
+                const timestamp = new Date(element.getAttribute("data-timestamp") || new Date().getTime()).getTime();
+                const lineName = element.getAttribute("data-linename");
+                const dirName = element.getAttribute("data-dirname");
+                const time = calcTime(timestamp || new Date().getTime());
+                const text = timestamp > Date.now() ? 
+                    `${lineName} (${dirName}) scheduled to leave in ${time}` :
+                    `${lineName} (${dirName}) left ${time} ago. Refresh to get new times.`
+                element.innerHTML = text;
             }
         }
     }
@@ -98,12 +174,15 @@ function Board() {
 
     return (
         <div className="w-full flex flex-col mt-5">
+            <div className="flex flex-row w-full items-center">
+                <FontAwesomeIcon icon={faFeather} color="gray" />
+                <input placeholder="Filter lines/stops or type bus/train" className="ml-3 w-full" onInput={(e) => setFilter(e.currentTarget.value)} />
+                <FontAwesomeIcon icon={faRotateRight} color="gray" className="hover:cursor-pointer"
+                    onClick={() => pruneData(messagesRef.current)}
+                />
+            </div>
         {messages.length > 0 &&
             <>
-                <div className="flex flex-row w-full items-center">
-                    <FontAwesomeIcon icon={faFeather} color="gray" />
-                    <input placeholder="Filter lines/stops or type bus/train" className="ml-3 w-full" onInput={(e) => setFilter(e.currentTarget.value)} />
-                </div>
                 {messages.map((message) => {
                     const show = message.stop.stopName.toLowerCase().includes(filter) || 
                                     message.data.LineName.toLowerCase().includes(filter) || 
@@ -118,15 +197,17 @@ function Board() {
                                 <span className="mr-3 text-gray-500 time-ago" data-timestamp={message.timestamp}>{calcTime(message.timestamp)} ago</span>
                                 <span className="font-medium">{message.stop.stopName}</span>
                             </span>
-                            <span>
-                                {message.data.LineName} ({message.data.DirectionName}) scheduled to leave in <span className="leave-time" data-timestamp={message.data.ScheduledDepartureTime}>
-                                    {calcTime(message.data.ScheduledDepartureTime)}
-                            </span>
-                            </span>
+                                <span className="leave-time" data-timestamp={message.data.ScheduledDepartureTime} data-linename={message.data.LineName} data-dirname={message.data.DirectionName}>
+                                    {message.data.LineName} ({message.data.DirectionName}) scheduled to leave in <span>
+                                        {calcTime(message.data.ScheduledDepartureTime)}</span>
+                                </span>
+                            
                             <span className="mb-2">
                                 Next service: {message.next ? message.next : "unavailable"}
                             </span>
-                        </div> : <></>
+                        </div> 
+                        : 
+                        <></>
                     )
                 })}
             </>
