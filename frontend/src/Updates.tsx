@@ -97,32 +97,49 @@ function Board() {
     }, []);
 
     useEffect(() => {
+        console.log(messages);
         updateTimestamps();
     }, [messages]);
 
     // go thru all messages and update old messages with new messages
-    const pruneData = (data: Message[]) => {
+    const pruneData = (data: Message[]): Message[] => {
         const result = [...data];
         for (let i = result.length - 1; i >= 0; i--) {
             const res = result[i];
+            const storage = localStorage.getItem(`kubo-data-${res.stop.stopCode}-${res.data.LineCode}`);
+            if (storage) {
+                const dataJSON = JSON.parse(storage) as Message[];
+                if (Array.isArray(dataJSON) && dataJSON.length >= 1) {
+                    const service = dataJSON.splice(0, 1)[0];
+                    console.log(service);
+                }
+            }
+
             if (new Date(res.data.ScheduledDepartureTime).getTime() <= Date.now()) {
                 // get new message
-                const storage = localStorage.getItem(`kubo-data-${res.stop.stopCode}-${res.data.LineCode}`);
+                const key = `kubo-data-${res.stop.stopCode}-${res.data.LineCode}`;
+                const storage = localStorage.getItem(key);
                 if (!storage) {
                     result.splice(i, 1);
                 } else {
                     const dataJSON = JSON.parse(storage) as Message[];
-                    if (Array.isArray(dataJSON) && dataJSON.length >= 1) {
-                        const service = dataJSON.splice(0, 1)[0];
-                        result[i] = service;
-                        if (dataJSON.length > 0) {
-                            const nextService = dataJSON.splice(0, 1)[0];
-                            result[i].next = nextService.data.ScheduledDepartureTime;
+                    let splindex = -1;
+                    for (let j = 0; j < dataJSON.length; j++) {
+                        const d = dataJSON[j];
+                        if (new Date(d.data.ScheduledDepartureTime).getTime() > Date.now()) {
+                            result[i] = d;
+                            splindex = j;
                         }
                     }
+                    if (splindex !== -1 && dataJSON.length > splindex + 1) {
+                        const nextService = dataJSON[splindex + 1];
+                        result[i].next = nextService.data.ScheduledDepartureTime;
+                    }
+                    localStorage.setItem(key, JSON.stringify(splindex !== -1 ? dataJSON.splice(splindex) : dataJSON));
                 }
             }
         }
+        console.log(result);
         return result;
     }
 
@@ -178,7 +195,7 @@ function Board() {
                 <FontAwesomeIcon icon={faFeather} color="gray" />
                 <input placeholder="Filter lines/stops or type bus/train" className="ml-3 w-full" onInput={(e) => setFilter(e.currentTarget.value)} />
                 <FontAwesomeIcon icon={faRotateRight} color="gray" className="hover:cursor-pointer"
-                    onClick={() => pruneData(messagesRef.current)}
+                    onClick={() => setMessages([...pruneData(messagesRef.current)])}
                 />
             </div>
         {messages.length > 0 &&
