@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Cookies from 'universal-cookie';
 
 import io, { Socket } from "socket.io-client";
 import { Stop, StopList, StopListSchema, Sub } from "./types";
@@ -17,7 +18,16 @@ import Subscriptions from "./Subscriptions";
 import { useClickOutside } from "./hooks/useClickOut";
 
 const socket: Socket = io("http://localhost:5000");
-export const SocketContext = createContext<Socket>(socket);
+const cookie = new Cookies();
+export const SocketContext = createContext<{
+    socket: Socket,
+    kubo_id: string | undefined,
+    session: string | undefined
+}>({
+    socket,
+    kubo_id: undefined,
+    session: undefined
+});
 
 export interface SubDict {
     [k: string]: Sub
@@ -30,6 +40,8 @@ function App() {
     const [open, setOpen] = useState(false);
     const [selectedStop, setSelectedStop] = useState<Stop | undefined>(undefined);
     const [panel, setPanel] = useState<number>(0);
+    const [id, setId] = useState(undefined);
+    const [session, setSession] = useState(undefined);
 
     const dropdownRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -51,7 +63,7 @@ function App() {
     };
 
     const fetchSubscriptions = () => {
-        fetch(`http://localhost:5000/api/subscriptions`)
+        fetch(`http://localhost:5000/api/subscriptions?session=${session}`)
             .then(res => res.json())
             .then(data => {
                 try {
@@ -105,13 +117,40 @@ function App() {
     }, []);
 
     useEffect(() => {
-        socket.on("welcome", () => {
-            console.log('connected to backend!')
+        socket.on("welcome", (session) => {
+            console.log('connected to backend!');
+            let kuboCookie = cookie.get('kubo-id');
+            if (!kuboCookie) {
+                // ideally: take user to login page
+                kuboCookie = 'test';
+                cookie.set('kubo-id', kuboCookie, { path: '/' });
+            }
+            setId(kuboCookie);
+            setSession(session);
+
+            // establish handshake connection with backend to give user info
+            fetch(`http://localhost:5000/api/handshake?id=${kuboCookie}&session=${session}`)
+                .then(res => res.json())
+                .then(data => {
+                    try {
+                        const result = JSON.parse(data);
+                        if (result.status === 200) {
+                            console.log(result.message);
+                        } else {
+                            console.error(`Error in making handshake: ${result.message}`)
+                        }
+                    } catch (e) {
+                        console.error(`Error while parsing handshake result: ${e}`);
+                    }
+                });
         })
     }, [])
 
     const subscribe = () => {
-        socket.emit('subscribe', selectedStop?.stopCode.toString());
+        socket.emit('subscribe', {
+            stopCode: selectedStop?.stopCode.toString(),
+            session: session
+        });
         handleClose();
     }
 
@@ -161,7 +200,9 @@ function App() {
     const { clickOutside, setClickOutside } = useClickOutside(dropdownRef, inputRef);
 
     return (
-        <SocketContext.Provider value={socket}>
+        <SocketContext.Provider value={{
+            socket, kubo_id: id, session
+        }}>
         <div className="w-full">
             <h1>kubo.</h1>
             <div className="form-group mt-3 text-[#99A3BA]">

@@ -5,10 +5,10 @@ import { Sub } from "./types";
 function Subscriptions() {
 
     const [subscriptions, setSubscriptions] = useState<SubDict>({});
-    const socket = useContext(SocketContext);
+    const { socket, session } = useContext(SocketContext);
 
     const fetchSubscriptions = () => {
-        fetch(`http://localhost:5000/api/subscriptions`)
+        fetch(`http://localhost:5000/api/subscriptions?session${session}`)
             .then(res => res.json())
             .then(data => {
                 try {
@@ -57,7 +57,10 @@ function Subscriptions() {
     }, [])
 
     const unsubscribeClick = (stopCode: string) => {
-        socket.emit("unsubscribe", stopCode);
+        socket.emit("unsubscribe", {
+            stopCode,
+            session
+        });
     }
 
     return (

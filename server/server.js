@@ -49,6 +49,16 @@ const dataRef = db.collection("data").doc(userId);
  */
 const memoryStore = {};
 
+/** 
+ * list of connected users
+ * [session: string]: {
+ *      id: string,
+ *      socket: Socket,
+ *      subscriptions: string[]
+ * }
+*/
+const users = {};
+
 const wipe = async (subscription) => {    
     try {
         const docSnap = await dataRef.get();
@@ -94,8 +104,12 @@ const cleanup = async () => {
     return;
 }
 
-const subscribe = async (stopCode) => {
+const subscribe = async (stopCode, session) => {
     // check if topic exists in subscribes
+    if (!users[session]) {
+        throw new Error('Session not found for user');
+    }
+
     const topicName = `stop-${stopCode}`;
     try {
         const topicExists = await get_topic(pubsub, topicName);
@@ -104,12 +118,23 @@ const subscribe = async (stopCode) => {
             console.log(`Topic created! ${creationResult}`);
             try {
                 const data = {}
-                data[stopCode] = topicName;
+                data[stopCode] = {
+                    topic: topicName,
+                    users: [ users[session].id ]
+                };
                 await db.collection("subscriptions").doc("stops").update(data);
             } catch (error) {
                 console.error(`Error writing to subscriptions: ${error}`);
                 return false;
             }
+        } else {
+            db.collection("subscriptions").doc(stopCode).update({
+                users: admin.firestore.FieldValue.arrayUnion(users[session].id)
+            }).then(() => {
+                console.log("User added to subscriptions successfully!");
+            }).catch((error) => {
+                console.error("Error updating document: ", error);
+            });
         }
     } catch (error) {
         console.error(`Error getting topic: ${error}`)
@@ -127,7 +152,11 @@ const subscribe = async (stopCode) => {
     return true;
 }
 
-const unsubscribe = async (stopCode) => {
+const unsubscribe = async (stopCode, session) => {
+    if (!users[session]) {
+        throw new Error("No session");
+    }
+
     await userRef.get().then((doc) => {
         if (doc.exists) {
             const data = doc.data();
@@ -142,6 +171,32 @@ const unsubscribe = async (stopCode) => {
     }).catch((error) => {
         console.error("Error updating array: ", error);
         return false;
+    });
+
+    await db.collection("subscriptions").doc(stopCode).get().then(async (doc) => {
+        if (doc.exists) {
+            const data = doc.data();
+            const updatedData = {
+                ...data, 
+                users: (data.users || []).filter(item => item !== users[session].id)
+            }
+            await db.collection("subscriptions").doc("stops").update(updatedData);
+        } else {
+            console.error("No such subscription document");
+            return false;
+        }
+    }).then(() => {
+        console.log("Subscription unsubscribed successfully!");
+    }).catch((error) => {
+        console.error("Error unsubscribing array: ", error);
+    })
+    
+    .update({
+        users: admin.firestore.FieldValue.arrayUnion(users[session].id)
+    }).then(() => {
+        console.log("User added to subscriptions successfully!");
+    }).catch((error) => {
+        console.error("Error updating document: ", error);
     });
     return true;
 }
@@ -240,6 +295,9 @@ userRef.onSnapshot((doc) => {
  */
 app.get("/api/subscriptions", async (req, res) => {
     try {
+        // TODO: get sessions
+        const { session } = req.query;
+
         const doc = await userRef.get();
         
         if (!doc.exists) {
@@ -276,17 +334,41 @@ app.get("/api/search", async (req, res) => {
     }));
 });
 
+app.get("/api/handshake", async (req, res) => {
+    const { id, session } = req.query;
+    if (!users[session]) {
+        return {
+            status: 404,
+            message: 'No session found'
+        }
+    }
+
+    users[session].id = id;
+    return {
+        status: 200,
+        message: "ACK"
+    }
+})
+
 /**
  * sockets
  */
 io.on("connection", socket => {
     console.log("⚡ Client connected!");
-
     get_setup_data();
-    io.emit('welcome');
 
-    socket.on('subscribe', async (stopCode) => {
-        if (await subscribe(stopCode)) {
+    const session = v4();
+    const client = {
+        session,
+        socket,
+        id: undefined
+    }
+    users[session] = client;
+
+    io.emit('welcome', session);
+
+    socket.on('subscribe', async ({stopCode, session}) => {
+        if (await subscribe(stopCode, session)) {
             io.emit('subscribe-success');
         } else {
             io.emit('subscribe-error');
@@ -295,10 +377,11 @@ io.on("connection", socket => {
     
     socket.on("disconnect", () => {
         console.log("User disconnected");
+        // TODO: remove stuff from users
     });
     
-    socket.on('unsubscribe', async (stopCode) => {
-        if (await unsubscribe(stopCode)) {
+    socket.on('unsubscribe', async ({stopCode, session}) => {
+        if (await unsubscribe(stopCode, session)) {
             io.emit('unsubscribe-success', `Successfully unsubscribed from ${stopCode}`);
         } else {
             io.emit('unsubscribe-error', 'Unsubscribe error');

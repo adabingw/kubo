@@ -42,7 +42,8 @@ def polling():
         data = defaultdict(list)
         subscriptions = db_data[0]
         
-        for i, (stop, topic) in enumerate(subscriptions.items()):
+        for i, (stop, d) in enumerate(subscriptions.items()):
+            topic = d['topic']
             logging.debug(f"{i}, {stop}, {topic}")
             
             payload = [stop]

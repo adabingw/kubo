@@ -9,7 +9,7 @@ function Board() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [filter, setFilter] = useState<string>("");
     const messagesRef = useRef<Message[]>([]);
-    const socket = useContext(SocketContext);
+    const { socket } = useContext(SocketContext);
 
     useEffect(() => {
         // runs on reload too
@@ -133,6 +133,7 @@ function Board() {
                     }
                     if (splindex !== -1 && dataJSON.length > splindex + 1) {
                         const nextService = dataJSON[splindex + 1];
+                        console.log(nextService);
                         result[i].next = nextService.data.ScheduledDepartureTime;
                     }
                     localStorage.setItem(key, JSON.stringify(splindex !== -1 ? dataJSON.splice(splindex) : dataJSON));
