@@ -12,6 +12,21 @@ const { init_db, get_stop_by_name, get_stop_by_stopcode } = require('./db.js');
 const { create_get_subscription, create_topic, get_topic } = require('./pubsub.js');
 
 /**
+ * firestore has 3 collections:
+ * SUBSCRIPTIONS - stores a subscription's data / used mostly for polling
+ *      [stopCode: string]: {
+ *          topic: string,
+ *          users: string[]
+ *      }
+ * USERS - stores a user's subscriptions / used mostly to query user's data
+ *      [userId: string]: string[]
+ * DATA - stores historical data for max 1 hour
+ *      [userId: string]: {
+ *          [${timestamp}-${subscription}: string]: string
+ *      }
+ */
+
+/**
  * firebase and pubsub setup
  */
 admin.initializeApp({
@@ -43,6 +58,7 @@ const io = new Server(server, {
 const userId = "test";  
 const userRef = db.collection("users").doc(userId);
 const dataRef = db.collection("data").doc(userId);
+const subscriptions = db.collection("subscriptions").doc("stops");
 
 /**
  * temp storage to store session data
@@ -59,6 +75,7 @@ const memoryStore = {};
 */
 const users = {};
 
+// wipes historical data for a subscription
 const wipe = async (subscription) => {    
     try {
         const docSnap = await dataRef.get();
@@ -113,11 +130,12 @@ const subscribe = async (stopCode, session) => {
     const topicName = `stop-${stopCode}`;
     try {
         const topicExists = await get_topic(pubsub, topicName);
+        // if topic doesn't exist, create it and push it to subscriptions collection
         if (!topicExists) {
             const creationResult = await create_topic(pubsub, topicName);
             console.log(`Topic created! ${creationResult}`);
             try {
-                const data = {}
+                const data = {};
                 data[stopCode] = {
                     topic: topicName,
                     users: [ users[session].id ]
@@ -157,6 +175,7 @@ const unsubscribe = async (stopCode, session) => {
         throw new Error("No session");
     }
 
+    // update user data and remove the stop
     await userRef.get().then((doc) => {
         if (doc.exists) {
             const data = doc.data();
@@ -173,48 +192,49 @@ const unsubscribe = async (stopCode, session) => {
         return false;
     });
 
+    // update subscriptions and remove user from a specific stop
+    // if user list empty, remove that doc
     await db.collection("subscriptions").doc(stopCode).get().then(async (doc) => {
         if (doc.exists) {
             const data = doc.data();
-            const updatedData = {
-                ...data, 
-                users: (data.users || []).filter(item => item !== users[session].id)
+            const updatedUsers = (data.users || []).filter(item => item !== users[session].id);
+    
+            if (updatedUsers.length === 0) {
+                // Delete the document if no users remain
+                await db.collection("subscriptions").doc(stopCode).delete();
+                console.log("Subscription document deleted successfully!");
+            } else {
+                // Otherwise, update the document
+                await db.collection("subscriptions").doc(stopCode).update({ users: updatedUsers });
+                console.log("Subscription updated successfully!");
             }
-            await db.collection("subscriptions").doc("stops").update(updatedData);
         } else {
             console.error("No such subscription document");
             return false;
         }
-    }).then(() => {
-        console.log("Subscription unsubscribed successfully!");
     }).catch((error) => {
-        console.error("Error unsubscribing array: ", error);
-    })
-    
-    .update({
-        users: admin.firestore.FieldValue.arrayUnion(users[session].id)
-    }).then(() => {
-        console.log("User added to subscriptions successfully!");
-    }).catch((error) => {
-        console.error("Error updating document: ", error);
+        console.error("Error updating subscription: ", error);
     });
+
     return true;
 }
 
 const get_setup_data = async () => {
+    // see if there's any historical data we can cleanup
     try {
         cleanup();
     } catch (error) {
         console.error(`Error cleaning up ${error}`);
     }
 
+    // see if there are historical data we can load up
     try {
         const docSnap = await dataRef.get();
         if (!docSnap.exists) {
             return null;
         }
-        const data = docSnap.data()
-        const messages = []
+        const data = docSnap.data();
+        const messages = [];
         
         for (const key of Object.keys(data)) {
             try {
@@ -230,6 +250,16 @@ const get_setup_data = async () => {
         console.error("Error getting document:", error);
     }
 }
+
+subscriptions.onSnapshot((doc) => {
+    if (doc.exists) {
+        // doc data should be of form topic: string, users: string[]
+        const data = doc.data();
+        console.log("Subscription data changed: ", data);
+        const topic = data.topic;
+        const users = data.users;
+    }
+})
 
 // listening to users collection for userId for updates on subscriptions
 userRef.onSnapshot((doc) => {
