@@ -66,14 +66,16 @@ const subscriptions = db.collection("subscriptions").doc("stops");
 const memoryStore = {};
 
 /** 
- * list of connected users
+ * users: list of connected users
  * [session: string]: {
  *      id: string,
  *      socket: Socket,
  *      subscriptions: string[]
  * }
+ * userToSessionMap: map of userId to session
 */
 const users = {};
+const userToSessionMap = {};
 
 // wipes historical data for a subscription
 const wipe = async (subscription) => {    
@@ -219,7 +221,13 @@ const unsubscribe = async (stopCode, session) => {
     return true;
 }
 
-const get_setup_data = async () => {
+const get_setup_data = async (session) => {
+    if (!users[session]) {
+        throw Error("No session found");
+    }
+
+    const { id, socket } = users[session];
+
     // see if there's any historical data we can cleanup
     try {
         cleanup();
@@ -245,62 +253,60 @@ const get_setup_data = async () => {
             }
         }
         console.log(messages)
-        io.emit("new-message", messages);
+        socket.emit("new-message", messages);
     } catch (error) {
         console.error("Error getting document:", error);
     }
 }
 
-subscriptions.onSnapshot((doc) => {
+subscriptions.onSnapshot(async (doc) => {
     if (doc.exists) {
         // doc data should be of form topic: string, users: string[]
         const data = doc.data();
         console.log("Subscription data changed: ", data);
         const topic = data.topic;
         const users = data.users;
-    }
-})
 
-// listening to users collection for userId for updates on subscriptions
-userRef.onSnapshot((doc) => {
-    if (doc.exists) {
-        // doc data should be map of list of pubsub subscriptions
-        console.log("User data changed:", doc.data());
-        const data = doc.data();
-        const stops = data.stops;
-        if (!stops) {
-            console.error('No stops');
+        if (!topic) {
+            console.error("No topic");
             return;
         }
 
-        stops.forEach(async sub => {
-            const subscription = await create_get_subscription(pubsub, sub);
-            if (subscription) {
-                subscription.on("message", async message => {
-                    const stopCode = subscription.name.split('-');
-                    console.log(`Stop code: ${stopCode}`);
-                    if (stopCode.length != 3) return;
-                    const stop = await get_stop_by_stopcode(stopCode[2]);
+        const subscription = await create_get_subscription(pubsub, topic);
+        if (subscription) {
+            subscription.on("message", async message => {
+                const stopCode = subscription.name.split('-');
+                console.log(`Stop code: ${stopCode}`);
+                if (stopCode.length != 3) return;
+                const stop = await get_stop_by_stopcode(stopCode[2]);
 
-                    // wipe data for that specific subscription
-                    await wipe(subscription.name.replaceAll('/', '-'));
+                // wipe data for that specific subscription
+                await wipe(subscription.name.replaceAll('/', '-'));
 
-                    const data = {};
-                    data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
-                        creationDate: new Date().getTime(),
-                        data: JSON.stringify({ 
-                            topic: sub, 
-                            data: message.data.toString(), 
-                            timestamp: new Date(),
-                            stop: JSON.stringify(stop)
-                        })
-                    };
+                const data = {};
+                data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
+                    creationDate: new Date().getTime(),
+                    data: JSON.stringify({ 
+                        topic: sub, 
+                        data: message.data.toString(), 
+                        timestamp: new Date(),
+                        stop: JSON.stringify(stop)
+                    })
+                };
 
-                    // add data to historical data
-                    await dataRef.set(data, { merge: true });
+                // add data to historical data
+                await dataRef.set(data, { merge: true });
 
+                for (const user of users) {
+                    const session = userToSessionMap[user];
+                    if (!session || (session && !users[session])) {
+                        console.error("Cannot find session");
+                        return;
+                    }
+
+                    const { socket } = users[session];
                     // emit data to frontend
-                    io.emit("new-message", [{ 
+                    socket.emit("new-message", [{ 
                         topic: sub, 
                         data: message.data.toString(), 
                         timestamp: new Date(),
@@ -312,23 +318,31 @@ userRef.onSnapshot((doc) => {
                     if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore["cleanup"]).getTime() < Date.now() - 60 * 60 * 1000)) {
                         cleanup();
                     }
-                });
-            }
-        });
+                }
+            });
+        }
     } else {
-        console.log("User not found");
+        console.error("Data doesn't exist.");
     }
 });
 
 /**
  * endpoints
  */
+// gets subscription of a user
 app.get("/api/subscriptions", async (req, res) => {
     try {
-        // TODO: get sessions
         const { session } = req.query;
 
-        const doc = await userRef.get();
+        if (!users[session]) {
+            return {
+                status: 404,
+                message: 'No session found'
+            }
+        }
+
+        const userId = users[session].id;
+        const doc = db.collection("users").doc(userId).get();
         
         if (!doc.exists) {
             console.error("No such document!");
@@ -353,7 +367,7 @@ app.get("/api/subscriptions", async (req, res) => {
     }
 });
 
-
+// endpoint to query stopname
 app.get("/api/search", async (req, res) => {
     const { query } = req.query;
     const result = await get_stop_by_name(query);
@@ -364,6 +378,7 @@ app.get("/api/search", async (req, res) => {
     }));
 });
 
+// handshake endpoint between frontend and server on startup
 app.get("/api/handshake", async (req, res) => {
     const { id, session } = req.query;
     if (!users[session]) {
@@ -374,6 +389,7 @@ app.get("/api/handshake", async (req, res) => {
     }
 
     users[session].id = id;
+    userToSessionMap[id] = session;
     return {
         status: 200,
         message: "ACK"
@@ -385,9 +401,9 @@ app.get("/api/handshake", async (req, res) => {
  */
 io.on("connection", socket => {
     console.log("⚡ Client connected!");
-    get_setup_data();
 
-    const session = v4();
+    // create session for a client and pass to web
+    const session = socket.id;
     const client = {
         session,
         socket,
@@ -395,32 +411,41 @@ io.on("connection", socket => {
     }
     users[session] = client;
 
-    io.emit('welcome', session);
+    socket.emit('welcome', session);
+
+    get_setup_data(session);
 
     socket.on('subscribe', async ({stopCode, session}) => {
         if (await subscribe(stopCode, session)) {
-            io.emit('subscribe-success');
+            socket.emit('subscribe-success');
         } else {
-            io.emit('subscribe-error');
+            socket.emit('subscribe-error');
         }
     });
     
     socket.on("disconnect", () => {
-        console.log("User disconnected");
-        // TODO: remove stuff from users
+        console.log("User disconnected", socket.id);
+        if (!users[socket.id]) {
+            console.error("No session found");
+            return;
+        }
+        const { id } = users[socket.id];
+        delete userToSessionMap[id];
+        delete users[socket.id];
     });
     
     socket.on('unsubscribe', async ({stopCode, session}) => {
         if (await unsubscribe(stopCode, session)) {
-            io.emit('unsubscribe-success', `Successfully unsubscribed from ${stopCode}`);
+            socket.emit('unsubscribe-success', `Successfully unsubscribed from ${stopCode}`);
         } else {
-            io.emit('unsubscribe-error', 'Unsubscribe error');
+            socket.emit('unsubscribe-error', 'Unsubscribe error');
         } 
     });
 });
 
 server.listen(5000, () => {
     try {
+        // setup database with proper data
         init_db();
     } catch (err) {
         console.error('cannot setup db', err);
