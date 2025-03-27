@@ -1,0 +1,7 @@
+docker build --no-cache -f ./server.dockerfile -t kubo-server .
+docker run -p 3000:3000 kubo-server
+
+## push to gcr
+docker tag kubo-server gcr.io/kubo/server
+docker push gcr.io/kubo/server
+

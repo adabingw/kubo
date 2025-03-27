@@ -252,7 +252,6 @@ const get_setup_data = async (session) => {
                 console.error(`Error parsing JSON ${e}`);
             }
         }
-        console.log(messages)
         socket.emit("new-message", messages);
     } catch (error) {
         console.error("Error getting document:", error);
@@ -263,63 +262,67 @@ subscriptions.onSnapshot(async (doc) => {
     if (doc.exists) {
         // doc data should be of form topic: string, users: string[]
         const data = doc.data();
-        console.log("Subscription data changed: ", data);
-        const topic = data.topic;
-        const users = data.users;
 
-        if (!topic) {
-            console.error("No topic");
-            return;
-        }
-
-        const subscription = await create_get_subscription(pubsub, topic);
-        if (subscription) {
-            subscription.on("message", async message => {
-                const stopCode = subscription.name.split('-');
-                console.log(`Stop code: ${stopCode}`);
-                if (stopCode.length != 3) return;
-                const stop = await get_stop_by_stopcode(stopCode[2]);
-
-                // wipe data for that specific subscription
-                await wipe(subscription.name.replaceAll('/', '-'));
-
-                const data = {};
-                data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
-                    creationDate: new Date().getTime(),
-                    data: JSON.stringify({ 
-                        topic: sub, 
-                        data: message.data.toString(), 
-                        timestamp: new Date(),
-                        stop: JSON.stringify(stop)
-                    })
-                };
-
-                // add data to historical data
-                await dataRef.set(data, { merge: true });
-
-                for (const user of users) {
-                    const session = userToSessionMap[user];
-                    if (!session || (session && !users[session])) {
-                        console.error("Cannot find session");
-                        return;
+        for (const [k, v] of Object.entries(data)) {
+            console.log("Subscription data changed: ", k, v);
+            const topic = v.topic;
+            const subscribedUsers = v.users;
+    
+            console.log(topic, subscribedUsers)
+    
+            if (!topic) {
+                console.error("No topic");
+                return;
+            }
+    
+            const subscription = await create_get_subscription(pubsub, topic);
+            if (subscription) {
+                subscription.on("message", async message => {
+                    const stopCode = subscription.name.split('-');
+                    if (stopCode.length != 3) return;
+                    const stop = await get_stop_by_stopcode(stopCode[2]);
+    
+                    // wipe data for that specific subscription
+                    await wipe(subscription.name.replaceAll('/', '-'));
+    
+                    const data = {};
+                    data[`${new Date().getTime()}-${subscription.name.replaceAll('/', '-')}`] = {
+                        creationDate: new Date().getTime(),
+                        data: JSON.stringify({ 
+                            topic: topic, 
+                            data: message.data.toString(), 
+                            timestamp: new Date(),
+                            stop: JSON.stringify(stop)
+                        })
+                    };
+    
+                    // add data to historical data
+                    await dataRef.set(data, { merge: true });
+    
+                    for (const user of subscribedUsers) {
+                        const session = userToSessionMap[user];
+                        if (!session || (session && !users[session])) {
+                            console.error("Cannot find session");
+                            return;
+                        }
+    
+                        const { socket } = users[session];
+                        // emit data to frontend
+                        socket.emit("new-message", [{ 
+                            topic: topic, 
+                            data: message.data.toString(), 
+                            timestamp: new Date(),
+                            stop: JSON.stringify(stop)
+                        }]);
+                        message.ack();
+    
+                        // check if need to cleanup data
+                        if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore["cleanup"]).getTime() < Date.now() - 60 * 60 * 1000)) {
+                            cleanup();
+                        }
                     }
-
-                    const { socket } = users[session];
-                    // emit data to frontend
-                    socket.emit("new-message", [{ 
-                        topic: sub, 
-                        data: message.data.toString(), 
-                        timestamp: new Date(),
-                        stop: JSON.stringify(stop)
-                    }]);
-                    message.ack();
-
-                    // check if need to cleanup data
-                    if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore["cleanup"]).getTime() < Date.now() - 60 * 60 * 1000)) {
-                        cleanup();
-                    }
-                }
-            });
+                });
+            }
         }
     } else {
         console.error("Data doesn't exist.");
@@ -381,6 +384,7 @@ app.get("/api/search", async (req, res) => {
 // handshake endpoint between frontend and server on startup
 app.get("/api/handshake", async (req, res) => {
     const { id, session } = req.query;
+    console.log(`ACK: ${id}, ${session}`);
     if (!users[session]) {
         return {
             status: 404,
@@ -410,6 +414,8 @@ io.on("connection", socket => {
         id: undefined
     }
     users[session] = client;
+
+    console.log(`Client info: ${client.session}`);
 
     socket.emit('welcome', session);
 

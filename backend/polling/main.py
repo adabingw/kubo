@@ -36,7 +36,7 @@ def polling():
             db_data.append(subscription)
     
         logging.debug(db_data)
-        # DEBUG:root:[{'LO': 'stop-LO', '00147': 'stop-00147', 'UN': 'stop-UN'}]
+        # DEBUG:root:[{'LO': {'topic': 'stop-LO', 'users': ['test']}, 'UN': {'topic': 'stop-UN', 'users': ['test']}}]
 
         # query from api
         data = defaultdict(list)
@@ -68,7 +68,7 @@ def polling():
                 for stop, datum in data.items():
                     message_data = json.dumps(datum).encode("utf-8")
 
-                    topic_id = subscriptions[stop]
+                    topic_id = subscriptions[stop]['topic']
                     topic_path = publisher.topic_path(PUBSUB_PROJECT_ID, topic_id)
                     logging.debug(f"{topic_path}, {topic_id}")
                     
