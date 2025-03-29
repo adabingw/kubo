@@ -1,7 +1,15 @@
 docker build --no-cache -f ./server.dockerfile -t kubo-server .
 docker run -p 3000:3000 kubo-server
 
-## push to gcr
-docker tag kubo-server gcr.io/kubo/server
-docker push gcr.io/kubo/server
+## create repo
+gcloud artifacts repositories create kubo-server --repository-format=docker --location=us-central1 --description="kubo's server"
 
+## push to gcr
+docker tag kubo-server us-central1-docker.pkg.dev/kubo-448922/kubo-server/server:latest
+gcloud auth configure-docker us-central1-docker.pkg.dev
+docker push us-central1-docker.pkg.dev/kubo-448922/kubo-server/server:latest
+
+gcloud projects add-iam-policy-binding kubo-server  --member="user:adabingw@gmail.com" --role="roles/artifactregistry.writer"
+
+gcloud container clusters create kubo-cluster --zone us-central1 --num-nodes 1
+gcloud container clusters get-credentials kubo-cluster --zone us-central1
