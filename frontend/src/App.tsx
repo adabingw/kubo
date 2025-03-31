@@ -17,7 +17,8 @@ import Updates from "./Updates";
 import Subscriptions from "./Subscriptions";
 import { useClickOutside } from "./hooks/useClickOut";
 
-const socket: Socket = io("http://localhost:5000");
+const ip = import.meta.env.VITE_SERVER_IP || "34.120.108.49";
+const socket: Socket = io(`http://${ip}`);
 const cookie = new Cookies();
 export const SocketContext = createContext<{
     socket: Socket,
@@ -63,7 +64,11 @@ function App() {
     };
 
     const fetchSubscriptions = () => {
-        fetch(`http://localhost:5000/api/subscriptions?session=${session}`)
+        if (!session) {
+            console.error("Session not defined");
+            return;
+        }
+        fetch(`http://${ip}/api/subscriptions?session=${session}`)
             .then(res => res.json())
             .then(data => {
                 try {
@@ -87,7 +92,12 @@ function App() {
 
     useEffect(() => {
         console.log(subscriptions);
-    }, [subscriptions])
+    }, [subscriptions]);
+
+    useEffect(() => {
+        console.log("Session updated: ", session);
+        fetchSubscriptions();
+    }, [session]);
 
     useEffect(() => {
         const subs = localStorage.getItem(`kubo-subscriptions`);
@@ -125,19 +135,20 @@ function App() {
                 kuboCookie = 'test';
                 cookie.set('kubo-id', kuboCookie, { path: '/' });
             }
+            console.log(kuboCookie, session);
             setId(kuboCookie);
             setSession(session);
 
             // establish handshake connection with backend to give user info
-            fetch(`http://localhost:5000/api/handshake?id=${kuboCookie}&session=${session}`)
+            fetch(`http://${ip}/api/handshake?id=${kuboCookie}&session=${session}`)
                 .then(res => res.json())
                 .then(data => {
                     try {
-                        const result = JSON.parse(data);
-                        if (result.status === 200) {
-                            console.log(result.message);
+                        console.log(data)
+                        if (data.message === "ACK") {
+                            console.log(data);
                         } else {
-                            console.error(`Error in making handshake: ${result.message}`)
+                            console.error(`Error in making handshake: ${data.message}`)
                         }
                     } catch (e) {
                         console.error(`Error while parsing handshake result: ${e}`);
@@ -166,14 +177,13 @@ function App() {
                 console.error(`Error parsing JSON: ${e}`);
             }
         }
-        fetch(`http://localhost:5000/api/search?query=${v}`)
+        fetch(`http://${ip}/api/search?query=${v}`)
             .then(res => res.json())
             .then(data => {
                 try {
-                    const result = JSON.parse(data);
-                    console.log(result);
-                    localStorage.setItem(`kubo-${result.query}`, JSON.stringify(result.data));
-                    setSearch(result.data);
+                    console.log(data);
+                    localStorage.setItem(`kubo-${data.query}`, JSON.stringify(data.data));
+                    setSearch(data.data);
                 } catch (e) {
                     console.error(`Error while parsing search result: ${e}`);
                 }

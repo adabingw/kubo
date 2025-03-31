@@ -6,12 +6,20 @@ function Subscriptions() {
 
     const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const { socket, session } = useContext(SocketContext);
+    const ip = import.meta.env.VITE_SERVER_IP || "34.120.108.49";
 
     const fetchSubscriptions = () => {
-        fetch(`http://localhost:5000/api/subscriptions?session${session}`)
+        if (!session) {
+            console.error("Session not defined");
+            return;
+        }
+        fetch(`http://${ip}/api/subscriptions?session=${session}`)
             .then(res => res.json())
             .then(data => {
                 try {
+                    if (data.error) {
+                        throw data.error;
+                    }
                     console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
                     const result = data;
                     const dict: SubDict = {}
@@ -29,6 +37,11 @@ function Subscriptions() {
             });
         return {};
     }
+
+    useEffect(() => {
+        console.log("Session updated ", session);
+        fetchSubscriptions();
+    }, [session]);
 
     useEffect(() => {
         const subscriptions = localStorage.getItem(`kubo-subscriptions`);

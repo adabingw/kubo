@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: kubo-server
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: kubo-server
@@ -14,20 +14,11 @@ spec:
     spec: 
       containers:
         - name: kubo-server
+          imagePullPolicy: Always
           image: us-central1-docker.pkg.dev/kubo-448922/kubo-server/server:latest
+          env:
+            - name: PORT
+              value: "80"
           ports:
-            - containerPort: 3000
+            - containerPort: 80
 
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kubo-server-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: kubo-server
-  ports: 
-    - protocol: TCP
-      port: 80
-      targetPort: 3000

@@ -42,12 +42,16 @@ const db = admin.firestore();
  * expressjs and socketio setup
  */
 const app = express();
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({
+    origin: "*",  // Allow any frontend
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type"  // Only allow necessary headers
+}));
 app.use(express.json()); // Middleware for parsing JSON
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "*",
       methods: ["GET", "POST"],
     },
 });
@@ -278,6 +282,7 @@ subscriptions.onSnapshot(async (doc) => {
             const subscription = await create_get_subscription(pubsub, topic);
             if (subscription) {
                 subscription.on("message", async message => {
+                    console.log(`Message received ${JSON.stringify(message)}`);
                     const stopCode = subscription.name.split('-');
                     if (stopCode.length != 3) return;
                     const stop = await get_stop_by_stopcode(stopCode[2]);
@@ -337,15 +342,15 @@ app.get("/api/subscriptions", async (req, res) => {
     try {
         const { session } = req.query;
 
+        console.log(session);
+
         if (!users[session]) {
-            return {
-                status: 404,
-                message: 'No session found'
-            }
+            return res.status(404).json({ error: "No session found."}).end();
         }
 
         const userId = users[session].id;
-        const doc = db.collection("users").doc(userId).get();
+        console.log(userId);
+        const doc = await db.collection("users").doc(userId).get();
         
         if (!doc.exists) {
             console.error("No such document!");
@@ -363,10 +368,10 @@ app.get("/api/subscriptions", async (req, res) => {
         );
         console.log(result)
 
-        return res.json(result);
+        return res.status(200).json(result).end();
     } catch (error) {
         console.error("Error getting subscriptions:", error);
-        return res.status(500).json({ error: `Error: ${error.message}` });
+        return res.status(500).json({ error: `Error: ${error.message}` }).end();
     }
 });
 
@@ -375,29 +380,30 @@ app.get("/api/search", async (req, res) => {
     const { query } = req.query;
     const result = await get_stop_by_name(query);
     console.log(result);
-    res.json(JSON.stringify({
+    res.status(200).json({
         query: query,
         data: result
-    }));
+    }).end();
 });
+
+app.get("/", async (req, res) => {
+    console.log("health checkpoint");
+    res.status(200).end();
+})
 
 // handshake endpoint between frontend and server on startup
 app.get("/api/handshake", async (req, res) => {
     const { id, session } = req.query;
     console.log(`ACK: ${id}, ${session}`);
     if (!users[session]) {
-        return {
-            status: 404,
-            message: 'No session found'
-        }
+        res.status(404).json({ error: "No session found."}).end();
     }
 
     users[session].id = id;
     userToSessionMap[id] = session;
-    return {
-        status: 200,
+    res.status(200).json({
         message: "ACK"
-    }
+    }).end();
 })
 
 /**
@@ -449,12 +455,14 @@ io.on("connection", socket => {
     });
 });
 
-server.listen(5000, () => {
+const port = process.env.PORT || '80';
+
+server.listen(port, () => {
     try {
         // setup database with proper data
         init_db();
     } catch (err) {
         console.error('cannot setup db', err);
     }
-    console.log("🚀 Server running on port 5000")}
+    console.log(`🚀 Server running on port ${process.env.PORT}`)}
 );

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: debug-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: debug-service
+                port:
+                  number: 80
+            path: /test/
+            pathType: Prefix
