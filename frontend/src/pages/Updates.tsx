@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { SocketContext } from "./App";
-import { Message, NextService, StopSchema } from "./types";
+import { SocketContext } from "../App";
+import { Message, NextService, StopSchema } from "../types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus, faFeather, faRotateRight, faTrain } from "@fortawesome/free-solid-svg-icons";
 

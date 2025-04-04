@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import { SocketContext, SubDict } from "./App";
-import { Sub } from "./types";
+import { SocketContext, SubDict } from "../App";
+import { Sub } from "../types/types";
 
 function Subscriptions() {
 
