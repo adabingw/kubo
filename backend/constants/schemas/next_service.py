@@ -1,10 +1,5 @@
 from schema import Schema, Or
-
-metadata_schema = Schema({
-    "TimeStamp": str,  # Fixed capitalization to match your data
-    "ErrorCode": str,
-    "ErrorMessage": str
-})
+from constants.schemas.main import metadata_schema
 
 line_schema = Schema({
     "StopCode": Or(str, int),
