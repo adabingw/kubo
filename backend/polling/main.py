@@ -1,9 +1,10 @@
 from google.cloud import firestore
 from google.cloud import pubsub_v1
 from flask import Flask
-from collections import defaultdict
+from datetime import datetime
+from pytz import timezone
 
-from constants.endpoints import QUERY_NEXT_SERVICE, QUERY_INFO_ALERTS, QUERY_SERVICE_ALERTS, QUERY_EXCEPTIONS
+from constants.endpoints import QUERY_NEXT_SERVICE, QUERY_INFO_ALERTS, QUERY_SERVICE_ALERTS, QUERY_EXCEPTIONS, QUERY_TRIP
 from constants.api import request
 from constants.firestore import FIRESTORE_SUBSCRIPTION_COLLECTION
 from constants.pubsub import PUBSUB_PROJECT_ID
@@ -16,11 +17,13 @@ app = Flask(__name__)
 db = firestore.Client(database='(default)')
 logging.basicConfig(level=logging.DEBUG)
 type_to_query = {
-    "stop": QUERY_NEXT_SERVICE,
-    "information-alert": QUERY_INFO_ALERTS,
-    "service-alert": QUERY_SERVICE_ALERTS,
-    'exception': QUERY_EXCEPTIONS
+    'stop': QUERY_NEXT_SERVICE,
+    'information-alert': QUERY_INFO_ALERTS,
+    'service-alert': QUERY_SERVICE_ALERTS,
+    'exception': QUERY_EXCEPTIONS,
+    'trip': QUERY_TRIP
 }
+tz = timezone('EST')
 
 def publish_message(message, topic):
     try:
@@ -37,6 +40,43 @@ def publish_message(message, topic):
     except Exception as e:
         logging.debug(f"Error publishing message: {e}")
 
+def query_subscription(subscription, topic):
+    subscription_type = subscription['type']
+    logging.debug(f"{subscription_type}, {topic}")
+    
+    if subscription_type in type_to_query:
+        query = type_to_query[subscription_type]
+        payload = subscription.get('params', {})
+        res = request(query, payload)
+    
+        if not res:
+            return {
+                'status': 502,
+                'message': 'Error querying endpoint'
+            }
+    
+        result = json.loads(json.dumps(res))
+    
+        if result['Metadata']['ErrorCode'] == '200':
+            
+            if subscription_type == 'stop':
+                updates = result['NextService']['Lines']
+                publish_message(updates, topic)
+            
+            elif subscription_type == 'information-alert' or subscription_type == 'service-alert':
+                updates = result['Messages']['Message']
+                publish_message(updates, topic)
+            
+            elif subscription_type == 'trip':
+                updates = result['SchJourneys']
+                publish_message(updates, topic)
+    
+    else:
+        return {
+            'status': 404,
+            'message': 'Cannot find type query'
+        }
+
 def polling():
     """
     Query subscriptions from Firestore.
@@ -50,57 +90,37 @@ def polling():
         docs = subscriptions_ref.stream()
 
         # Parse and store the results
-        db_data = []
+        subscriptions = {}
         for doc in docs:
             subscription = doc.to_dict()
 
             # Add the subscription to the list
-            db_data.append(subscription)
+            subscriptions[doc.id] = subscription
     
-        logging.debug(db_data)
-        # DEBUG:root:[{'service-alert': {'type': 'service-alert'}, 'information-alert': {'type': 'information-alert'}, 'exception': {'type': 'exception'}, 'stop-UN': {'type': 'stop', 'users': ['test'], 'params': {'stopCode': 'UN'}}}]
+        logging.debug(subscriptions)
+        # DEBUG:root: {
+            # 'exception': {'type': 'exception'}, 
+            # 'information-alert': {'type': 'information-alert'}, 
+            # 'service-alert': {'type': 'service-alert'}, 
+            # 'stops': 
+            #   {'stop-UN': {'type': 'stop', 'users': ['test'], 'params': {'stopCode': 'UN'}}}, 'trips': {}}
 
-        # query from api
-        data = defaultdict(list)
-        subscriptions = db_data[0]
-        
-        for i, (topic, body) in enumerate(subscriptions.items()):
-            if not body['type']:
-                logging.error(f"This data has no type ")
-                
-            subscription_type = body['type']
-            logging.debug(f"{i}, {subscription_type}, {topic}")
-            
-            if subscription_type in type_to_query:
-                query = type_to_query[subscription_type]
-                payload = body.get('params', {})
-                res = request(query, payload)
-            
-                if not res:
-                    return {
-                        'status': 502,
-                        'message': 'Error querying endpoint'
-                    }
-            
-                result = json.loads(json.dumps(res))
-            
-                if result['Metadata']['ErrorCode'] == '200':
+        # query from api        
+        for key, body in subscriptions.items():
+            logging.debug(f"Body of {key}: {body}")
+            if 'alert' in key:
+                query_subscription(body, key)
+            elif key == 'stops' or key == 'trips':
+                for topic, sub in body.items():
+                    logging.debug(f"Topic and sub: {topic}, {sub}")
+                    if not sub['type']:
+                        logging.error(f"This data has no type ")
+                        return
+                    if sub['type'] == 'trip':
+                        sub['params']['date'] = datetime.now(tz).strftime('%Y%m%d')
+                        sub['params']['time'] = datetime.now(tz).strftime('%H%M')
                     
-                    if subscription_type == 'stop':
-                        updates = result['NextService']['Lines']
-                        publish_message(updates, topic)
-                    
-                    elif subscription_type == 'information-alert' or subscription_type == 'service-alert':
-                        updates = result['Messages']['Message']
-                        publish_message(updates, topic)
-            
-            else:
-                return {
-                    'status': 404,
-                    'message': 'Cannot find type query'
-                }
-
-            logging.debug(data)
+                    query_subscription(sub, topic)
 
     except Exception as e:
         logging.debug(f"Error querying Firestore: {e}")

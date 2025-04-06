@@ -1,0 +1,1218 @@
+{
+    "Metadata": {
+      "TimeStamp": "2025-04-06 13:10:13",
+      "ErrorCode": "200",
+      "ErrorMessage": "OK"
+    },
+    "SchJourneys": [
+      {
+        "Date": "2025-04-07",
+        "Time": "08:00",
+        "To": "00019",
+        "From": "KI",
+        "Services": [
+          {
+            "Colour": "#00853e",
+            "Type": "RB",
+            "Direction": "E",
+            "Code": "31",
+            "StartTime": "2025-04-07 08:37:00",
+            "EndTime": "2025-04-07 10:50:00",
+            "Duration": "02:13:00",
+            "Accessible": "",
+            "Trips": {
+              "Trip": [
+                {
+                  "Number": "3962",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "KI",
+                        "Order": 1,
+                        "Time": "08:37",
+                        "sortingTime": "0837",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GL",
+                        "Order": 2,
+                        "Time": "08:55",
+                        "sortingTime": "0855",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "AC",
+                        "Order": 3,
+                        "Time": "09:11",
+                        "sortingTime": "0911",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "09:24",
+                        "sortingTime": "0924",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "MO",
+                        "Order": 5,
+                        "Time": "09:34",
+                        "sortingTime": "0934",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "MO",
+                  "departFromCode": "KI",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "kitchS",
+                  "tripPatternId": 3776
+                },
+                {
+                  "Number": "33282",
+                  "Display": "",
+                  "Line": "33",
+                  "Direction": "E",
+                  "LineVariant": "33B",
+                  "Type": "B",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "00296",
+                        "Order": 1,
+                        "Time": "09:40",
+                        "sortingTime": "0940",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00942",
+                        "Order": 2,
+                        "Time": "09:43",
+                        "sortingTime": "0943",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00216",
+                        "Order": 3,
+                        "Time": "09:44",
+                        "sortingTime": "0944",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01150",
+                        "Order": 4,
+                        "Time": "09:47",
+                        "sortingTime": "0947",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01462",
+                        "Order": 5,
+                        "Time": "09:49",
+                        "sortingTime": "0949",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "02745",
+                        "Order": 6,
+                        "Time": "09:51",
+                        "sortingTime": "0951",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01426",
+                        "Order": 7,
+                        "Time": "09:52",
+                        "sortingTime": "0952",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00221",
+                        "Order": 8,
+                        "Time": "10:00",
+                        "sortingTime": "1000",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "01313",
+                        "Order": 9,
+                        "Time": "10:02",
+                        "sortingTime": "1002",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "02750",
+                        "Order": 10,
+                        "Time": "10:03",
+                        "sortingTime": "1003",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01317",
+                        "Order": 11,
+                        "Time": "10:05",
+                        "sortingTime": "1005",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01308",
+                        "Order": 12,
+                        "Time": "10:06",
+                        "sortingTime": "1006",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00223",
+                        "Order": 13,
+                        "Time": "10:08",
+                        "sortingTime": "1008",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00992",
+                        "Order": 14,
+                        "Time": "10:11",
+                        "sortingTime": "1011",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00991",
+                        "Order": 15,
+                        "Time": "10:12",
+                        "sortingTime": "1012",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00354",
+                        "Order": 16,
+                        "Time": "10:18",
+                        "sortingTime": "1018",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00022",
+                        "Order": 17,
+                        "Time": "10:45",
+                        "sortingTime": "1045",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00019",
+                        "Order": 18,
+                        "Time": "10:50",
+                        "sortingTime": "1050",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "00019",
+                  "departFromCode": "00296",
+                  "departFromAlternativeCode": "00296",
+                  "departFromTimingPoint": "mtpleS",
+                  "tripPatternId": 10272
+                }
+              ]
+            },
+            "Transfers": {
+              "Transfer": [
+                {
+                  "Code": "00296",
+                  "Order": 5,
+                  "Time": "09:34"
+                }
+              ]
+            },
+            "TransferLinks": {
+              "Link": [
+                {
+                  "FromTrip": "3962",
+                  "FromStopCode": "MO",
+                  "ToTrip": "33282",
+                  "ToStopCode": "00296",
+                  "TransferDuration": "00:06:00"
+                }
+              ]
+            },
+            "StartSortTime": "0837",
+            "EndSortTime": "1050",
+            "tripHash": "33282_3962_",
+            "transferCount": 1
+          },
+          {
+            "Colour": "#00853e",
+            "Type": "RB",
+            "Direction": "E",
+            "Code": "31",
+            "StartTime": "2025-04-07 08:09:00",
+            "EndTime": "2025-04-07 10:50:00",
+            "Duration": "02:41:00",
+            "Accessible": "",
+            "Trips": {
+              "Trip": [
+                {
+                  "Number": "3960",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "KI",
+                        "Order": 1,
+                        "Time": "08:09",
+                        "sortingTime": "0809",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GL",
+                        "Order": 2,
+                        "Time": "08:27",
+                        "sortingTime": "0827",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "AC",
+                        "Order": 3,
+                        "Time": "08:43",
+                        "sortingTime": "0843",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "08:56",
+                        "sortingTime": "0856",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "MO",
+                        "Order": 5,
+                        "Time": "09:06",
+                        "sortingTime": "0906",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "MO",
+                  "departFromCode": "KI",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "kitchS",
+                  "tripPatternId": 3771
+                },
+                {
+                  "Number": "33282",
+                  "Display": "",
+                  "Line": "33",
+                  "Direction": "E",
+                  "LineVariant": "33B",
+                  "Type": "B",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "00296",
+                        "Order": 1,
+                        "Time": "09:40",
+                        "sortingTime": "0940",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00942",
+                        "Order": 2,
+                        "Time": "09:43",
+                        "sortingTime": "0943",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00216",
+                        "Order": 3,
+                        "Time": "09:44",
+                        "sortingTime": "0944",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01150",
+                        "Order": 4,
+                        "Time": "09:47",
+                        "sortingTime": "0947",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01462",
+                        "Order": 5,
+                        "Time": "09:49",
+                        "sortingTime": "0949",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "02745",
+                        "Order": 6,
+                        "Time": "09:51",
+                        "sortingTime": "0951",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01426",
+                        "Order": 7,
+                        "Time": "09:52",
+                        "sortingTime": "0952",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00221",
+                        "Order": 8,
+                        "Time": "10:00",
+                        "sortingTime": "1000",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "01313",
+                        "Order": 9,
+                        "Time": "10:02",
+                        "sortingTime": "1002",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "02750",
+                        "Order": 10,
+                        "Time": "10:03",
+                        "sortingTime": "1003",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01317",
+                        "Order": 11,
+                        "Time": "10:05",
+                        "sortingTime": "1005",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01308",
+                        "Order": 12,
+                        "Time": "10:06",
+                        "sortingTime": "1006",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00223",
+                        "Order": 13,
+                        "Time": "10:08",
+                        "sortingTime": "1008",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00992",
+                        "Order": 14,
+                        "Time": "10:11",
+                        "sortingTime": "1011",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00991",
+                        "Order": 15,
+                        "Time": "10:12",
+                        "sortingTime": "1012",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00354",
+                        "Order": 16,
+                        "Time": "10:18",
+                        "sortingTime": "1018",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00022",
+                        "Order": 17,
+                        "Time": "10:45",
+                        "sortingTime": "1045",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00019",
+                        "Order": 18,
+                        "Time": "10:50",
+                        "sortingTime": "1050",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "00019",
+                  "departFromCode": "00296",
+                  "departFromAlternativeCode": "00296",
+                  "departFromTimingPoint": "mtpleS",
+                  "tripPatternId": 10272
+                }
+              ]
+            },
+            "Transfers": {
+              "Transfer": [
+                {
+                  "Code": "00296",
+                  "Order": 5,
+                  "Time": "09:06"
+                }
+              ]
+            },
+            "TransferLinks": {
+              "Link": [
+                {
+                  "FromTrip": "3960",
+                  "FromStopCode": "MO",
+                  "ToTrip": "33282",
+                  "ToStopCode": "00296",
+                  "TransferDuration": "00:34:00"
+                }
+              ]
+            },
+            "StartSortTime": "0809",
+            "EndSortTime": "1050",
+            "tripHash": "33282_3960_",
+            "transferCount": 1
+          },
+          {
+            "Colour": "#00853e",
+            "Type": "RB",
+            "Direction": "E",
+            "Code": "31",
+            "StartTime": "2025-04-07 08:09:00",
+            "EndTime": "2025-04-07 10:50:00",
+            "Duration": "02:41:00",
+            "Accessible": "",
+            "Trips": {
+              "Trip": [
+                {
+                  "Number": "3960",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "KI",
+                        "Order": 1,
+                        "Time": "08:09",
+                        "sortingTime": "0809",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GL",
+                        "Order": 2,
+                        "Time": "08:27",
+                        "sortingTime": "0827",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "AC",
+                        "Order": 3,
+                        "Time": "08:43",
+                        "sortingTime": "0843",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "08:56",
+                        "sortingTime": "0856",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "GE",
+                  "departFromCode": "KI",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "kitchS",
+                  "tripPatternId": 3771
+                },
+                {
+                  "Number": "3962",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "09:24",
+                        "sortingTime": "0924",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "MO",
+                        "Order": 5,
+                        "Time": "09:34",
+                        "sortingTime": "0934",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "MO",
+                  "departFromCode": "GE",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "georgS",
+                  "tripPatternId": 3776
+                },
+                {
+                  "Number": "33282",
+                  "Display": "",
+                  "Line": "33",
+                  "Direction": "E",
+                  "LineVariant": "33B",
+                  "Type": "B",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "00296",
+                        "Order": 1,
+                        "Time": "09:40",
+                        "sortingTime": "0940",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00942",
+                        "Order": 2,
+                        "Time": "09:43",
+                        "sortingTime": "0943",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00216",
+                        "Order": 3,
+                        "Time": "09:44",
+                        "sortingTime": "0944",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01150",
+                        "Order": 4,
+                        "Time": "09:47",
+                        "sortingTime": "0947",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01462",
+                        "Order": 5,
+                        "Time": "09:49",
+                        "sortingTime": "0949",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "02745",
+                        "Order": 6,
+                        "Time": "09:51",
+                        "sortingTime": "0951",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01426",
+                        "Order": 7,
+                        "Time": "09:52",
+                        "sortingTime": "0952",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00221",
+                        "Order": 8,
+                        "Time": "10:00",
+                        "sortingTime": "1000",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "01313",
+                        "Order": 9,
+                        "Time": "10:02",
+                        "sortingTime": "1002",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "02750",
+                        "Order": 10,
+                        "Time": "10:03",
+                        "sortingTime": "1003",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01317",
+                        "Order": 11,
+                        "Time": "10:05",
+                        "sortingTime": "1005",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01308",
+                        "Order": 12,
+                        "Time": "10:06",
+                        "sortingTime": "1006",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00223",
+                        "Order": 13,
+                        "Time": "10:08",
+                        "sortingTime": "1008",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00992",
+                        "Order": 14,
+                        "Time": "10:11",
+                        "sortingTime": "1011",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00991",
+                        "Order": 15,
+                        "Time": "10:12",
+                        "sortingTime": "1012",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00354",
+                        "Order": 16,
+                        "Time": "10:18",
+                        "sortingTime": "1018",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00022",
+                        "Order": 17,
+                        "Time": "10:45",
+                        "sortingTime": "1045",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00019",
+                        "Order": 18,
+                        "Time": "10:50",
+                        "sortingTime": "1050",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "00019",
+                  "departFromCode": "00296",
+                  "departFromAlternativeCode": "00296",
+                  "departFromTimingPoint": "mtpleS",
+                  "tripPatternId": 10272
+                }
+              ]
+            },
+            "Transfers": {
+              "Transfer": [
+                {
+                  "Code": "GE",
+                  "Order": 4,
+                  "Time": "08:56"
+                },
+                {
+                  "Code": "00296",
+                  "Order": 5,
+                  "Time": "09:34"
+                }
+              ]
+            },
+            "TransferLinks": {
+              "Link": [
+                {
+                  "FromTrip": "3960",
+                  "FromStopCode": "GE",
+                  "ToTrip": "3962",
+                  "ToStopCode": "GE",
+                  "TransferDuration": "00:28:00"
+                },
+                {
+                  "FromTrip": "3962",
+                  "FromStopCode": "MO",
+                  "ToTrip": "33282",
+                  "ToStopCode": "00296",
+                  "TransferDuration": "00:06:00"
+                }
+              ]
+            },
+            "StartSortTime": "0809",
+            "EndSortTime": "1050",
+            "tripHash": "33282_3962_3960_",
+            "transferCount": 2
+          },
+          {
+            "Colour": "#00853e",
+            "Type": "RB",
+            "Direction": "E",
+            "Code": "31",
+            "StartTime": "2025-04-07 08:37:00",
+            "EndTime": "2025-04-07 11:55:00",
+            "Duration": "03:18:00",
+            "Accessible": "",
+            "Trips": {
+              "Trip": [
+                {
+                  "Number": "3962",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "KI",
+                        "Order": 1,
+                        "Time": "08:37",
+                        "sortingTime": "0837",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GL",
+                        "Order": 2,
+                        "Time": "08:55",
+                        "sortingTime": "0855",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "AC",
+                        "Order": 3,
+                        "Time": "09:11",
+                        "sortingTime": "0911",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "09:24",
+                        "sortingTime": "0924",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "MO",
+                        "Order": 5,
+                        "Time": "09:34",
+                        "sortingTime": "0934",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "MO",
+                  "departFromCode": "KI",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "kitchS",
+                  "tripPatternId": 3776
+                },
+                {
+                  "Number": "33322",
+                  "Display": "",
+                  "Line": "33",
+                  "Direction": "E",
+                  "LineVariant": "33B",
+                  "Type": "B",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "00296",
+                        "Order": 1,
+                        "Time": "10:45",
+                        "sortingTime": "1045",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00942",
+                        "Order": 2,
+                        "Time": "10:48",
+                        "sortingTime": "1048",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00216",
+                        "Order": 3,
+                        "Time": "10:49",
+                        "sortingTime": "1049",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01150",
+                        "Order": 4,
+                        "Time": "10:52",
+                        "sortingTime": "1052",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01462",
+                        "Order": 5,
+                        "Time": "10:54",
+                        "sortingTime": "1054",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "02745",
+                        "Order": 6,
+                        "Time": "10:56",
+                        "sortingTime": "1056",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01426",
+                        "Order": 7,
+                        "Time": "10:57",
+                        "sortingTime": "1057",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00221",
+                        "Order": 8,
+                        "Time": "11:05",
+                        "sortingTime": "1105",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "01313",
+                        "Order": 9,
+                        "Time": "11:07",
+                        "sortingTime": "1107",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "02750",
+                        "Order": 10,
+                        "Time": "11:08",
+                        "sortingTime": "1108",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01317",
+                        "Order": 11,
+                        "Time": "11:10",
+                        "sortingTime": "1110",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01308",
+                        "Order": 12,
+                        "Time": "11:11",
+                        "sortingTime": "1111",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00223",
+                        "Order": 13,
+                        "Time": "11:13",
+                        "sortingTime": "1113",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00992",
+                        "Order": 14,
+                        "Time": "11:16",
+                        "sortingTime": "1116",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00991",
+                        "Order": 15,
+                        "Time": "11:17",
+                        "sortingTime": "1117",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00354",
+                        "Order": 16,
+                        "Time": "11:23",
+                        "sortingTime": "1123",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00022",
+                        "Order": 17,
+                        "Time": "11:50",
+                        "sortingTime": "1150",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00019",
+                        "Order": 18,
+                        "Time": "11:55",
+                        "sortingTime": "1155",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "00019",
+                  "departFromCode": "00296",
+                  "departFromAlternativeCode": "00296",
+                  "departFromTimingPoint": "mtpleS",
+                  "tripPatternId": 10275
+                }
+              ]
+            },
+            "Transfers": {
+              "Transfer": [
+                {
+                  "Code": "00296",
+                  "Order": 5,
+                  "Time": "09:34"
+                }
+              ]
+            },
+            "TransferLinks": {
+              "Link": [
+                {
+                  "FromTrip": "3962",
+                  "FromStopCode": "MO",
+                  "ToTrip": "33322",
+                  "ToStopCode": "00296",
+                  "TransferDuration": "01:11:00"
+                }
+              ]
+            },
+            "StartSortTime": "0837",
+            "EndSortTime": "1155",
+            "tripHash": "33322_3962_",
+            "transferCount": 1
+          },
+          {
+            "Colour": "#00853e",
+            "Type": "RB",
+            "Direction": "E",
+            "Code": "31",
+            "StartTime": "2025-04-07 08:09:00",
+            "EndTime": "2025-04-07 11:55:00",
+            "Duration": "03:46:00",
+            "Accessible": "",
+            "Trips": {
+              "Trip": [
+                {
+                  "Number": "3960",
+                  "Display": "GT - Union Station",
+                  "Line": "GT",
+                  "Direction": "E",
+                  "LineVariant": "GT",
+                  "Type": "T",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "KI",
+                        "Order": 1,
+                        "Time": "08:09",
+                        "sortingTime": "0809",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GL",
+                        "Order": 2,
+                        "Time": "08:27",
+                        "sortingTime": "0827",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "AC",
+                        "Order": 3,
+                        "Time": "08:43",
+                        "sortingTime": "0843",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "GE",
+                        "Order": 4,
+                        "Time": "08:56",
+                        "sortingTime": "0856",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "MO",
+                        "Order": 5,
+                        "Time": "09:06",
+                        "sortingTime": "0906",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "MO",
+                  "departFromCode": "KI",
+                  "departFromAlternativeCode": null,
+                  "departFromTimingPoint": "kitchS",
+                  "tripPatternId": 3771
+                },
+                {
+                  "Number": "33322",
+                  "Display": "",
+                  "Line": "33",
+                  "Direction": "E",
+                  "LineVariant": "33B",
+                  "Type": "B",
+                  "Stops": {
+                    "Stop": [
+                      {
+                        "Code": "00296",
+                        "Order": 1,
+                        "Time": "10:45",
+                        "sortingTime": "1045",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00942",
+                        "Order": 2,
+                        "Time": "10:48",
+                        "sortingTime": "1048",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00216",
+                        "Order": 3,
+                        "Time": "10:49",
+                        "sortingTime": "1049",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01150",
+                        "Order": 4,
+                        "Time": "10:52",
+                        "sortingTime": "1052",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01462",
+                        "Order": 5,
+                        "Time": "10:54",
+                        "sortingTime": "1054",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "02745",
+                        "Order": 6,
+                        "Time": "10:56",
+                        "sortingTime": "1056",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01426",
+                        "Order": 7,
+                        "Time": "10:57",
+                        "sortingTime": "1057",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00221",
+                        "Order": 8,
+                        "Time": "11:05",
+                        "sortingTime": "1105",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "01313",
+                        "Order": 9,
+                        "Time": "11:07",
+                        "sortingTime": "1107",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "02750",
+                        "Order": 10,
+                        "Time": "11:08",
+                        "sortingTime": "1108",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01317",
+                        "Order": 11,
+                        "Time": "11:10",
+                        "sortingTime": "1110",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "01308",
+                        "Order": 12,
+                        "Time": "11:11",
+                        "sortingTime": "1111",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00223",
+                        "Order": 13,
+                        "Time": "11:13",
+                        "sortingTime": "1113",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00992",
+                        "Order": 14,
+                        "Time": "11:16",
+                        "sortingTime": "1116",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00991",
+                        "Order": 15,
+                        "Time": "11:17",
+                        "sortingTime": "1117",
+                        "IsMajor": false
+                      },
+                      {
+                        "Code": "00354",
+                        "Order": 16,
+                        "Time": "11:23",
+                        "sortingTime": "1123",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00022",
+                        "Order": 17,
+                        "Time": "11:50",
+                        "sortingTime": "1150",
+                        "IsMajor": true
+                      },
+                      {
+                        "Code": "00019",
+                        "Order": 18,
+                        "Time": "11:55",
+                        "sortingTime": "1155",
+                        "IsMajor": true
+                      }
+                    ]
+                  },
+                  "destinationStopCode": "00019",
+                  "departFromCode": "00296",
+                  "departFromAlternativeCode": "00296",
+                  "departFromTimingPoint": "mtpleS",
+                  "tripPatternId": 10275
+                }
+              ]
+            },
+            "Transfers": {
+              "Transfer": [
+                {
+                  "Code": "00296",
+                  "Order": 5,
+                  "Time": "09:06"
+                }
+              ]
+            },
+            "TransferLinks": {
+              "Link": [
+                {
+                  "FromTrip": "3960",
+                  "FromStopCode": "MO",
+                  "ToTrip": "33322",
+                  "ToStopCode": "00296",
+                  "TransferDuration": "01:39:00"
+                }
+              ]
+            },
+            "StartSortTime": "0809",
+            "EndSortTime": "1155",
+            "tripHash": "33322_3960_",
+            "transferCount": 1
+          }
+        ]
+      }
+    ]
+  }
