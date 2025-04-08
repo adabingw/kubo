@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "target": "es2021", // or later
+        "lib": ["es2021", "dom"],
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleDetection": "force",
+        "skipLibCheck": true
+    },
+    "include": ["./src/**/*"]
+}

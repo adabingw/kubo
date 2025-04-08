@@ -43,7 +43,7 @@ const get_topic = async (pubsub, topicName) => {
     }
 }
 
-module.exports = {
+export {
     create_get_subscription,
     create_topic,
     get_topic

@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from "react";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
 import io, { Socket } from "socket.io-client";
@@ -32,6 +32,7 @@ function App() {
     const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const [id, setId] = useState(undefined);
     const [session, setSession] = useState(undefined);
+    const { pathname } = useLocation();
 
     const fetchSubscriptions = () => {
         if (!session) {
@@ -127,7 +128,7 @@ function App() {
         })
     }, [])
 
-    const itemStyle = "my-1 py-2 cursor-pointer underline-offset-4 hover:underline hover:decoration-[#857c6a]"
+    const itemStyle = "my-1 py-2 cursor-pointer underline-offset-4 hover:underline decoration-[#857c6a]"
 
     return (
         <SocketContext.Provider value={{
@@ -136,10 +137,10 @@ function App() {
         <div className="w-full flex flex-row h-full">
             <div className="mr-10 w-1/5">
                 <p className={`font-semibold mb-6 cursor-pointer hover:text-[#5c5649]`}>kubo.</p>
-                <Link to="/trips"><p className={itemStyle}>trips</p></Link>
-                <Link to="/stops"><p className={itemStyle}>stops</p></Link>
-                <Link to="/trips"><p className={itemStyle}>subscriptions</p></Link>
-                <Link to="/updates"><p className={itemStyle}>information updates</p></Link>
+                <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>trips</p></Link>
+                <Link to="/stops"><p className={`${itemStyle} ${pathname === '/stops' ? 'underline' : 'no-underline'}`}>stops</p></Link>
+                <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>subscriptions</p></Link>
+                <Link to="/updates"><p className={`${itemStyle} ${pathname === '/updates' ? 'underline' : 'no-underline'}`}>information updates</p></Link>
             </div>
             <div className="w-4/5 h-full">
                 <Routes>

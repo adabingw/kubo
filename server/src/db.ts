@@ -1,6 +1,6 @@
-const sqlite3 = require('sqlite3').verbose(); // Import SQLite
-const axios = require('axios');
-const go = require('./env.go.js');
+import sqlite3 from "sqlite3";
+import axios from "axios";
+import { ALL_STOPS_ENDPOINT, GOAPI_KEY, GOAPI_URL } from './env.go';
 
 // create local stops db to store go stops
 const db = new sqlite3.Database('./db');
@@ -26,7 +26,7 @@ const init_db = async () => {
         db.run(`CREATE INDEX IF NOT EXISTS idx_name ON stops (stopName)`);
     });
 
-    const url = `${go.GOAPI_URL}${go.ALL_STOPS_ENDPOINT}?key=${go.GOAPI_KEY}`
+    const url = `${GOAPI_URL}${ALL_STOPS_ENDPOINT}?key=${GOAPI_KEY}`
     const response = await axios.get(url);
     const data = response.data;
 
@@ -94,10 +94,10 @@ const get_stop_by_name = (stopName) => {
     });
 }
 
-const teardown = (db) => {
+const teardown = () => {
     db.close();
 }
 
-module.exports = {
+export {
     init_db, get_stop_by_name, get_stop_by_stopcode
 }
