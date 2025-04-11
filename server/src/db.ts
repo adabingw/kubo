@@ -9,13 +9,13 @@ const tableName = 'stops'
 const init_db = async () => {
     db.serialize(() => {
         // Create a users table with id, name, and email
-        db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
-            if (err) {
-              console.error(`Error dropping table ${tableName}:`, err.message);
-            } else {
-              console.log(`Table ${tableName} has been dropped.`);
-            }
-        });
+        // db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
+        //     if (err) {
+        //       console.error(`Error dropping table ${tableName}:`, err.message);
+        //     } else {
+        //       console.log(`Table ${tableName} has been dropped.`);
+        //     }
+        // });
         db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (
             stopCode TEXT PRIMARY KEY,
             stopName TEXT,
@@ -53,7 +53,7 @@ const init_db = async () => {
     return db;
 }
 
-const get_stop_by_stopcode = (stopCode) => {
+const get_stop_by_stopcode = (stopCode: string): Promise<{ stopCode: string; stopName: string, type: string }> => {
     return new Promise((resolve, reject) => {
         db.get(
             `SELECT * FROM stops
@@ -65,7 +65,7 @@ const get_stop_by_stopcode = (stopCode) => {
                     console.error(err);
                     reject(err);
                 } else {
-                    resolve(rows);
+                    resolve(rows as { stopCode: string; stopName: string; type: string });
                 }
             }
         );

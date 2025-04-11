@@ -300,7 +300,7 @@ const emitMessage = (session: string, message: any, messageType: string) => {
 
     const { socket } = users[session];
     // emit data to frontend
-    socket.emit(messageType, [message]);
+    socket.emit(messageType, message);
 
     // check if need to cleanup data
     if (!memoryStore["cleanup"] || (memoryStore["cleanup"] && new Date(memoryStore["cleanup"]).getTime() < Date.now() - 60 * 60 * 1000)) {
@@ -332,7 +332,8 @@ const parse_stop = async(subscription: string, topic: string, data: StopDataType
     }
     postData[`${new Date().getTime()}-${subscription.replaceAll('/', '-')}`] = {
         creationDate: new Date().getTime(),
-        data: JSON.stringify(messageData),
+        data: JSON.stringify(messageData.data),
+        topic: topic,
         type: 'stop'
     };
 
@@ -349,16 +350,76 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
     // wipe data for that specific subscription
     await wipe(subscription.replaceAll('/', '-'));
 
+    console.log(typeof message)
+
+    interface Stop {
+        stopCode: string,
+        stopName: string
+    }
+    interface Alert {
+        type: 'stop' | 'line',
+        subject: string,
+        body: string,
+        category: string,
+        subcategory: string,
+        stop: Stop | undefined,
+        lines: string | undefined
+    }
+    const parsedData: Record<string, Alert[]> = {};
+    const messages = typeof message === 'string' ? JSON.parse(message) : message;
+
+    for (const message of messages) {
+        console.log('alert message: ', message);
+        const category = message.Category;
+        const data: Alert = {
+            type: 'stop',
+            subject: message.SubjectEnglish,
+            body: message.BodyEnglish,
+            category: category,
+            subcategory: message.SubCategory,
+            stop: undefined,
+            lines: undefined
+        }
+        if (category === "Amenity") {
+            message.Stops.forEach(async (m: { Name: string | null, Code: string }) => {
+                const stopCode = m.Code;
+                if (!parsedData[stopCode]) {
+                    parsedData[stopCode] = [];
+                }
+                parsedData[stopCode].push({
+                    ...data,
+                    stop:  {
+                        stopCode,
+                        stopName: (await get_stop_by_stopcode(stopCode)).stopCode
+                    }
+                })
+            });
+        } else {
+            message.Lines.forEach((line: { Code: string }) => {
+                const lineCode = line.Code;
+                if (!parsedData[lineCode]) {
+                    parsedData[lineCode] = [];
+                }
+                parsedData[lineCode].push({
+                    ...data,
+                    type: 'line',
+                    lines: line.Code
+                })
+            });
+        }
+    }
+
     const postData = {};
     const messageData = { 
         topic: topic, 
         type: type,
-        data: message.toString(), 
+        data: JSON.stringify(parsedData), 
         timestamp: new Date(),
     }
     postData[`${new Date().getTime()}-${subscription.replaceAll('/', '-')}`] = {
         creationDate: new Date().getTime(),
-        data: JSON.stringify(messageData),
+        data: JSON.stringify(messageData.data),
+        topic: topic,
         type: type
     };
 
@@ -383,7 +444,8 @@ const parse_trip = async(subscription: string, topic: string, message: any, subs
     }
     postData[`${new Date().getTime()}-${subscription.replaceAll('/', '-')}`] = {
         creationDate: new Date().getTime(),
-        data: JSON.stringify(messageData),
+        data: JSON.stringify(messageData.data),
+        topic: topic,
         type: 'trip'
     };
 
@@ -511,7 +573,7 @@ app.get("/api/subscriptions", async (req, res) => {
         const result = await Promise.all(
             stops.map(async (stop) => ({
                 topic: stop,
-                stop: await get_stop_by_stopcode(stop),
+                stop: await get_stop_by_stopcode(stop.split('-')[1]),
             }))
         );
         console.log(result)
@@ -634,5 +696,5 @@ server.listen(port, () => {
     } catch (err) {
         console.error('cannot setup db', err);
     }
-    console.log(`🚀 Server running on port ${process.env.PORT}`)}
+    console.log(`🚀 Server running on port ${port}`)}
 );
