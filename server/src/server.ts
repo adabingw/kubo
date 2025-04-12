@@ -350,64 +350,79 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
     // wipe data for that specific subscription
     await wipe(subscription.replaceAll('/', '-'));
 
-    console.log(typeof message)
-
     interface Stop {
         stopCode: string,
         stopName: string
     }
     interface Alert {
         type: 'stop' | 'line',
-        subject: string,
-        body: string,
-        category: string,
-        subcategory: string,
         stop: Stop | undefined,
         lines: string | undefined
+        messages: {
+            subject: string,
+            body: string,
+            category: string,
+            subcategory: string,
+        }[]
     }
-    const parsedData: Record<string, Alert[]> = {};
+    const parsedData: Record<string, Alert> = {};
     const messages = typeof message === 'string' ? JSON.parse(message) : message;
 
     for (const message of messages) {
-        console.log('alert message: ', message);
+        // console.log('alert message: ', message);
         const category = message.Category;
-        const data: Alert = {
-            type: 'stop',
-            subject: message.SubjectEnglish,
-            body: message.BodyEnglish,
-            category: category,
-            subcategory: message.SubCategory,
+        const subcategory = message.SubCategory;
+        const data = {
+            type: 'stop' as 'stop' | 'line',
             stop: undefined,
             lines: undefined
         }
-        if (category === "Amenity") {
-            message.Stops.forEach(async (m: { Name: string | null, Code: string }) => {
+        const messageData = {
+            subject: message.SubjectEnglish,
+            body: message.BodyEnglish,
+            category: category,
+            subcategory: subcategory,
+        }
+        console.log(category, subcategory)
+        if (category === "Amenity" || subcategory === "Station General Information") {
+            for (const m of message.Stops) {
                 const stopCode = m.Code;
-                if (!parsedData[stopCode]) {
-                    parsedData[stopCode] = [];
+                const stopName = (await get_stop_by_stopcode(stopCode)).stopName;
+                console.log(stopName);
+                
+                if (!parsedData[stopName]) {
+                    parsedData[stopName] = {
+                        ...data,
+                        messages: [],
+                        stop: {
+                            stopCode,
+                            stopName
+                        }
+                    };
                 }
-                parsedData[stopCode].push({
-                    ...data,
-                    stop:  {
-                        stopCode,
-                        stopName: (await get_stop_by_stopcode(stopCode)).stopCode
-                    }
+                parsedData[stopName].messages.push({
+                    ...messageData,
                 })
-            });
+            };
         } else {
             message.Lines.forEach((line: { Code: string }) => {
                 const lineCode = line.Code;
                 if (!parsedData[lineCode]) {
-                    parsedData[lineCode] = [];
+                    parsedData[lineCode] = {
+                        ...data,
+                        messages: [],
+                        type: 'line',
+                        lines: line.Code
+                    };
                 }
-                parsedData[lineCode].push({
-                    ...data,
-                    type: 'line',
-                    lines: line.Code
+                parsedData[lineCode].messages.push({
+                    ...messageData
                 })
             });
         }
     }
+
+    console.log(parsedData)
 
     const postData = {};
     const messageData = { 
@@ -465,14 +480,12 @@ subscriptions.doc('stops').onSnapshot(async (doc) => {
         for (const [topic, v] of Object.entries(data)) {
             console.log("Subscription data changed: ", topic, v);
             const subscribedUsers = v.users;
-    
-            console.log(topic, subscribedUsers);
-    
+        
             const subscription = await create_get_subscription(pubsub, topic);
             if (subscription) {
                 subscription.on("message", async message => {
                     const data = message.data.toString('utf8');
-                    console.log(`Message received for stops ${inspect(data)}`);
+                    // console.log(`Message received for stops ${inspect(data)}`);
                     parse_stop(subscription.name, topic, v, data, subscribedUsers);
                     message.ack();
                 });
@@ -498,7 +511,7 @@ subscriptions.doc('trips').onSnapshot(async (doc) => {
             if (subscription) {
                 subscription.on("message", async message => {
                     const data = message.data.toString('utf8');
-                    console.log(`Message received for trips ${inspect(data)}`);
+                    // console.log(`Message received for trips ${inspect(data)}`);
                     parse_trip(subscription.name, topic, data, subscribedUsers);
                     message.ack();
                 });
@@ -516,7 +529,7 @@ subscriptions.doc('information-alert').onSnapshot(async (doc) => {
         if (subscription) {
             subscription.on("message", async message => {
                 const data = message.data.toString('utf8');
-                console.log(`Message received for info alert ${inspect(data)}`);
+                // console.log(`Message received for info alert ${inspect(data)}`);
                 parse_alert(subscription.name, 'information-alert', data, 'information-alert');
                 message.ack();
             });
@@ -533,7 +546,7 @@ subscriptions.doc('service-alert').onSnapshot(async (doc) => {
         if (subscription) {
             subscription.on("message", async message => {
                 const data = message.data.toString('utf8');
-                console.log(`Message received for service alert ${inspect(data)}`);
+                // console.log(`Message received for service alert ${inspect(data)}`);
                 parse_alert(subscription.name, 'service-alert', data, 'service-alert');
                 message.ack();
             });

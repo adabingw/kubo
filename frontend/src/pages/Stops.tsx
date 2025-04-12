@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { StopList, StopListSchema, Sub } from "../types/types";
+import { Sub } from "../types/types";
+import { StopList, StopListSchema } from "../types/stops";
 import { faBus, faMagnifyingGlass, faTrain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubDict, SocketContext } from "../App";

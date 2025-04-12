@@ -9,13 +9,13 @@ const tableName = 'stops'
 const init_db = async () => {
     db.serialize(() => {
         // Create a users table with id, name, and email
-        // db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
-        //     if (err) {
-        //       console.error(`Error dropping table ${tableName}:`, err.message);
-        //     } else {
-        //       console.log(`Table ${tableName} has been dropped.`);
-        //     }
-        // });
+        db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
+            if (err) {
+              console.error(`Error dropping table ${tableName}:`, err.message);
+            } else {
+              console.log(`Table ${tableName} has been dropped.`);
+            }
+        });
         db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (
             stopCode TEXT PRIMARY KEY,
             stopName TEXT,

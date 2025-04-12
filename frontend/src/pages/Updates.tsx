@@ -1,6 +1,8 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { SocketContext } from "../App";
-import { Message, NextService, StopSchema } from "../types/types";
+import { Message } from "../types/types";
+import { NextServiceSchema } from "../types/next_service";
+import { StopSchema } from "../types/stops";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBus, faFeather, faRotateRight, faTrain } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,7 +24,7 @@ function Board() {
             for (const msg of msgs) {
                 const dataJSON = JSON.parse(msg.data);
                 for (const data of dataJSON) {
-                    const parsedData = NextService.parse(data);
+                    const parsedData = NextServiceSchema.parse(data);
                     const stop_ = StopSchema.parse(JSON.parse(msg.stop));
                     const key = `${stop_.stopCode}-${parsedData.LineCode}`;
 
