@@ -277,14 +277,16 @@ const get_setup_data = async (session) => {
         
         for (const key of Object.keys(data)) {
             try {
-                const jsonData = JSON.parse(data[key].data);
-                messages[`new-${data[key].type}`] = jsonData;
+                console.log(JSON.stringify(data[key]))
+                // const jsonData = JSON.parse(data[key].data);
+                messages[`new-${data[key].type}`] = data[key];
             } catch (e) {
                 console.error(`Error parsing JSON ${e}`);
             }
         }
 
         for (const key of Object.keys(messages)) {
+            console.log('setup data key: ', key);
             socket.emit(key, messages[key]);
         }
     } catch (error) {
@@ -356,8 +358,8 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
     }
     interface Alert {
         type: 'stop' | 'line',
-        stop: Stop | undefined,
-        lines: string | undefined
+        stops: Stop | null,
+        lines: string | null
         messages: {
             subject: string,
             body: string,
@@ -374,8 +376,8 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
         const subcategory = message.SubCategory;
         const data = {
             type: 'stop' as 'stop' | 'line',
-            stop: undefined,
-            lines: undefined
+            stops: null,
+            lines: null
         }
         const messageData = {
             subject: message.SubjectEnglish,
@@ -383,21 +385,19 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
             category: category,
             subcategory: subcategory,
         }
-        console.log(category, subcategory)
         if (category === "Amenity" || subcategory === "Station General Information") {
             for (const m of message.Stops) {
                 const stopCode = m.Code;
                 const stopName = (await get_stop_by_stopcode(stopCode)).stopName;
-                console.log(stopName);
                 
                 if (!parsedData[stopName]) {
                     parsedData[stopName] = {
                         ...data,
                         messages: [],
-                        stop: {
+                        stops: {
                             stopCode,
                             stopName
-                        }
+                        },
                     };
                 }
                 parsedData[stopName].messages.push({
@@ -421,8 +421,6 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
             });
         }
     }
-
-    console.log(parsedData)
 
     const postData = {};
     const messageData = { 

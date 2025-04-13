@@ -31,8 +31,8 @@ export const UpdateSchema = z.record(z.string(), z.object({
     stops: z.union([z.object({
         stopCode: z.string(),
         stopName: z.string()
-    }), z.undefined()]),
-    lines: z.union([z.string(), z.undefined()]),
+    }), z.null()]),
+    lines: z.union([z.string(), z.null()]),
     messages: z.array(z.object({
         subject: z.string(),
         body: z.string(),

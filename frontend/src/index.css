@@ -2,6 +2,12 @@
 @custom-variant hover (&:hover);
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
+@theme {
+    --color-beige-800: #5c5649;
+    --color-beige-100: #f7f3f0;
+    --color-beige-300: #c4c1b7;
+}
+
 :root {
     font-family: "JetBrains Mono", monospace;
     line-height: 24px;
@@ -13,21 +19,6 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  
-    --light-main: #ffffff;
-    --light-highlight: #e8e5df;
-  
-    --dark-main: #222831;
-    --dark-highlight: #393E46;
-
-    --group-color: var(--input-color);
-    --group-border: var(--input-border);
-    --group-background: #EEF4FF;
-
-    --input-color: #99A3BA;
-    --input-border: #CDD9ED;
-    --input-background: #fff;
-    --input-placeholder: #CBD1DC;
   
     scrollbar-width: thin;
 }
@@ -51,102 +42,4 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-.form-field {
-    display: block;
-    width: 100%;
-    padding: 8px 16px;
-    line-height: 25px;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    border-radius: 6px;
-    -webkit-appearance: none;
-    color: var(--input-color);
-    border: 1px solid var(--input-border);
-    background: var(--input-background);
-    transition: border .3s ease;
-    &::placeholder {
-        color: var(--input-placeholder);
-    }
-}
-
-.form-group {
-    position: relative;
-    display: flex;
-    width: 100%;
-    & > span,
-    .form-field {
-        white-space: nowrap;
-        display: block;
-        &:not(:first-child):not(:last-child) {
-            border-radius: 0;
-        }
-        &:first-child {
-            border-radius: 6px 0 0 6px;
-        }
-        &:last-child {
-            border-radius: 0 6px 6px 0;
-        }
-        &:not(:first-child) {
-            margin-left: -1px;
-        }
-    }
-    .form-field {
-        position: relative;
-        z-index: 1;
-        flex: 1 1 auto;
-        width: 1%;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    & > span {
-        text-align: center;
-        padding: 8px 12px;
-        font-size: 14px;
-        line-height: 25px;
-        /* color: var(--group-color); */
-        background: var(--group-background);
-        border: 1px solid var(--group-border);
-        transition: background .3s ease, border .3s ease, color .3s ease;
-    }
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-/* CSS */
-.button-16 {
-  background-color: var(--group-background);
-  border: 1px solid var(--group-border);
-  border-radius: 4px;
-  color: #3c4043;
-  cursor: pointer;
-  font-family: arial,sans-serif;
-  font-size: 14px;
-  height: 36px;
-  line-height: 27px;
-  display: flex;
-  align-items: center;
-  min-width: 54px;
-  padding: 0 16px;
-  text-align: center;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: pre;
-}
-
-.button-16:hover {
-  border-color: #dadce0;
-  box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
-  color: #202124;
-}
-
-.button-16:focus {
-  border-color: #4285f4;
-  outline: none;
 }

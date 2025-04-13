@@ -4,7 +4,7 @@ export const line_data: Record<string, string> = {
     "15": "Brantford/Burlington",
     "16": "Hamilton/Toronto Express",
     "18": "Lakeshore West",
-    "13": "Waterloo/Hamilton",
+    "17": "Waterloo/Hamilton",
     "19": "Mississauga/North York",
     "21": "Milton",
     "22": "Milton/Oakville",
@@ -12,6 +12,7 @@ export const line_data: Record<string, string> = {
     "27": "Milton/North York",
     "29": "Guelph/Mississauga",
     "30": "Kitchener",
+    "31": "Kitchener",
     "32": "Brampton Trinity Common/North York",
     "33": "Kitchener",
     "36": "Brampton/North York",
@@ -19,7 +20,11 @@ export const line_data: Record<string, string> = {
     "38": "Bolton/Malton",
     "40": "Hamilton/Richmond Hill",
     "41": "Hamilton/Pickering",
+    "47": "Hamilton/Pickering",
+    "48": "Hamilton/Pickering",
     "52": "Oshawa/Oakville",
+    "54": "Oshawa/Oakville",
+    "56": "Oshawa/Oakville",
     "94": "Pickering/Mississauga",
     "61": "Richmond Hill",
     "65": "Barrie",
@@ -38,5 +43,6 @@ export const line_data: Record<string, string> = {
     "MI": "Milton",
     "BR": "Barrie",
     "RH": "Richmond Hill",
-    "ST": "Stouffville"
+    "ST": "Stouffville",
+    "UP": "UP Express"
 }

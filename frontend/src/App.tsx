@@ -136,7 +136,7 @@ function App() {
         }}>
         <div className="w-full flex flex-row h-full">
             <div className="mr-10 w-1/5">
-                <p className={`font-semibold mb-6 cursor-pointer hover:text-[#5c5649]`}>kubo.</p>
+                <p className={`font-semibold mb-6 cursor-pointer hover:text-beige-800`}>kubo.</p>
                 <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>trips</p></Link>
                 <Link to="/stops"><p className={`${itemStyle} ${pathname === '/stops' ? 'underline' : 'no-underline'}`}>stops</p></Link>
                 <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>subscriptions</p></Link>
