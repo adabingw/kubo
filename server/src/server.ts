@@ -150,30 +150,44 @@ const subscribe = async (params: StopParams | TripParams, session) => {
     const topicName = params.type === 'stop' ? `stop-${params.stopCode}` : `trip-${params.from}-${params.to}`;
     try {
         const topicExists = await get_topic(pubsub, topicName);
+        const { type, ...remParams } = params;
         // if topic doesn't exist, create it and push it to subscriptions collection
         if (!topicExists) {
             const creationResult = await create_topic(pubsub, topicName);
             console.log(`Topic created! ${creationResult}`);
             try {
                 const data = {};
-                const { type, ...remParams } = params;
                 data[topicName] = {
-                    type: params.type,
+                    type: type,
                     params: remParams,
                     users: [ users[session].id ]
                 };
-                await db.collection("subscriptions").doc(`${params.type}s`).update(data);
+
+                await db.collection("subscriptions").doc(`${params.type}s`).update({
+                    [topicName]: data[topicName]
+                });
             } catch (error) {
                 console.error(`Error writing to subscriptions: ${error}`);
                 return false;
             }
         } else {
-            db.collection("subscriptions").doc(`${params.type}s`).update({
-                users: admin.firestore.FieldValue.arrayUnion(users[session].id)
-            }).then(() => {
-                console.log("User added to subscriptions successfully!");
-            }).catch((error) => {
-                console.error("Error updating document: ", error);
+            const docRef = db.collection("subscriptions").doc(`${params.type}s`);
+            await db.runTransaction(async (transaction) => {
+                const doc = await transaction.get(docRef);
+                const data = doc.data() || {};
+                const topic = data[topicName] || {
+                    type: type,
+                    params: remParams,
+                    users: []
+                };
+
+                if (!topic.users.includes(users[session].id)) {
+                    topic.users.push(users[session].id);
+                }
+
+                transaction.update(docRef, {
+                    [topicName]: topic
+                });
             });
         }
     } catch (error) {
@@ -183,7 +197,7 @@ const subscribe = async (params: StopParams | TripParams, session) => {
     // update users collection
     const userRefUpdate = {};
     userRefUpdate[`${params.type}s`] = admin.firestore.FieldValue.arrayUnion(
-        params.type === 'stop' ? params.stopCode : `${params.from}-${params.to}`
+        params.type === 'stop' ? `stop-${params.stopCode}` : `trip-${params.from}-${params.to}`
     )
     await userRef.update(userRefUpdate).then(() => {
         console.log('Array updated successfully!');
@@ -200,14 +214,13 @@ const unsubscribe = async (params: StopParams | TripParams, session) => {
     }
 
     const collection = `${params.type}s`;
-    const item = params.type === 'stop' ? params.stopCode : `${params.from}-${params.to}`;
     const topic = params.type === 'stop' ? `stop-${params.stopCode}` : `trip-${params.from}-${params.to}`;
 
     // update user data and remove the stop
     await userRef.get().then((doc) => {
         if (doc.exists) {
             const data = doc.data();
-            const updatedArray = (data[collection] || []).filter(sub => sub !== item);
+            const updatedArray = (data[collection] || []).filter(sub => sub !== topic);
             const updateRefArray = {};
             updateRefArray[collection] = updatedArray;
             userRef.update(updateRefArray);
@@ -229,6 +242,11 @@ const unsubscribe = async (params: StopParams | TripParams, session) => {
             const data = doc.data();
             const topicData = data[topic];
             const subRef = {};
+
+            if (!topicData.users) {
+                console.error("No user field for ", topicData, topic);
+                return true;
+            }
     
             if (topicData.users.length === 1) {
                 // Delete the document if no users remain
@@ -277,7 +295,6 @@ const get_setup_data = async (session) => {
         
         for (const key of Object.keys(data)) {
             try {
-                console.log(JSON.stringify(data[key]))
                 // const jsonData = JSON.parse(data[key].data);
                 messages[`new-${data[key].type}`] = data[key];
             } catch (e) {
@@ -286,7 +303,6 @@ const get_setup_data = async (session) => {
         }
 
         for (const key of Object.keys(messages)) {
-            console.log('setup data key: ', key);
             socket.emit(key, messages[key]);
         }
     } catch (error) {
@@ -371,7 +387,6 @@ const parse_alert = async(subscription: string, topic: string, message: any, typ
     const messages = typeof message === 'string' ? JSON.parse(message) : message;
 
     for (const message of messages) {
-        // console.log('alert message: ', message);
         const category = message.Category;
         const subcategory = message.SubCategory;
         const data = {
@@ -502,9 +517,7 @@ subscriptions.doc('trips').onSnapshot(async (doc) => {
         for (const [topic, v] of Object.entries(data)) {
             console.log("Subscription data changed: ", topic, v);
             const subscribedUsers = v.users;
-    
-            console.log(topic, subscribedUsers);
-    
+        
             const subscription = await create_get_subscription(pubsub, topic);
             if (subscription) {
                 subscription.on("message", async message => {
@@ -563,7 +576,7 @@ app.get("/api/subscriptions", async (req, res) => {
         const { session: sessionVar } = req.query;
         const session = sessionVar as string;
 
-        console.log(session, users);
+        // console.log(session, users);
 
         if (!users[session]) {
             return res.status(404).json({ error: "No session found."}).end();
@@ -587,7 +600,6 @@ app.get("/api/subscriptions", async (req, res) => {
                 stop: await get_stop_by_stopcode(stop.split('-')[1]),
             }))
         );
-        console.log(result)
 
         return res.status(200).json(result).end();
     } catch (error) {
@@ -600,7 +612,6 @@ app.get("/api/subscriptions", async (req, res) => {
 app.get("/api/search", async (req, res) => {
     const { query } = req.query;
     const result = await get_stop_by_name(query);
-    console.log(result);
     res.status(200).json({
         query: query,
         data: result
@@ -608,7 +619,7 @@ app.get("/api/search", async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-    console.log("health checkpoint");
+    console.log("Health checkpoint");
     res.status(200).end();
 })
 
@@ -644,17 +655,14 @@ io.on("connection", async socket => {
     }
     users[session] = client;
 
-    console.log(`Client info: ${client.session}`);
-
     socket.emit('welcome', session);
-
     get_setup_data(session);
 
     const info_subscription = await create_get_subscription(pubsub, 'information-alert');
     if (info_subscription) {
         info_subscription.on("message", async message => {
             const data = message.data.toString('utf8');
-            console.log(`Message received for info alert ${inspect(data)}`);
+            // console.log(`Message received for info alert ${inspect(data)}`);
             parse_alert(info_subscription.name, 'information-alert', data, 'information-alert');
             message.ack();
         });
@@ -664,14 +672,14 @@ io.on("connection", async socket => {
     if (service_subscription) {
         service_subscription.on("message", async message => {
             const data = message.data.toString('utf8');
-            console.log(`Message received for service alert ${inspect(data)}`);
+            // console.log(`Message received for service alert ${inspect(data)}`);
             parse_alert(service_subscription.name, 'service-alert', data, 'service-alert');
             message.ack();
         });
     }
 
-    socket.on('subscribe', async ({stopCode, session}) => {
-        if (await subscribe(stopCode, session)) {
+    socket.on('subscribe', async ({schema, session}) => {
+        if (await subscribe(schema, session)) {
             socket.emit('subscribe-success');
         } else {
             socket.emit('subscribe-error');
@@ -689,9 +697,9 @@ io.on("connection", async socket => {
         delete users[socket.id];
     });
     
-    socket.on('unsubscribe', async ({stopCode, session}) => {
-        if (await unsubscribe(stopCode, session)) {
-            socket.emit('unsubscribe-success', `Successfully unsubscribed from ${stopCode}`);
+    socket.on('unsubscribe', async ({schema, session}) => {
+        if (await unsubscribe(schema, session)) {
+            socket.emit('unsubscribe-success', `Successfully unsubscribed from ${schema}`);
         } else {
             socket.emit('unsubscribe-error', 'Unsubscribe error');
         } 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Sub } from "../types/types";
+import { Subscription } from "../types/types";
 import { StopList, StopListSchema } from "../types/stops";
 import { faBus, faMagnifyingGlass, faTrain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -41,7 +41,7 @@ function Stops() {
                     console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
                     const result = data;
                     const dict: SubDict = {}
-                    result.forEach((sub: Sub) => {
+                    result.forEach((sub: Subscription) => {
                         const key = sub.stop.stopCode.toString();
                         dict[key] = sub
                     })
@@ -84,7 +84,7 @@ function Stops() {
     useEffect(() => {
         socket.on('subscribe-success', () => {
             fetchSubscriptions();
-        })
+        });
     }, []);
 
     const makeSearch = (v: string) => {
@@ -119,14 +119,18 @@ function Stops() {
     }
 
     const onClick = (subscribed: boolean, stopCode: string) => {
+        const schema = {
+            type: 'stop',
+            stopCode: stopCode
+        }
         if (subscribed) {
             socket.emit("unsubscribe", {
-                stopCode,
+                schema,
                 session
             });
         } else {
             socket.emit('subscribe', {
-                stopCode,
+                schema,
                 session
             });
         }

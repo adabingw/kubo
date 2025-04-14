@@ -10,10 +10,10 @@ export const MessageSchema = z.object({
     next: z.string().optional()
 })
 
-export const SubSchema = z.object({
+export const SubscriptionSchema = z.object({
     topic: z.string(),
     stop: StopSchema,
 })
 
 export type Message = z.infer<typeof MessageSchema>
-export type Sub = z.infer<typeof SubSchema>
+export type Subscription = z.infer<typeof SubscriptionSchema>

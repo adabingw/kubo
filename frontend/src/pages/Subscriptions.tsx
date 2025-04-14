@@ -1,6 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { SocketContext, SubDict } from "../App";
-import { Sub } from "../types/types";
+import { Subscription } from "../types/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBellSlash } from "@fortawesome/free-regular-svg-icons";
+import { Tooltip } from "@mui/material";
+import { faBus, faTrain, faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
 
 function Subscriptions() {
 
@@ -23,7 +27,7 @@ function Subscriptions() {
                     console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
                     const result = data;
                     const dict: SubDict = {}
-                    result.forEach((sub: Sub) => {
+                    result.forEach((sub: Subscription) => {
                         const key = sub.stop.stopCode.toString();
                         dict[key] = sub
                     })
@@ -70,24 +74,55 @@ function Subscriptions() {
     }, [])
 
     const unsubscribeClick = (stopCode: string) => {
+        const schema = {
+            type: 'stop',
+            stopCode: stopCode
+        }
         socket.emit("unsubscribe", {
-            stopCode,
+            schema,
             session
         });
     }
 
     return (
         <div className="w-full flex flex-col mt-5">
+            <div className="font-semibold italic">stop subscriptions</div>
+            <div className="mx-10 mt-5">
             {Object.keys(subscriptions).map((i) => (
-                <div key={`${subscriptions[i].stop.stopCode}`} className="border-b-1 flex flex-row items-center justify-between my-2">
+                <div key={`${subscriptions[i].stop.stopCode}`} className="border-b-1 flex flex-row items-center justify-between pb-2 my-2">
                     <span>
-                        {subscriptions[i].stop.stopName}
+                        {subscriptions[i].stop.type.toLowerCase().includes('train') ? 
+                            <FontAwesomeIcon color="#5c5649" icon={faTrain} /> : <FontAwesomeIcon color="#5c5649" icon={faBus} />
+                        }
+                        <span className="ml-3">{subscriptions[i].stop.stopName}</span>
                     </span>
-                    <span className="button-16 mb-2" onClick={() => unsubscribeClick(subscriptions[i].stop.stopCode.toString())}>
-                        unsubscribe
-                    </span>
+                    <div>
+                        <Tooltip 
+                            title={`see updates`} 
+                            placement="top" arrow
+                        >
+                            <span className="border mr-2 border-beige-300 rounded-full px-2 py-1 cursor-pointer hover:bg-beige-100" onClick={() => unsubscribeClick(subscriptions[i].stop.stopCode.toString())}>
+                                <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} color="#5c5649" />
+                                <span className="ml-1">
+                                    open
+                                </span>
+                            </span>
+                        </Tooltip>
+                        <Tooltip 
+                            title={`unsubscribe`} 
+                            placement="top" arrow
+                        >
+                            <span className="border border-beige-300 rounded-full px-2 py-1 cursor-pointer hover:bg-beige-100" onClick={() => unsubscribeClick(subscriptions[i].stop.stopCode.toString())}>
+                                <FontAwesomeIcon icon={faBellSlash} color="#5c5649" />
+                                <span className="ml-1">
+                                    unsubscribe
+                                </span>
+                            </span>
+                        </Tooltip>
+                    </div>
                 </div>
             ))}
+            </div>
         </div>
     );
 }

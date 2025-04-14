@@ -57,9 +57,7 @@ function UpdatePage(props: {updates: Update, type: 'information' | 'service'}) {
             if (filter === 'station' && item.type === 'stop') {
                 acc[key] = item;
             } else {
-                console.log(key);
                 const code = key.replace(/\D/g, "");
-                console.log(code);
                 if (item.type === 'line' && (filter === 'train' && code.length === 0) || (filter === 'bus' && code.length !== 0)) {
                     acc[key] = item;
                 }
@@ -158,7 +156,7 @@ function UpdatePage(props: {updates: Update, type: 'information' | 'service'}) {
                                 <div className={`overflow-hidden w-full`}>
                                     {updates[key].messages.map((update, index) => (
                                         <div className={`w-full flex flex-row ${index !== 0 ? "border-t-1 border-beige-300 mt-3 pt-3": ""}`} key={`${index}`}>
-                                            <div className="w-1/7 flex justify-center items-start">
+                                            <div className="w-1/7 flex justify-center items-start mt-3">
                                                 <FontAwesomeIcon icon={icon_map[update.category] ? icon_map[update.category] : faCircleQuestion}
                                                     color="#5c5649"
                                                     size="lg"

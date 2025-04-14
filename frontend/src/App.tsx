@@ -5,11 +5,12 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
 import io, { Socket } from "socket.io-client";
-import { Sub } from "./types/types";
+import { Subscription } from "./types/types";
 import Stops from "./pages/Stops";
-import Trips from "./pages/Trips";
+// import Trips from "./pages/Trips";
 import ServiceUpdates from "./pages/ServiceUpdates";
 import Main from "./pages/Main";
+import Subscriptions from "./pages/Subscriptions";
 
 const ip = import.meta.env.VITE_SERVER_IP || "34.120.108.49";
 const socket: Socket = io(`http://${ip}`);
@@ -25,7 +26,7 @@ export const SocketContext = createContext<{
 });
 
 export interface SubDict {
-    [k: string]: Sub
+    [k: string]: Subscription
 }
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
                     console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
                     const result = data;
                     const dict: SubDict = {}
-                    result.forEach((sub: Sub) => {
+                    result.forEach((sub: Subscription) => {
                         const key = sub.stop.stopCode.toString();
                         dict[key] = sub
                     })
@@ -137,17 +138,18 @@ function App() {
         <div className="w-full flex flex-row h-full">
             <div className="mr-10 w-1/5">
                 <p className={`font-semibold mb-6 cursor-pointer hover:text-beige-800`}>kubo.</p>
-                <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>trips</p></Link>
+                {/* <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>trips</p></Link> */}
                 <Link to="/stops"><p className={`${itemStyle} ${pathname === '/stops' ? 'underline' : 'no-underline'}`}>stops</p></Link>
-                <Link to="/trips"><p className={`${itemStyle} ${pathname === '/trips' ? 'underline' : 'no-underline'}`}>subscriptions</p></Link>
+                <Link to="/subscriptions"><p className={`${itemStyle} ${pathname === '/subscriptions' ? 'underline' : 'no-underline'}`}>subscriptions</p></Link>
                 <Link to="/updates"><p className={`${itemStyle} ${pathname === '/updates' ? 'underline' : 'no-underline'}`}>information updates</p></Link>
             </div>
             <div className="w-4/5 h-full">
                 <Routes>
                     <Route path="/" element={<Main />}></Route>
                     <Route path="/stops" element={<Stops />}></Route>
-                    <Route path="/trips" element={<Trips />} />
+                    {/* <Route path="/trips" element={<Trips />} /> */}
                     <Route path="/updates" element={<ServiceUpdates />} />
+                    <Route path="/subscriptions" element={<Subscriptions />} />
                 </Routes>
             </div> 
             <ToastContainer 
