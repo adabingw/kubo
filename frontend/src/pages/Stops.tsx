@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Subscription } from "../types/types";
-import { StopList, StopListSchema } from "../types/stops";
+import { StopList } from "../types/stops";
 import { faBus, faMagnifyingGlass, faTrain } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubDict, SocketContext } from "../App";
 import Rating from '@mui/material/Rating';
 import { Tooltip } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import { fetchSubscriptions } from "../utils/subscription";
 
 const StyledRating = styled(Rating)({
     '& .MuiRating-iconFilled': {
@@ -26,39 +26,8 @@ function Stops() {
     
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const fetchSubscriptions = () => {
-        if (!session) {
-            console.error("Session not defined");
-            return;
-        }
-        fetch(`http://${ip}/api/subscriptions?session=${session}`)
-            .then(res => res.json())
-            .then(data => {
-                try {
-                    if (data.error) {
-                        throw data.error;
-                    }
-                    console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
-                    const result = data;
-                    const dict: SubDict = {}
-                    result.forEach((sub: Subscription) => {
-                        const key = sub.stop.stopCode.toString();
-                        dict[key] = sub
-                    })
-                    console.log(`Fetch subscriptions dict: ${JSON.stringify(dict)}`);
-                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(dict));
-                    setSubscriptions(dict);
-                    return result;
-                } catch (e) {
-                    console.error(`Error while parsing search result: ${e}`);
-                }
-            });
-        return {};
-    }
-
     useEffect(() => {
-        console.log("Session updated ", session);
-        fetchSubscriptions();
+        fetchData();
     }, [session]);
 
     useEffect(() => {
@@ -71,40 +40,32 @@ function Stops() {
                 console.error(`Error parsing JSON: ${e}`);
             }
         } else {
-            fetchSubscriptions();
+            fetchData();
         }
     }, []);
 
+    const fetchData = async() => {
+        const sub = await fetchSubscriptions(ip, session);
+        setSubscriptions({... sub});
+    }
+
     useEffect(() => {
         socket.on('unsubscribe-success', () => {
-            fetchSubscriptions();
+            fetchData();
         });
     }, []);
 
     useEffect(() => {
         socket.on('subscribe-success', () => {
-            fetchSubscriptions();
+            fetchData();
         });
     }, []);
 
     const makeSearch = (v: string) => {
-        const storage = localStorage.getItem(`kubo-${v}`);
-        console.log('storage: ', storage);
-        if (storage) {
-            try {
-                const stopData = StopListSchema.parse(JSON.parse(storage));
-                setSearch(stopData);
-                return;
-            } catch (e) {
-                console.error(`Error parsing JSON: ${e}`);
-            }
-        }
         fetch(`http://${ip}/api/search?query=${v}`)
             .then(res => res.json())
             .then(data => {
                 try {
-                    console.log(data);
-                    localStorage.setItem(`kubo-${data.query}`, JSON.stringify(data.data));
                     setSearch(data.data.length > 0 ? data.data : undefined);
                 } catch (e) {
                     console.error(`Error while parsing search result: ${e}`);

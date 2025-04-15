@@ -91,7 +91,7 @@ const wipe = async (subscription) => {
     try {
         const docSnap = await dataRef.get();
         if (!docSnap.exists) {
-            console.log("No document found!");
+            // console.log("No document found!");
             return null;
         }
         const data = docSnap.data()
@@ -114,7 +114,7 @@ const cleanup = async () => {
     try {
         const docSnap = await dataRef.get();
         if (!docSnap.exists) {
-            console.log("No document found!");
+            // console.log("No document found!");
             return null;
         }
         const data = docSnap.data()
@@ -199,9 +199,7 @@ const subscribe = async (params: StopParams | TripParams, session) => {
     userRefUpdate[`${params.type}s`] = admin.firestore.FieldValue.arrayUnion(
         params.type === 'stop' ? `stop-${params.stopCode}` : `trip-${params.from}-${params.to}`
     )
-    await userRef.update(userRefUpdate).then(() => {
-        console.log('Array updated successfully!');
-    }).catch((error) => {
+    await userRef.update(userRefUpdate).catch((error) => {
         console.error('Error updating array: ', error);
         return false;
     });
@@ -228,8 +226,6 @@ const unsubscribe = async (params: StopParams | TripParams, session) => {
             console.error("No such document!");
             return false;
         }
-    }).then(() => {
-        console.log("Array updated successfully!");
     }).catch((error) => {
         console.error("Error updating array: ", error);
         return false;
@@ -252,12 +248,12 @@ const unsubscribe = async (params: StopParams | TripParams, session) => {
                 // Delete the document if no users remain
                 subRef[topic] = FieldValue.delete();
                 await db.collection("subscriptions").doc(collection).update(subRef);
-                console.log("Subscription document deleted successfully!");
+                // console.log("Subscription document deleted successfully!");
             } else {
                 // Otherwise, update the document
                 subRef[topic] = FieldValue.arrayRemove(users[session].id);
                 await db.collection("subscriptions").doc(collection).update(subRef);
-                console.log("Subscription updated successfully!");
+                // console.log("Subscription updated successfully!");
             }
         } else {
             console.error("No such subscription document");
@@ -360,7 +356,7 @@ const parse_stop = async(subscription: string, topic: string, data: StopDataType
     
     for (const user of subscribedUsers) {
         const session = userToSessionMap[user];
-        emitMessage(session, messageData, "new-message");
+        emitMessage(session, messageData, `new-${topic}`);
     }
 }
 
@@ -491,7 +487,7 @@ subscriptions.doc('stops').onSnapshot(async (doc) => {
         const data = doc.data();
 
         for (const [topic, v] of Object.entries(data)) {
-            console.log("Subscription data changed: ", topic, v);
+            // console.log("Subscription data changed: ", topic, v);
             const subscribedUsers = v.users;
         
             const subscription = await create_get_subscription(pubsub, topic);
@@ -515,7 +511,7 @@ subscriptions.doc('trips').onSnapshot(async (doc) => {
         const data = doc.data();
 
         for (const [topic, v] of Object.entries(data)) {
-            console.log("Subscription data changed: ", topic, v);
+            // console.log("Subscription data changed: ", topic, v);
             const subscribedUsers = v.users;
         
             const subscription = await create_get_subscription(pubsub, topic);
@@ -687,7 +683,6 @@ io.on("connection", async socket => {
     });
     
     socket.on("disconnect", () => {
-        console.log("User disconnected", socket.id);
         if (!users[socket.id]) {
             console.error("No session found");
             return;

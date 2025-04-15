@@ -188,7 +188,6 @@ function ServiceUpdates() {
 
     useEffect(() => {
         socket.on('new-information-alert', (message) => {
-            console.log('info alert: ');
             const messageJSON = typeof message === "string" ? JSON.parse(message) : message;
             let data = messageJSON.data;
             while (typeof data === "string") {
@@ -200,7 +199,6 @@ function ServiceUpdates() {
 
     useEffect(() => {
         socket.on('new-service-alert', (message) => {
-            console.log('service alert ')
             const messageJSON = typeof message === "string" ? JSON.parse(message) : message;
             let data = messageJSON.data;
             while (typeof data === "string") {
@@ -208,6 +206,19 @@ function ServiceUpdates() {
             }
             setService(UpdateSchema.parse(data));
         });
+    }, []);
+
+    useEffect(() => {
+        const service = localStorage.getItem('service-alert');
+        const info = localStorage.getItem('info-alert');
+        if (service) {
+            const serviceData = JSON.parse(service);
+            setService(UpdateSchema.parse(serviceData));
+        }
+        if (info) {
+            const infoData = JSON.parse(info);
+            setInfo(UpdateSchema.parse(infoData));
+        }
     }, []);
 
     const getlen = (alert: Update) => {

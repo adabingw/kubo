@@ -1,50 +1,26 @@
 import { useEffect, useState, useContext } from "react";
 import { SocketContext, SubDict } from "../App";
-import { Subscription } from "../types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBellSlash } from "@fortawesome/free-regular-svg-icons";
 import { Tooltip } from "@mui/material";
 import { faBus, faTrain, faUpRightAndDownLeftFromCenter } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { fetchSubscriptions } from "../utils/subscription";
 
 function Subscriptions() {
 
     const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const { socket, session } = useContext(SocketContext);
     const ip = import.meta.env.VITE_SERVER_IP || "34.120.108.49";
+    const navigate = useNavigate();
 
-    const fetchSubscriptions = () => {
-        if (!session) {
-            console.error("Session not defined");
-            return;
-        }
-        fetch(`http://${ip}/api/subscriptions?session=${session}`)
-            .then(res => res.json())
-            .then(data => {
-                try {
-                    if (data.error) {
-                        throw data.error;
-                    }
-                    console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
-                    const result = data;
-                    const dict: SubDict = {}
-                    result.forEach((sub: Subscription) => {
-                        const key = sub.stop.stopCode.toString();
-                        dict[key] = sub
-                    })
-                    console.log(`Fetch subscriptions dict: ${JSON.stringify(dict)}`);
-                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(dict));
-                    setSubscriptions(dict);
-                    return result;
-                } catch (e) {
-                    console.error(`Error while parsing search result: ${e}`);
-                }
-            });
-        return {};
+    const fetchData = async() => {
+        const sub = await fetchSubscriptions(ip, session);
+        setSubscriptions({... sub});
     }
 
     useEffect(() => {
-        console.log("Session updated ", session);
-        fetchSubscriptions();
+        fetchData();
     }, [session]);
 
     useEffect(() => {
@@ -57,19 +33,19 @@ function Subscriptions() {
                 console.error(`Error parsing JSON: ${e}`);
             }
         } else {
-            fetchSubscriptions();
+            fetchData();
         }
     }, []);
 
     useEffect(() => {
         socket.on('unsubscribe-success', () => {
-            fetchSubscriptions();
+            fetchData();
         });
     }, [])
 
     useEffect(() => {
         socket.on('subscribe-success', () => {
-            fetchSubscriptions();
+            fetchData();
         })
     }, [])
 
@@ -89,21 +65,25 @@ function Subscriptions() {
             <div className="font-semibold italic">stop subscriptions</div>
             <div className="mx-10 mt-5">
             {Object.keys(subscriptions).map((i) => (
-                <div key={`${subscriptions[i].stop.stopCode}`} className="border-b-1 flex flex-row items-center justify-between pb-2 my-2">
+                <div key={`${subscriptions[i].stop.stopCode}`} className="border-b-1 group flex flex-row items-center justify-between pb-2 my-2">
                     <span>
                         {subscriptions[i].stop.type.toLowerCase().includes('train') ? 
                             <FontAwesomeIcon color="#5c5649" icon={faTrain} /> : <FontAwesomeIcon color="#5c5649" icon={faBus} />
                         }
                         <span className="ml-3">{subscriptions[i].stop.stopName}</span>
                     </span>
-                    <div>
+                    <div className="group-hover:opacity-100 opacity-0">
                         <Tooltip 
                             title={`see updates`} 
                             placement="top" arrow
                         >
-                            <span className="border mr-2 border-beige-300 rounded-full px-2 py-1 cursor-pointer hover:bg-beige-100" onClick={() => unsubscribeClick(subscriptions[i].stop.stopCode.toString())}>
+                            <span className="border mr-2 border-beige-300 rounded-full px-2 py-1 cursor-pointer hover:bg-beige-100" 
+                                onClick={() => {
+                                    navigate(`/status/${subscriptions[i].topic}`)
+                                }}
+                            >
                                 <FontAwesomeIcon icon={faUpRightAndDownLeftFromCenter} color="#5c5649" />
-                                <span className="ml-1">
+                                <span className="ml-1" >
                                     open
                                 </span>
                             </span>

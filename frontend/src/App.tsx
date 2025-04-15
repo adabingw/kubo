@@ -11,6 +11,11 @@ import Stops from "./pages/Stops";
 import ServiceUpdates from "./pages/ServiceUpdates";
 import Main from "./pages/Main";
 import Subscriptions from "./pages/Subscriptions";
+import Updates from "./pages/Updates";
+
+import { fetchSubscriptions } from "./utils/subscription";
+import { message_parser } from "./utils/message_parser";
+import { UpdateSchema } from "./types/alert";
 
 const ip = import.meta.env.VITE_SERVER_IP || "34.120.108.49";
 const socket: Socket = io(`http://${ip}`);
@@ -30,71 +35,49 @@ export interface SubDict {
 }
 
 function App() {
-    const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const [id, setId] = useState(undefined);
     const [session, setSession] = useState(undefined);
+    const [subscriptions, setSubscriptions] = useState<SubDict>({});
     const { pathname } = useLocation();
 
-    const fetchSubscriptions = () => {
-        if (!session) {
-            console.error("Session not defined");
-            return;
+    useEffect(() => {
+        const fetchData = async() => {
+            const sub = await fetchSubscriptions(ip, session);
+            setSubscriptions({... sub});
         }
-        fetch(`http://${ip}/api/subscriptions?session=${session}`)
-            .then(res => res.json())
-            .then(data => {
-                try {
-                    console.log(`Fetch subscriptions data: ${JSON.stringify(data)}`);
-                    const result = data;
-                    const dict: SubDict = {}
-                    result.forEach((sub: Subscription) => {
-                        const key = sub.stop.stopCode.toString();
-                        dict[key] = sub
-                    })
-                    console.log(`Fetch subscriptions dict: ${JSON.stringify(dict)}`);
-                    localStorage.setItem(`kubo-subscriptions`, JSON.stringify(dict));
-                    setSubscriptions(dict);
-                    return result;
-                } catch (e) {
-                    console.error(`Error while parsing search result: ${e}`);
-                }
-            });
-        return {};
-    }
-
-    useEffect(() => {
-        console.log(subscriptions);
-    }, [subscriptions]);
-
-    useEffect(() => {
-        console.log("Session updated: ", session);
-        fetchSubscriptions();
+        fetchData();
     }, [session]);
 
     useEffect(() => {
-        const subs = localStorage.getItem(`kubo-subscriptions`);
-        if (subs) {
-            try {
-                setSubscriptions(JSON.parse(subs));
-                console.log(`Fetched subscriptions from local storage: ${JSON.stringify(subs)}`);
-                return;
-            } catch (e) {
-                console.error(`Error parsing JSON: ${e}`);
-            }
-        } else {
-            fetchSubscriptions();
-        }
-    }, []);
+        Object.keys(subscriptions).forEach((key) => {
+            const subscription = subscriptions[key];
+            socket.on(`new-${subscription.topic}`, (msgs: { topic: string, data: string, timestamp: string, stop: string}) => {
+                message_parser(msgs, undefined);
+            });
+        })
+    }, [subscriptions]);
 
     useEffect(() => {
-        socket.on('unsubscribe-success', () => {
-            fetchSubscriptions();
+        socket.on('new-information-alert', (message) => {
+            const messageJSON = typeof message === "string" ? JSON.parse(message) : message;
+            let data = messageJSON.data;
+            while (typeof data === "string") {
+                data = JSON.parse(data);
+            }
+            const update = UpdateSchema.parse(data);
+            localStorage.setItem('info-alert', JSON.stringify(update));
         });
     }, []);
 
     useEffect(() => {
-        socket.on('subscribe-success', () => {
-            fetchSubscriptions();
+        socket.on('new-service-alert', (message) => {
+            const messageJSON = typeof message === "string" ? JSON.parse(message) : message;
+            let data = messageJSON.data;
+            while (typeof data === "string") {
+                data = JSON.parse(data);
+            }
+            const update = UpdateSchema.parse(data);
+            localStorage.setItem('service-alert', JSON.stringify(update));
         });
     }, []);
 
@@ -116,7 +99,6 @@ function App() {
                 .then(res => res.json())
                 .then(data => {
                     try {
-                        console.log(data)
                         if (data.message === "ACK") {
                             console.log(data);
                         } else {
@@ -150,6 +132,7 @@ function App() {
                     {/* <Route path="/trips" element={<Trips />} /> */}
                     <Route path="/updates" element={<ServiceUpdates />} />
                     <Route path="/subscriptions" element={<Subscriptions />} />
+                    <Route path="/status/:topic" element={<Updates />} />
                 </Routes>
             </div> 
             <ToastContainer 
@@ -164,25 +147,6 @@ function App() {
                 pauseOnHover
                 theme="light"
             />
-            {/* <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                {`Subscribe to ${selectedStop?.stopName}?`}
-                </DialogTitle>
-                <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Subscribe to {selectedStop?.stopName} and get updates on all its services?
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={subscribe}>Sure</Button>
-                    <Button onClick={handleClose}>Nah</Button>
-                </DialogActions>
-            </Dialog> */}
         </div>
         </SocketContext.Provider>
     );

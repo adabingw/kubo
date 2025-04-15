@@ -9,13 +9,13 @@ const tableName = 'stops'
 const init_db = async () => {
     db.serialize(() => {
         // Create a users table with id, name, and email
-        db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
-            if (err) {
-              console.error(`Error dropping table ${tableName}:`, err.message);
-            } else {
-              console.log(`Table ${tableName} has been dropped.`);
-            }
-        });
+        // db.run(`DROP TABLE IF EXISTS ${tableName}`, (err) => {
+        //     if (err) {
+        //       console.error(`Error dropping table ${tableName}:`, err.message);
+        //     } else {
+        //       console.log(`Table ${tableName} has been dropped.`);
+        //     }
+        // });
         db.run(`CREATE TABLE IF NOT EXISTS ${tableName} (
             stopCode TEXT PRIMARY KEY,
             stopName TEXT,
@@ -38,10 +38,10 @@ const init_db = async () => {
     if (data.Stations && data.Stations.Station) {
         const stations = data.Stations.Station;
         for (const station of stations) {
-            const query = 'INSERT INTO stops (stopCode, stopName, type) VALUES (?, ?, ?)';
+            const query = 'INSERT OR IGNORE INTO stops (stopCode, stopName, type) VALUES (?, ?, ?)';
             db.run(query, [station.LocationCode.toString(), station.LocationName, station.LocationType], function(err) {
               if (err) {
-                // teardown();
+                teardown();
                 throw new Error(err + " " + station.LocationCode);
               }
             });
