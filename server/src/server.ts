@@ -14,11 +14,11 @@ import { IOSocket } from './sockets';
 
 const app = express();
 app.use(cors({
-    origin: "*",  // Allow any frontend
+    origin: "*",
     methods: "GET,POST,PUT,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type"  // Only allow necessary headers
+    allowedHeaders: "Content-Type"
 }));
-app.use(express.json()); // Middleware for parsing JSON
+app.use(express.json());
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
@@ -29,17 +29,17 @@ const io = new Server(server, {
 
 const port = process.env.PORT || '80';
 
-server.listen(port, () => {
+server.listen(port, async () => {
     const sqldb = new sqlite3.Database('./db');
-    admin.initializeApp({
-        credential: admin.credential.cert(SERVICE_ACCOUNT),
-    });
     const pubsub = new PubSub({
         projectId: PUBSUB_PROJECT_ID,
         credentials: {
             client_email: SERVICE_ACCOUNT.clientEmail,
             private_key: SERVICE_ACCOUNT.privateKey
         }
+    });
+    admin.initializeApp({
+        credential: admin.credential.cert(SERVICE_ACCOUNT),
     });
     const db = admin.firestore();
     const userRef = db.collection("users").doc(context.userId);
@@ -58,16 +58,14 @@ server.listen(port, () => {
     }
     context.pubsub = pubsub;
 
-    IOSocket(context as AppContext);    // initialize socket
-    init_db(context as AppContext);     // initialize sqlite3 db
+    await init_db(context as AppContext);       // initialize sqlite3 db
+    IOSocket(context as AppContext);            // initialize socket
 
     // initialize endpoints
     app.use("/api/subscriptions", subscriptionsRoute(context as AppContext));
     app.use("/api/search", searchRoute(context as AppContext));
     app.use("/api/handshake", handshakeRoute(context as AppContext));
-    app.use("/", async (_, res) => {
-        res.status(200).end();
-    })
+    app.use("/", async (_, res) => res.status(200).end());
 
-    console.log(`🚀 Server running on port ${port}`)}
-);
+    console.log(`🚀 Server running on port ${port}`);
+});

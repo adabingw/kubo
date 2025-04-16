@@ -17,9 +17,9 @@ export const IOSocket = (context: AppContext) => {
         }
         context.users[session] = client;
     
-        socket.emit('welcome', session);
-        get_setup_data(context, session);
-        AlertsListener(context);
+        socket.emit('welcome', session);    // send session id for handshake event
+        get_setup_data(context, session);   // get cached data from firestore
+        AlertsListener(context);            // listen to alerts from go
     
         socket.on('subscribe', async ({schema, session}) => {
             if (await subscribe(context, schema, session)) {
