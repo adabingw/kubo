@@ -81,13 +81,6 @@ export const prune_data = (data: Message[]): Message[] => {
     const result = [...data];
     for (let i = result.length - 1; i >= 0; i--) {
         const res = result[i];
-        const storage = localStorage.getItem(`kubo-data-${res.stop.stopCode}-${res.data.LineCode}`);
-        if (storage) {
-            const dataJSON = JSON.parse(storage) as Message[];
-            if (Array.isArray(dataJSON) && dataJSON.length >= 1) {
-                const service = dataJSON.splice(0, 1)[0];
-            }
-        }
 
         if (new Date(res.data.ScheduledDepartureTime).getTime() <= Date.now()) {
             // get new message
